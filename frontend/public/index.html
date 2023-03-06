@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="description" content="Web site created using create-react-app" />
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" />
+    <link rel="stylesheet" href="https://unpkg.com/tailwindcss@2.2.19/dist/tailwind.min.css" />
+
+    <!--Replace with your tailwind.css once created-->
+    <link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet" />
+    <!--Totally optional :) -->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"
+      integrity="sha256-xKeoJ50pzbUGkpQxDYHD7o7hxe0LaOGeguUidbq6vis="
+      crossorigin="anonymous"
+    ></script>
+
+    <title>React App</title>
+  </head>
+  <body class="bg-gray-800 font-sans leading-normal tracking-normal">
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"></div>
+    <script>
+      /*Toggle dropdown list*/
+      function toggleDD(myDropMenu) {
+        document.getElementById(myDropMenu).classList.toggle("invisible");
+      }
+      /*Filter dropdown options*/
+      function filterDD(myDropMenu, myDropMenuSearch) {
+        var input, filter, ul, li, a, i;
+        input = document.getElementById(myDropMenuSearch);
+        filter = input.value.toUpperCase();
+        div = document.getElementById(myDropMenu);
+        a = div.getElementsByTagName("a");
+        for (i = 0; i < a.length; i++) {
+          if (a[i].innerHTML.toUpperCase().indexOf(filter) > -1) {
+            a[i].style.display = "";
+          } else {
+            a[i].style.display = "none";
+          }
+        }
+      }
+      // Close the dropdown menu if the user clicks outside of it
+      window.onclick = function (event) {
+        if (!event.target.matches(".drop-button") && !event.target.matches(".drop-search")) {
+          var dropdowns = document.getElementsByClassName("dropdownlist");
+          for (var i = 0; i < dropdowns.length; i++) {
+            var openDropdown = dropdowns[i];
+            if (!openDropdown.classList.contains("invisible")) {
+              openDropdown.classList.add("invisible");
+            }
+          }
+        }
+      };
+    </script>
+  </body>
+</html>

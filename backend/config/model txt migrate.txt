@@ -1,0 +1,7 @@
+sequelize model:generate --name Category --attributes name:STRING
+sequelize model:generate --name Product --attributes sku:STRING,name:STRING,url_photo:STRING,stock:INTEGER,min_stock:INTEGER,categoryId:INTEGER,supplierId:INTEGER
+sequelize model:generate --name User --attributes name:STRING,username:STRING,email:STRING,mobile:STRING,password:STRING,role:STRING
+sequelize model:generate --name Customer --attributes name:STRING,phone:STRING,email:INTEGER,address:INTEGER
+sequelize model:generate --name Supplier --attributes name:STRING,phone:STRING,email:INTEGER,address:INTEGER
+sequelize model:generate --name Order --attributes code:STRING,type:STRING,date:DATE,status:STRING,userId:INTEGER,customerId:INTEGER
+sequelize model:generate --name OrderDetail --attributes quantity:INTEGER,productId:INTEGER,orderId:INTEGER
