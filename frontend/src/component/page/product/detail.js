@@ -14,6 +14,8 @@ const DetailProduct = () => {
   const [stock, setStock] = useState("");
   const [min_stock, setMin_Stock] = useState("");
   const [url_photo, setUrl_photo] = useState("");
+  const [price, setPrice] = useState("");
+  const [status, setStatus] = useState("");
   const [category, setCategory] = useState("");
   const [supplier, setSupplier] = useState("");
 
@@ -41,10 +43,12 @@ const DetailProduct = () => {
       setStock(data.stock);
       setMin_Stock(data.min_stock);
       setUrl_photo(data.url_photo);
+      setPrice(data.price);
+      setStatus(data.status);
       setCategory(data.category.name);
       setSupplier(data.supplier.name);
     } catch (error) {
-      navigate("/blank");
+      navigate("/not-found");
     }
   };
 
@@ -72,6 +76,9 @@ const DetailProduct = () => {
             </div>
             <div className="w-3/5">
               <ul className=" text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                <li className="w-full px-4 py-2 border-b border-gray-200 dark:border-gray-600">
+                  <span className="font-bold">Status :</span> {status}
+                </li>
                 <li className="w-full px-4 py-2 border-b border-gray-200 rounded-t-lg dark:border-gray-600">
                   <span className="font-bold">SKU : </span> {sku}
                 </li>
@@ -83,6 +90,9 @@ const DetailProduct = () => {
                 </li>
                 <li className="w-full px-4 py-2 border-b border-gray-200 dark:border-gray-600">
                   <span className="font-bold">Minimal Stock :</span> {min_stock}
+                </li>
+                <li className="w-full px-4 py-2 border-b border-gray-200 dark:border-gray-600">
+                  <span className="font-bold">Price :</span> Rp {price.toLocaleString()}
                 </li>
                 <li className="w-full px-4 py-2 border-b border-gray-200 dark:border-gray-600">
                   <span className="font-bold">Category :</span> {category}

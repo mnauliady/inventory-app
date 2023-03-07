@@ -1,7 +1,9 @@
 // Import model Order
 // import Order from "../models/Order.js";
+const { v4: uuidv4 } = require("uuid");
 const Order = require("../models").order;
 const OrderDetail = require("../models").orderdetail;
+const { check, validationResult } = require("express-validator");
 
 // Get semua order
 const getOrders = async (req, res) => {
@@ -37,7 +39,7 @@ const getOrderById = async (req, res) => {
 const createOrder = async (req, res) => {
   // validasi inputan
   await check("code").isLength({ min: 3 }).withMessage("Minimal 3 character").run(req);
-  await check("type").isEmail().withMessage("Wrong email format").run(req);
+  // await check("type").isEmail().withMessage("Wrong email format").run(req);
   await check("date").isLength({ min: 10, max: 13 }).run(req);
   await check("status").notEmpty().withMessage("Address is required").run(req);
   await check("userId").notEmpty().withMessage("Address is required").run(req);
@@ -50,7 +52,15 @@ const createOrder = async (req, res) => {
   }
 
   try {
-    await Order.create(req.body);
+    await Order.create({
+      id: uuidv4(),
+      code: req.body.code,
+      type: req.body.type,
+      date: req.body.date,
+      status: req.body.status,
+      userId: req.body.userId,
+      customerId: req.body.customerId,
+    });
     res.json({
       message: "Order Created",
     });

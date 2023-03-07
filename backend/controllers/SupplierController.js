@@ -2,6 +2,7 @@
 // import Supplier from "../models/Supplier.js";
 const Supplier = require("../models").supplier;
 const Product = require("../models").product;
+const { v4: uuidv4 } = require("uuid");
 const { check, validationResult } = require("express-validator");
 
 // Get semua supplier
@@ -40,7 +41,7 @@ const createSupplier = async (req, res) => {
   // validasi inputan
   await check("name").isLength({ min: 3 }).withMessage("Minimal 3 character").run(req);
   await check("email").isEmail().withMessage("Wrong email format").run(req);
-  await check("mobile").isLength({ min: 10, max: 13 }).run(req);
+  await check("phone").isLength({ min: 10, max: 13 }).run(req);
   await check("address").notEmpty().withMessage("Address is required").run(req);
 
   // jika terdapat error
@@ -50,7 +51,13 @@ const createSupplier = async (req, res) => {
   }
 
   try {
-    await Supplier.create(req.body);
+    await Supplier.create({
+      id: uuidv4(),
+      name: req.body.name,
+      phone: req.body.phone,
+      email: req.body.email,
+      address: req.body.address,
+    });
     res.json({
       message: "Supplier Created",
     });

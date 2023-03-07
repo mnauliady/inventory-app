@@ -5,10 +5,10 @@ module.exports = {
     await queryInterface.createTable("Categories", {
       id: {
         allowNull: false,
-        autoIncrement: true,
+        // autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER,
-        // defaultValue: Sequelize.UUIDV4,
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV4,
       },
       name: {
         type: Sequelize.STRING,
@@ -27,3 +27,6 @@ module.exports = {
     await queryInterface.dropTable("Categories");
   },
 };
+
+// sequelize db:migrate:undo --name 20230221015312-create-category.js
+// sequelize db:migrate --name 20230221015312-create-category.js

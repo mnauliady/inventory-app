@@ -5,18 +5,25 @@ module.exports = {
     await queryInterface.createTable("OrderDetails", {
       id: {
         allowNull: false,
-        autoIncrement: true,
+        // autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV4,
       },
       quantity: {
         type: Sequelize.INTEGER,
       },
       productId: {
+        type: Sequelize.UUID,
+      },
+      productName: {
+        type: Sequelize.STRING,
+      },
+      productPrice: {
         type: Sequelize.INTEGER,
       },
       orderId: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
       },
       createdAt: {
         allowNull: false,
@@ -32,3 +39,6 @@ module.exports = {
     await queryInterface.dropTable("OrderDetails");
   },
 };
+
+// sequelize db:migrate:undo --name 20230221091032-create-order-detail.js
+// sequelize db:migrate --name 20230221091032-create-order-detail.js

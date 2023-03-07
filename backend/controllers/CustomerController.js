@@ -2,6 +2,7 @@
 // import Customer from "../models/Customer.js";
 const Customer = require("../models").customer;
 const Order = require("../models").order;
+const { v4: uuidv4 } = require("uuid");
 const { check, validationResult } = require("express-validator");
 
 // Get semua customer
@@ -38,7 +39,7 @@ const createCustomer = async (req, res) => {
   // validasi inputan
   await check("name").isLength({ min: 3 }).withMessage("Minimal 3 character").run(req);
   await check("email").isEmail().withMessage("Wrong email format").run(req);
-  await check("mobile").isLength({ min: 10, max: 13 }).run(req);
+  await check("phone").isLength({ min: 10, max: 13 }).run(req);
   await check("address").notEmpty().withMessage("Address is required").run(req);
 
   // jika terdapat error
@@ -48,7 +49,13 @@ const createCustomer = async (req, res) => {
   }
 
   try {
-    await Customer.create(req.body);
+    await Customer.create({
+      id: uuidv4(),
+      name: req.body.name,
+      phone: req.body.phone,
+      email: req.body.email,
+      address: req.body.address,
+    });
     res.json({
       message: "Customer Created",
     });

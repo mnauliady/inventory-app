@@ -2,6 +2,8 @@
 // import Category from "../models/Category.js";
 const Category = require("../models").category;
 const Product = require("../models").product;
+const { v4: uuidv4 } = require("uuid");
+const uuid = require("uuid");
 const { check, validationResult } = require("express-validator");
 
 // Get semua category
@@ -18,17 +20,19 @@ const getCategories = async (req, res) => {
 
 // Get category berdasarkan id
 const getCategoryById = async (req, res) => {
+  if (!uuid.validate(req.params.id)) {
+    return res.status(400).json({ status: "error", message: "Category not found" });
+  }
+
   try {
     const category = await Category.findByPk(req.params.id);
 
     // mengecek jika category ada
     if (category) {
+      // console.log("Category not found");
       res.send(category);
     } else {
-      return res.status(409).json({
-        status: "error",
-        message: "category not found",
-      });
+      return res.status(400).json({ status: "error", message: "Category not found" });
     }
   } catch (err) {
     console.log(err);
@@ -48,7 +52,10 @@ const createCategory = async (req, res) => {
 
   try {
     // input data ke db
-    await Category.create(req.body);
+    await Category.create({
+      id: uuidv4(),
+      name: req.body.name,
+    });
     res.json({
       message: "Category Created",
     });
@@ -59,6 +66,15 @@ const createCategory = async (req, res) => {
 
 // Update category berdasarkan id
 const updateCategory = async (req, res) => {
+  // validasi inputan
+  await check("name").isLength({ min: 3 }).withMessage("Minimal 3 character").run(req);
+
+  // tampilkan jika ada error
+  const result = validationResult(req);
+  if (!result.isEmpty()) {
+    return res.status(400).json({ errors: result.array() });
+  }
+
   try {
     // update category
     const category = await Category.update(req.body, {

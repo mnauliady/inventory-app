@@ -54,6 +54,13 @@ const AddProduct = () => {
 
   const loadImage = (e) => {
     const image = e.target.files[0];
+
+    // cek size image
+    if (image.size > 3000000) {
+      window.alert("Please upload a file smaller than 3 MB");
+      return false;
+    }
+    console.log(image.size);
     setFile(image);
     setPreview(URL.createObjectURL(image));
   };
@@ -63,6 +70,7 @@ const AddProduct = () => {
   //state
   const [name, setName] = useState("");
   const [min_stock, setMin_Stock] = useState("");
+  const [price, setPrice] = useState("");
   const [sku, setSku] = useState("");
 
   // state validation
@@ -94,6 +102,7 @@ const AddProduct = () => {
         {
           sku,
           name,
+          price,
           min_stock,
           categoryId: selectedCategory,
           supplierId: selectedSupplier,
@@ -130,6 +139,8 @@ const AddProduct = () => {
             <form className="space-y-6" onSubmit={storePost}>
               <h5 className="text-xl font-medium text-gray-900 dark:text-white">Add New Product</h5>
               <hr />
+
+              {/* error handling */}
               {validation.errors && (
                 <div className="bg-red-500 rounded-md w-1/2">
                   <ul className="py-2 px-4 text-white">
@@ -141,6 +152,8 @@ const AddProduct = () => {
                   </ul>
                 </div>
               )}
+
+              {/* Product Name */}
               <div>
                 <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                   Product Name
@@ -155,6 +168,8 @@ const AddProduct = () => {
                   required
                 />
               </div>
+
+              {/* Minimal Stock */}
               <div>
                 <label htmlFor="min_stock" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                   Minimal Stock
@@ -171,6 +186,7 @@ const AddProduct = () => {
                 />
               </div>
 
+              {/* Category */}
               <div>
                 <label htmlFor="category" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                   Select an option
@@ -190,6 +206,7 @@ const AddProduct = () => {
                 </select>
               </div>
 
+              {/* Supplier */}
               <div>
                 <label htmlFor="supplier" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                   Select an option
@@ -209,6 +226,24 @@ const AddProduct = () => {
                 </select>
               </div>
 
+              {/* price */}
+              <div>
+                <label htmlFor="price" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                  Price (IDR)
+                </label>
+                <input
+                  value={price}
+                  onChange={(e) => setPrice(e.target.value)}
+                  type="number"
+                  name="price"
+                  id="price"
+                  min="0"
+                  className="w-48 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                  required
+                />
+              </div>
+
+              {/* IMage upload */}
               <div>
                 <div className="flex w-full">
                   <label
@@ -237,7 +272,14 @@ const AddProduct = () => {
                       </p>
                       <p className="text-xs text-gray-500 dark:text-gray-400">JPEG, PNG, or JPG (MAX. 3 MB)</p>
                     </div>
-                    <input id="dropzone-file" type="file" className="hidden" onChange={loadImage} />
+                    <input
+                      id="dropzone-file"
+                      type="file"
+                      className="hidden"
+                      onChange={loadImage}
+                      accept=".png,.jpg,.jpeg"
+                      required
+                    />
                   </label>
                 </div>
 
@@ -250,6 +292,7 @@ const AddProduct = () => {
                   ""
                 )}
               </div>
+
               <Link
                 to="/products"
                 className=" text-white bg-gray-500 hover:bg-gray-600 rounded-md font-medium text-sm px-5 py-2.5 mr-2 mb-2"

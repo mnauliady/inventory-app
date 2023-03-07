@@ -1,11 +1,12 @@
 // import Users from "../models/UserModel.js";
-const Users = require("../models/user");
+const Users = require("../models").user;
 // import jwt from "jsonwebtoken";
 const jwt = require("jsonwebtoken");
 
 const refreshToken = async (req, res) => {
   try {
     const refreshToken = req.cookies.refreshToken;
+    console.log(req.cookies.refreshToken);
     if (!refreshToken) return res.sendStatus(401);
     const user = await Users.findAll({
       where: {

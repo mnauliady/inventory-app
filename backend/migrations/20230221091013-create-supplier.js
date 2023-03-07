@@ -5,9 +5,9 @@ module.exports = {
     await queryInterface.createTable("Suppliers", {
       id: {
         allowNull: false,
-        autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV4,
       },
       name: {
         type: Sequelize.STRING,
@@ -16,10 +16,10 @@ module.exports = {
         type: Sequelize.STRING,
       },
       email: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING,
       },
       address: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.TEXT,
       },
       createdAt: {
         allowNull: false,
@@ -35,3 +35,6 @@ module.exports = {
     await queryInterface.dropTable("Suppliers");
   },
 };
+
+// sequelize db:migrate:undo --name 20230221091013-create-supplier.js
+// sequelize db:migrate --name 20230221091013-create-supplier.js

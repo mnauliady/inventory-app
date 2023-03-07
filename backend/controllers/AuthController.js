@@ -1,6 +1,7 @@
 const Users = require("../models").user;
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const { v4: uuidv4 } = require("uuid");
 
 // hapus ===============================
 const getUser = async (req, res) => {
@@ -51,6 +52,7 @@ const Register = async (req, res) => {
   try {
     // create/add ke db
     await Users.create({
+      id: uuidv4(),
       name: req.body.name,
       username: req.body.username,
       email: req.body.email,
@@ -77,7 +79,7 @@ const Login = async (req, res) => {
     // mengecek password
     const match = await bcrypt.compare(req.body.password, user[0].password);
     // jika tidak sesuai
-    if (!match) return res.status(400).json({ message: "Failed to login" });
+    if (!match) return res.status(400).json({ msg: "Failed to login" });
     // set user, name, email untuk jwt
     const userId = user[0].id;
     const name = user[0].name;
@@ -99,10 +101,11 @@ const Login = async (req, res) => {
     res.cookie("refreshToken", refreshToken, {
       httpOnly: true,
       maxAge: 24 * 60 * 60 * 1000,
+      // samesite: "strict",
     });
     res.json({ accessToken });
   } catch (error) {
-    res.status(404).json({ msg: "Email not found" });
+    res.status(404).json({ msg: "Failed to login" });
   }
 };
 

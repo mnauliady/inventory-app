@@ -5,10 +5,11 @@ module.exports = {
     await queryInterface.createTable("Products", {
       id: {
         allowNull: false,
-        autoIncrement: true,
+        // autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
-        // defaultValue: Sequelize.UUIDV4,
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV4,
       },
       sku: {
         type: Sequelize.STRING,
@@ -16,20 +17,23 @@ module.exports = {
       name: {
         type: Sequelize.STRING,
       },
+      status: {
+        type: Sequelize.STRING,
+      },
       url_photo: {
         type: Sequelize.STRING,
       },
-      stock: {
+      price: {
         type: Sequelize.INTEGER,
       },
       min_stock: {
         type: Sequelize.INTEGER,
       },
       categoryId: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
       },
       supplierId: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
       },
       createdAt: {
         allowNull: false,
@@ -45,3 +49,6 @@ module.exports = {
     await queryInterface.dropTable("Products");
   },
 };
+
+// sequelize db:migrate:undo --name 20230221015326-create-product.js
+// sequelize db:migrate --name 20230221015326-create-product.js

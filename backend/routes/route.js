@@ -59,7 +59,7 @@ const validateCategory = require("../validator/categoryValidator");
 
 // router.get("/alluser", verifyToken, getUser);
 router.get("/alluser", getUser);
-router.post("/register", validateUser, Register);
+router.post("/register", Register);
 router.post("/login", Login);
 router.get("/token", refreshToken);
 router.delete("/logout", Logout);

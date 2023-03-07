@@ -2,12 +2,13 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("Customers", {
+    await queryInterface.createTable("customers", {
       id: {
         allowNull: false,
-        autoIncrement: true,
+        // autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV4,
       },
       name: {
         type: Sequelize.STRING,
@@ -16,10 +17,10 @@ module.exports = {
         type: Sequelize.STRING,
       },
       email: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING,
       },
       address: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.TEXT,
       },
       createdAt: {
         allowNull: false,
@@ -35,3 +36,6 @@ module.exports = {
     await queryInterface.dropTable("Customers");
   },
 };
+
+// sequelize db:migrate:undo --name 20230221091012-create-customer.js
+// sequelize db:migrate --name 20230221091012-create-customer.js

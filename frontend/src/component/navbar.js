@@ -2,6 +2,8 @@ import { Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const navigation = [
@@ -14,6 +16,16 @@ const Navbar = () => {
   function classNames(...classes) {
     return classes.filter(Boolean).join(" ");
   }
+
+  const navigate = useNavigate();
+  const Logout = async () => {
+    try {
+      await axios.delete("http://localhost:5000/logout");
+      navigate("/login");
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <Disclosure as="nav" className="bg-gray-800">
@@ -116,14 +128,20 @@ const Navbar = () => {
                         )}
                       </Menu.Item>
                       <Menu.Item>
-                        {({ active }) => (
+                        <button
+                          onClick={Logout}
+                          className="w-full block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 text-left"
+                        >
+                          Log Out
+                        </button>
+                        {/* {({ active }) => (
                           <a
                             href="#"
                             className={classNames(active ? "bg-gray-100" : "", "block px-4 py-2 text-sm text-gray-700")}
                           >
                             Sign out
                           </a>
-                        )}
+                        )} */}
                       </Menu.Item>
                     </Menu.Items>
                   </Transition>

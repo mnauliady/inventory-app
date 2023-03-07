@@ -1,15 +1,79 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import jwt_decode from "jwt-decode";
+import { useNavigate } from "react-router-dom";
+
 import LineChart from "../chart/linechart";
 import BarChart from "../chart/barchart";
 import PieChart from "../chart/piechart";
 
 const Home = () => {
+  const [name, setName] = useState("");
+  const [token, setToken] = useState("");
+  const [expire, setExpire] = useState("");
+  const [users, setUsers] = useState([]);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    refreshToken();
+    getUsers();
+  }, []);
+
+  const refreshToken = async () => {
+    try {
+      // const res = await axios({method: 'POST', url: URL, data: {DATA}, withCredentials: true})
+      const response = await axios.get("http://localhost:5000/token", {
+        withCredentials: true,
+      });
+      console.log(response);
+      setToken(response.data.accessToken);
+      const decoded = jwt_decode(response.data.accessToken);
+      setName(decoded.name);
+      setExpire(decoded.exp);
+    } catch (error) {
+      if (error.response) {
+        // console.log(error.response);
+        navigate("/");
+      }
+    }
+  };
+
+  const axiosJWT = axios.create();
+
+  axiosJWT.interceptors.request.use(
+    async (config) => {
+      const currentDate = new Date();
+      if (expire * 1000 < currentDate.getTime()) {
+        const response = await axios.get("http://localhost:5000/token");
+        config.headers.Authorization = `Bearer ${response.data.accessToken}`;
+        setToken(response.data.accessToken);
+        const decoded = jwt_decode(response.data.accessToken);
+        setName(decoded.name);
+        setExpire(decoded.exp);
+      }
+      return config;
+    },
+    (error) => {
+      return Promise.reject(error);
+    }
+  );
+
+  const getUsers = async () => {
+    const response = await axiosJWT.get("http://localhost:5000/categories", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    setUsers(response.data);
+  };
+
   return (
     <section>
       <div id="main" className="main-content flex-1 bg-gray-100 mt-12 md:mt-2 pb-24 md:pb-5">
         <div className="bg-gray-800 pt-3">
           <div className=" bg-blue-800 p-4 shadow text-2xl text-white">
             <h1 className="font-bold pl-2">Dashboard</h1>
+            <h1>Welcome Back: {name}</h1>
           </div>
         </div>
 
@@ -87,7 +151,7 @@ const Home = () => {
             {/* <!--Graph Card--> */}
             <div className="bg-white border-transparent rounded-lg shadow-xl">
               <div className="bg-gray-300 uppercase text-gray-800 border-b-2 border-gray-300 rounded-tl-lg rounded-tr-lg p-2">
-                <h className="font-bold uppercase text-gray-600">Graph</h>
+                <h2 className="font-bold uppercase text-gray-600">Graph</h2>
               </div>
               <div className="p-5">
                 {/* <canvas id="chartjs-7" className="chartjs" width="undefined" height="undefined"></canvas> */}
@@ -132,47 +196,47 @@ const Home = () => {
                 <h2 className="font-bold uppercase text-gray-600">Table</h2>
               </div>
               <div className="p-5">
-                <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                  <thead class="text-xs text-gray-700 uppercase bg-gray-200 dark:bg-gray-700 dark:text-gray-400">
+                <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                  <thead className="text-xs text-gray-700 uppercase bg-gray-200 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
-                      <th scope="col" class="px-6 py-3">
+                      <th scope="col" className="px-6 py-3">
                         Product name
                       </th>
-                      <th scope="col" class="px-6 py-3">
+                      <th scope="col" className="px-6 py-3">
                         Color
                       </th>
-                      <th scope="col" class="px-6 py-3">
+                      <th scope="col" className="px-6 py-3">
                         Category
                       </th>
-                      <th scope="col" class="px-6 py-3">
+                      <th scope="col" className="px-6 py-3">
                         Price
                       </th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr class=" border-b dark:bg-gray-800 dark:border-gray-700">
-                      <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    <tr className=" border-b dark:bg-gray-800 dark:border-gray-700">
+                      <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                         Apple MacBook Pro 17"
                       </th>
-                      <td class="px-6 py-4">Silver</td>
-                      <td class="px-6 py-4">Laptop</td>
-                      <td class="px-6 py-4">$2999</td>
+                      <td className="px-6 py-4">Silver</td>
+                      <td className="px-6 py-4">Laptop</td>
+                      <td className="px-6 py-4">$2999</td>
                     </tr>
-                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                      <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                      <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                         Microsoft Surface Pro
                       </th>
-                      <td class="px-6 py-4">White</td>
-                      <td class="px-6 py-4">Laptop PC</td>
-                      <td class="px-6 py-4">$1999</td>
+                      <td className="px-6 py-4">White</td>
+                      <td className="px-6 py-4">Laptop PC</td>
+                      <td className="px-6 py-4">$1999</td>
                     </tr>
-                    <tr class="bg-white dark:bg-gray-800">
-                      <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    <tr className="bg-white dark:bg-gray-800">
+                      <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                         Magic Mouse 2
                       </th>
-                      <td class="px-6 py-4">Black</td>
-                      <td class="px-6 py-4">Accessories</td>
-                      <td class="px-6 py-4">$99</td>
+                      <td className="px-6 py-4">Black</td>
+                      <td className="px-6 py-4">Accessories</td>
+                      <td className="px-6 py-4">$99</td>
                     </tr>
                   </tbody>
                 </table>

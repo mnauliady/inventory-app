@@ -6,9 +6,9 @@ import axios from "axios";
 // import Link
 import { Link } from "react-router-dom";
 
-const Product = () => {
+const Category = () => {
   //define state
-  const [products, setProducts] = useState([]);
+  const [categories, setCategories] = useState([]);
 
   //useEffect hook
   useEffect(() => {
@@ -19,17 +19,17 @@ const Product = () => {
   //function "fetchData"
   const fectData = async () => {
     //fetching
-    const response = await axios.get("http://localhost:5000/products");
+    const response = await axios.get("http://localhost:5000/categories");
     //get response data
     const data = await response.data;
 
-    //assign response data to state "products"
-    setProducts(data);
+    //assign response data to state "categories"
+    setCategories(data);
   };
 
-  const deleteProduct = async (id) => {
+  const deleteCategory = async (id) => {
     //sending
-    await axios.delete(`http://localhost:5000/products/${id}`);
+    await axios.delete(`http://localhost:5000/categories/${id}`);
 
     //panggil function "fetchData"
     fectData();
@@ -41,23 +41,23 @@ const Product = () => {
       <div id="main" className="h-full main-content flex-1 bg-gray-100 mt-12 md:mt-2 pb-24 md:pb-5">
         <div className="bg-gray-800 pt-3">
           <div className=" bg-blue-800 p-4 shadow text-2xl text-white">
-            <h1 className="font-bold pl-2">Product</h1>
+            <h1 className="font-bold pl-2">Category</h1>
           </div>
         </div>
 
         {/* button Add */}
         <div className="flex flex-wrap mt-8 mx-8">
           <Link
-            to="/products/add"
+            to="/category/add"
             className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
           >
-            Add Product
+            Add Category
           </Link>
         </div>
 
         {/* Table */}
         <div className="flex flex-wrap mx-8">
-          <div className="w-full relative overflow-x-auto shadow-md sm:rounded-lg">
+          <div className="w-3/5 relative overflow-x-auto shadow-md sm:rounded-lg">
             <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
               <thead className=" text-sm text-gray-700 uppercase bg-gray-200 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
@@ -65,16 +65,7 @@ const Product = () => {
                     #
                   </th>
                   <th scope="col" className="px-6 py-3">
-                    SKU
-                  </th>
-                  <th scope="col" className="px-6 py-3">
-                    Product Name
-                  </th>
-                  <th scope="col" className="px-6 py-3">
-                    Stock
-                  </th>
-                  <th scope="col" className="px-6 py-3">
-                    Min Stock
+                    Category Name
                   </th>
                   <th scope="col" className="px-6 py-3">
                     Action
@@ -82,27 +73,18 @@ const Product = () => {
                 </tr>
               </thead>
               <tbody>
-                {products.map((product, index) => (
+                {categories.map((category, index) => (
                   <tr
                     className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-                    key={product.id}
+                    key={category.id}
                   >
                     <td scope="row" className="px-6 py-4  whitespace-nowrap">
                       {index + 1}
                     </td>
-                    <td className="px-6 py-4">{product.sku}</td>
-                    <td className="px-6 py-4">{product.name}</td>
-                    <td className="px-6 py-4">{product.stock}</td>
-                    <td className="px-6 py-4">{product.min_stock}</td>
+                    <td className="px-6 py-4">{category.name}</td>
                     <td className="px-6 py-4">
                       <Link
-                        to={`/products/${product.id}`}
-                        className=" text-white bg-green-700 hover:bg-green-800 rounded-md text-sm px-2 py-1.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 "
-                      >
-                        Detail
-                      </Link>
-                      <Link
-                        to={`/products/edit/${product.id}`}
+                        to={`/category/edit/${category.id}`}
                         className=" text-white bg-yellow-500 hover:bg-yellow-600 rounded-md text-sm px-2 py-1.5 mr-2 mb-2 dark:bg-yellow-600 dark:hover:bg-yellow-700"
                       >
                         Edit
@@ -110,10 +92,9 @@ const Product = () => {
                       <Link
                         onClick={() => {
                           if (window.confirm("Delete the item?")) {
-                            deleteProduct(product.id);
+                            deleteCategory(category.id);
                           }
                         }}
-                        // onClick={() => deleteProduct(product.id)}
                         className=" text-white bg-red-500 hover:bg-red-600 rounded-md text-sm px-2 py-1.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-res-700"
                       >
                         Delete
@@ -192,4 +173,4 @@ const Product = () => {
   );
 };
 
-export default Product;
+export default Category;
