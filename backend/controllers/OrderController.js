@@ -51,13 +51,15 @@ const createOrder = async (req, res) => {
     return res.status(400).json({ errors: result.array() });
   }
 
+  const code = `${req.body.type}-${Date.now()}`;
+  const status = "Delivered";
   try {
     await Order.create({
       id: uuidv4(),
-      code: req.body.code,
+      code,
       type: req.body.type,
       date: req.body.date,
-      status: req.body.status,
+      status,
       userId: req.body.userId,
       customerId: req.body.customerId,
     });

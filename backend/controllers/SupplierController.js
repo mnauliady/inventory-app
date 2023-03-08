@@ -68,6 +68,18 @@ const createSupplier = async (req, res) => {
 
 // Update supplier berdasarkan id
 const updateSupplier = async (req, res) => {
+  // validasi inputan
+  await check("name").isLength({ min: 3 }).withMessage("Minimal 3 character").run(req);
+  await check("email").isEmail().withMessage("Wrong email format").run(req);
+  await check("phone").isLength({ min: 10, max: 13 }).run(req);
+  await check("address").notEmpty().withMessage("Address is required").run(req);
+
+  // jika terdapat error
+  const result = validationResult(req);
+  if (!result.isEmpty()) {
+    return res.status(400).json({ errors: result.array() });
+  }
+
   try {
     const supplier = await Supplier.update(req.body, {
       where: {

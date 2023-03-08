@@ -81,13 +81,20 @@ const Login = async (req, res) => {
     // jika tidak sesuai
     if (!match) return res.status(400).json({ msg: "Failed to login" });
     // set user, name, email untuk jwt
+    const payload = {
+      userId: user[0].id,
+      name: user[0].name,
+      // email: user[0].email,
+      role: user[0].role,
+    };
     const userId = user[0].id;
     const name = user[0].name;
     const email = user[0].email;
-    const accessToken = jwt.sign({ userId, name, email }, process.env.ACCESS_TOKEN_SECRET, {
+    const role = user[0].role;
+    const accessToken = jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, {
       expiresIn: "1m",
     });
-    const refreshToken = jwt.sign({ userId, name, email }, process.env.REFRESH_TOKEN_SECRET, {
+    const refreshToken = jwt.sign(payload, process.env.REFRESH_TOKEN_SECRET, {
       expiresIn: "1d",
     });
     await Users.update(
@@ -101,7 +108,6 @@ const Login = async (req, res) => {
     res.cookie("refreshToken", refreshToken, {
       httpOnly: true,
       maxAge: 24 * 60 * 60 * 1000,
-      // samesite: "strict",
     });
     res.json({ accessToken });
   } catch (error) {

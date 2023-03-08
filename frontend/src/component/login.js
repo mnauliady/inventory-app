@@ -32,22 +32,18 @@ const Login = () => {
   };
 
   return (
-    <div className="bg-gray-200 w-full h-full">
+    <div className="bg-gray-800 w-full h-full">
       <div className="w-1/2 m-auto py-36 md:flex">
-        <div className="relative oferflow-hidden md:flex w-1/2 rounded-l-lg bg-blue-300 py-6 hidden ">
+        <div className="relative oferflow-hidden md:flex w-1/2 rounded-l-lg bg-blue-400 py-6 hidden ">
           <img src={loginImage} alt="login" />
         </div>
-        <div className="flex md:w-1/2 justify-center py-10 items-center bg-gray-50 rounded-lg md:rounded-r-lg md:rounded-l-none ">
-          <form className="bg-gray-50" onSubmit={Auth}>
-            <h1 className="text-gray-800 font-bold text-2xl mb-1">Welcome Back</h1>
-            <p className="text-sm font-normal text-gray-600 mb-7">Login to your account</p>
-            {/* <div className="flex items-center border-2 py-2 px-3 rounded-md mb-4">
-              <input className="pl-2 outline-none border-none" type="email" name="" id="" placeholder="Full name" />
-            </div> */}
-
+        <div className="flex md:w-1/2 justify-center py-10 items-center bg-gray-700 rounded-lg md:rounded-r-lg md:rounded-l-none ">
+          <form onSubmit={Auth}>
+            <h1 className="font-bold text-2xl mb-1 text-gray-50">Welcome Back</h1>
+            <p className="text-sm font-normal text-gray-200 mb-4">Login to your account</p>
             <div className="flex mb-4">
               <input
-                className="pl-2 mt-1 px-3 py-2 bg-gray-50 border shadow-sm border-gray-300 placeholder-gray-400 focus:outline-none focus:border-blue-500 focus:ring-blue-500 block w-full rounded-md sm:text-sm focus:ring-1"
+                className="text-gray-50 pl-2 mt-1 px-3 py-2 bg-gray-600 shadow-sm placeholder-gray-400 focus:outline-none focus:border-blue-600 focus:ring-gray-100 block w-full rounded-md sm:text-sm focus:ring-1"
                 type="email"
                 name="email"
                 id="email"
@@ -60,7 +56,7 @@ const Login = () => {
 
             <div className="flex">
               <input
-                className="pl-2 mt-1 px-3 py-2 bg-gray-50 border shadow-sm border-gray-300 placeholder-gray-400 focus:outline-none focus:border-blue-500 focus:ring-blue-500 block w-full rounded-md sm:text-sm focus:ring-1"
+                className="text-gray-50 pl-2 mt-1 px-3 py-2 bg-gray-600 shadow-sm placeholder-gray-400 focus:outline-none focus:border-blue-600 focus:ring-gray-200 block w-full rounded-md sm:text-sm focus:ring-1"
                 type="password"
                 name="password"
                 id="password"

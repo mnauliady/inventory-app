@@ -13,6 +13,17 @@ import EditCategory from "./page/category/edit";
 
 import Blank from "./page/blank";
 
+import Customer from "./page/customer";
+import AddCustomer from "./page/customer/add";
+import EditCustomer from "./page/customer/edit";
+
+import Supplier from "./page/supplier";
+import AddSupplier from "./page/supplier/add";
+import EditSupplier from "./page/supplier/edit";
+
+import Transaction from "./page/transaction";
+import AddTransaction from "./page/transaction/add";
+
 const Main = () => {
   return (
     <main>
@@ -34,8 +45,19 @@ const Main = () => {
           <Route path="/category/add" element={<AddCategory />} />
           <Route path="/category/edit/:id" element={<EditCategory />} />
 
-          <Route path="/transaction" element={<Product />} />
-          <Route path="/customer" element={<Product />} />
+          <Route path="/transaction" element={<Transaction />} />
+          <Route path="/transaction/add" element={<AddTransaction />} />
+
+          {/* customer page */}
+          <Route path="/customer" element={<Customer />} />
+          <Route path="/customer/add" element={<AddCustomer />} />
+          <Route path="/customer/edit/:id" element={<EditCustomer />} />
+
+          {/* Supplier page */}
+          <Route path="/supplier" element={<Supplier />} />
+          <Route path="/supplier/add" element={<AddSupplier />} />
+          <Route path="/supplier/edit/:id" element={<EditSupplier />} />
+
           <Route path="/supplier" element={<Product />} />
           <Route path="/not-found" element={<Blank />} />
         </Routes>

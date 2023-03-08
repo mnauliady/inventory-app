@@ -1,9 +1,10 @@
-import { Fragment } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import jwt_decode from "jwt-decode";
 
 const Navbar = () => {
   const navigation = [
@@ -17,10 +18,64 @@ const Navbar = () => {
     return classes.filter(Boolean).join(" ");
   }
 
+  const [name, setName] = useState("");
+  const [role, setRole] = useState("");
+  const [email, setEmail] = useState("");
+  const [token, setToken] = useState("");
+  const [expire, setExpire] = useState("");
+  const [users, setUsers] = useState([]);
+
   const navigate = useNavigate();
+
+  useEffect(() => {
+    refreshToken();
+  }, []);
+
+  const refreshToken = async () => {
+    try {
+      const response = await axios.get("http://localhost:5000/token", {
+        withCredentials: true,
+      });
+      console.log(response);
+      setToken(response.data.accessToken);
+      const decoded = jwt_decode(response.data.accessToken);
+      setName(decoded.name);
+      setRole(decoded.role);
+      setEmail(decoded.email);
+      setExpire(decoded.exp);
+    } catch (error) {
+      if (error.response) {
+        // console.log(error.response);
+        navigate("/");
+      }
+    }
+  };
+
+  const axiosJWT = axios.create();
+
+  axiosJWT.interceptors.request.use(
+    async (config) => {
+      const currentDate = new Date();
+      if (expire * 1000 < currentDate.getTime()) {
+        const response = await axios.get("http://localhost:5000/token");
+        config.headers.Authorization = `Bearer ${response.data.accessToken}`;
+        setToken(response.data.accessToken);
+        const decoded = jwt_decode(response.data.accessToken);
+        setName(decoded.name);
+        setEmail(decoded.email);
+        setRole(decoded.role);
+        setExpire(decoded.exp);
+      }
+      return config;
+    },
+    (error) => {
+      return Promise.reject(error);
+    }
+  );
+
   const Logout = async () => {
     try {
-      await axios.delete("http://localhost:5000/logout");
+      await axios.delete("http://localhost:5000/logout", { withCredentials: true });
       navigate("/login");
     } catch (error) {
       console.log(error);
@@ -88,7 +143,7 @@ const Navbar = () => {
                 <Menu as="div" className="relative ml-3">
                   <div>
                     <Menu.Button className="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none ">
-                      <div className="text-gray-400 text-sm font-medium">Hi, Username</div>
+                      <div className="text-gray-400 text-sm font-medium">Hi, {name}</div>
                       {/* <span className="sr-only">Open user menu</span>
                       <img
                         className="h-8 w-8 rounded-full"

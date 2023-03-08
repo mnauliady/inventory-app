@@ -1,79 +1,16 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
-import jwt_decode from "jwt-decode";
-import { useNavigate } from "react-router-dom";
 
 import LineChart from "../chart/linechart";
 import BarChart from "../chart/barchart";
 import PieChart from "../chart/piechart";
 
 const Home = () => {
-  const [name, setName] = useState("");
-  const [token, setToken] = useState("");
-  const [expire, setExpire] = useState("");
-  const [users, setUsers] = useState([]);
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    refreshToken();
-    getUsers();
-  }, []);
-
-  const refreshToken = async () => {
-    try {
-      // const res = await axios({method: 'POST', url: URL, data: {DATA}, withCredentials: true})
-      const response = await axios.get("http://localhost:5000/token", {
-        withCredentials: true,
-      });
-      console.log(response);
-      setToken(response.data.accessToken);
-      const decoded = jwt_decode(response.data.accessToken);
-      setName(decoded.name);
-      setExpire(decoded.exp);
-    } catch (error) {
-      if (error.response) {
-        // console.log(error.response);
-        navigate("/");
-      }
-    }
-  };
-
-  const axiosJWT = axios.create();
-
-  axiosJWT.interceptors.request.use(
-    async (config) => {
-      const currentDate = new Date();
-      if (expire * 1000 < currentDate.getTime()) {
-        const response = await axios.get("http://localhost:5000/token");
-        config.headers.Authorization = `Bearer ${response.data.accessToken}`;
-        setToken(response.data.accessToken);
-        const decoded = jwt_decode(response.data.accessToken);
-        setName(decoded.name);
-        setExpire(decoded.exp);
-      }
-      return config;
-    },
-    (error) => {
-      return Promise.reject(error);
-    }
-  );
-
-  const getUsers = async () => {
-    const response = await axiosJWT.get("http://localhost:5000/categories", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    setUsers(response.data);
-  };
-
   return (
     <section>
       <div id="main" className="main-content flex-1 bg-gray-100 mt-12 md:mt-2 pb-24 md:pb-5">
         <div className="bg-gray-800 pt-3">
           <div className=" bg-blue-800 p-4 shadow text-2xl text-white">
             <h1 className="font-bold pl-2">Dashboard</h1>
-            <h1>Welcome Back: {name}</h1>
           </div>
         </div>
 
