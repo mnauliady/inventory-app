@@ -138,26 +138,19 @@ const Logout = async (req, res) => {
   return res.sendStatus(200);
 };
 
-// ==========================================
-const isAdmin = async (req, res, next) => {
-  try {
-    const user = await Users.findAll({
-      where: {
-        id: req.params.id,
-      },
-    });
-    if (user[0].role == "admin") {
-      res.send(true);
-    } else {
-      res.status(403).send({
-        auth: false,
-        message: "Error",
-        message: "Require Admin Role",
-      });
-    }
-  } catch (err) {
-    console.log(err);
+const Me = async (req, res) => {
+  if (!req.cookies.refreshToken) {
+    return res.status(401).json({ msg: "Please login!" });
   }
+  const user = await Users.findOne({
+    attributes: ["id", "name", "email", "role"],
+    where: {
+      refresh_token: req.cookies.refreshToken,
+    },
+  });
+  if (!user) return res.status(404).json({ msg: "User not found" });
+  console.log(user);
+  res.status(200).json(user);
 };
 
-module.exports = { getUser, Register, Login, Logout, isAdmin };
+module.exports = { getUser, Register, Login, Logout, Me };

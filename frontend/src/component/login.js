@@ -1,34 +1,27 @@
-import React, { useState } from "react";
-import axios from "axios";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { LoginUser, reset } from "../features/authSlice";
 
 import loginImage from "../asset/img/login.png";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [msg, setMsg] = useState("");
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { user, isError, isSuccess, isLoading, message } = useSelector((state) => state.auth);
 
-  const Auth = async (e) => {
-    e.preventDefault();
-    try {
-      await axios.post(
-        "http://localhost:5000/login",
-        {
-          email,
-          password,
-        },
-        {
-          withCredentials: true,
-        }
-      );
-      navigate("/");
-    } catch (error) {
-      if (error.response) {
-        setMsg(error.response.data.msg);
-      }
+  useEffect(() => {
+    if (user || isSuccess) {
+      navigate("/home");
     }
+    dispatch(reset());
+  }, [user, isSuccess, dispatch, navigate]);
+
+  const Auth = (e) => {
+    e.preventDefault();
+    dispatch(LoginUser({ email, password }));
   };
 
   return (
@@ -66,12 +59,13 @@ const Login = () => {
                 required
               />
             </div>
-            <p className="text-white bg-red-500 rounded-md pl-2 mt-2 bg-opacity-90">{msg}</p>
+            {/* <p className="text-white bg-red-500 rounded-md pl-2 mt-2 bg-opacity-90">{msg}</p> */}
+            {isError && <p className="text-white bg-red-500 rounded-md pl-2 mt-2 bg-opacity-90">{message}</p>}
             <button
               type="submit"
               className="block w-full bg-blue-600 mt-4 py-2 rounded-md text-white font-semibold mb-2"
             >
-              Login
+              {isLoading ? "Loading..." : "Login"}
             </button>
             {/* <a href="/">Login</a> */}
           </form>

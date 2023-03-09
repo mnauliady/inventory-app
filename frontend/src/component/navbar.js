@@ -5,6 +5,8 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import jwt_decode from "jwt-decode";
+import { useDispatch, useSelector } from "react-redux";
+import { getMe, LogOut, reset } from "../features/authSlice";
 
 const Navbar = () => {
   const navigation = [
@@ -18,70 +20,34 @@ const Navbar = () => {
     return classes.filter(Boolean).join(" ");
   }
 
-  const [name, setName] = useState("");
-  const [role, setRole] = useState("");
-  const [email, setEmail] = useState("");
-  const [token, setToken] = useState("");
-  const [expire, setExpire] = useState("");
-  const [users, setUsers] = useState([]);
-
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
+  // ambil data isError untuk pengecekan status ambil data user, dan var user untuk data user login
+  const { isError, user } = useSelector((state) => state.auth);
+
+  // pengambilan data user pertama kali
   useEffect(() => {
-    refreshToken();
-  }, []);
+    // ambil data user
+    dispatch(getMe());
+  }, [dispatch]);
 
-  const refreshToken = async () => {
-    try {
-      const response = await axios.get("http://localhost:5000/token", {
-        withCredentials: true,
-      });
-      console.log(response);
-      setToken(response.data.accessToken);
-      const decoded = jwt_decode(response.data.accessToken);
-      setName(decoded.name);
-      setRole(decoded.role);
-      setEmail(decoded.email);
-      setExpire(decoded.exp);
-    } catch (error) {
-      if (error.response) {
-        // console.log(error.response);
-        navigate("/");
-      }
+  // validasi akses ke dashboard, jika user tidak ditemukan
+  useEffect(() => {
+    // jika error, maka arahkan ke halaman utama
+    if (isError) {
+      navigate("/category");
     }
-  };
-
-  const axiosJWT = axios.create();
-
-  axiosJWT.interceptors.request.use(
-    async (config) => {
-      const currentDate = new Date();
-      if (expire * 1000 < currentDate.getTime()) {
-        const response = await axios.get("http://localhost:5000/token");
-        config.headers.Authorization = `Bearer ${response.data.accessToken}`;
-        setToken(response.data.accessToken);
-        const decoded = jwt_decode(response.data.accessToken);
-        setName(decoded.name);
-        setEmail(decoded.email);
-        setRole(decoded.role);
-        setExpire(decoded.exp);
-      }
-      return config;
-    },
-    (error) => {
-      return Promise.reject(error);
-    }
-  );
+  }, [isError, navigate]);
 
   const Logout = async () => {
-    try {
-      await axios.delete("http://localhost:5000/logout", { withCredentials: true });
-      navigate("/login");
-    } catch (error) {
-      console.log(error);
-    }
+    dispatch(LogOut());
+    dispatch(reset());
+    navigate("/login");
   };
 
+  // const { user } = useSelector((state) => state.auth);
+  console.log(useSelector((state) => state.auth));
   return (
     <Disclosure as="nav" className="bg-gray-800">
       {({ open }) => (
@@ -143,7 +109,7 @@ const Navbar = () => {
                 <Menu as="div" className="relative ml-3">
                   <div>
                     <Menu.Button className="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none ">
-                      <div className="text-gray-400 text-sm font-medium">Hi, {name}</div>
+                      <div className="text-gray-400 text-sm font-medium">Hi, {user && user.name}</div>
                       {/* <span className="sr-only">Open user menu</span>
                       <img
                         className="h-8 w-8 rounded-full"

@@ -47,15 +47,11 @@ const {
   deleteOrderDetail,
 } = require("../controllers/OrderDetailController.js");
 
-// import { verifyToken } from "../middleware/VerifyToken.js";
-const verifyToken = require("../middleware/verifyToken");
-// import { refreshToken } from "../controllers/RefreshToken.js";
-const refreshToken = require("../controllers/RefreshToken");
-const { getUser, Register, Login, Logout, isAdmin } = require("../controllers/AuthController");
+// middleware untuk mengecek user login dan hak akses berdasarkan role
+const { verifyToken, adminRole, superAdminRole } = require("../middleware/verifyToken");
 
-// validator
-const validateUser = require("../validator/userValidator");
-const validateCategory = require("../validator/categoryValidator");
+const refreshToken = require("../controllers/RefreshToken");
+const { getUser, Register, Login, Logout, Me } = require("../controllers/AuthController");
 
 // router.get("/alluser", verifyToken, getUser);
 router.get("/alluser", getUser);
@@ -63,7 +59,7 @@ router.post("/register", Register);
 router.post("/login", Login);
 router.get("/token", refreshToken);
 router.delete("/logout", Logout);
-router.get("/admin/:id", isAdmin);
+router.get("/me", Me);
 
 // Route Category ============================================
 router.get("/categories", getCategories);
