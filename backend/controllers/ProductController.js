@@ -7,6 +7,7 @@ const OrderDetail = require("../models").orderdetail;
 const { v4: uuidv4 } = require("uuid");
 const uuid = require("uuid");
 const { check, validationResult } = require("express-validator");
+const db = require("../models/index");
 // include node fs module
 var fs = require("fs");
 
@@ -29,17 +30,27 @@ const getProductById = async (req, res) => {
   }
 
   try {
-    // mengecek jika product pada db by id
-    const product = await Product.findByPk(req.params.id, {
-      include: [
-        { model: Supplier, as: "supplier" },
-        { model: Category, as: "category" },
-      ],
-    });
+    let product = await db.sequelize.query(
+      `SELECT products.*, SUM(orderdetails.quantity) as stock, categories."name" as "category", suppliers."name" as "supplier" FROM orderdetails INNER JOIN products ON products."id" = orderdetails."productId" INNER JOIN categories
+      ON products."categoryId" = categories."id" INNER JOIN suppliers ON products."supplierId" = suppliers."id" WHERE
+      products."id" = (:id) GROUP BY products."id", categories."id", suppliers."id"`,
+      {
+        replacements: { id: req.params.id },
+        type: db.sequelize.QueryTypes.SELECT,
+      }
+    );
 
-    // jika product ada
-    if (product) {
-      res.send(product);
+    if (product.length !== 0) {
+      res.send(product[0]);
+    } else if (product.length === 0) {
+      product = await db.sequelize.query(
+        `SELECT products.*, suppliers."name" as "supplier", categories."name" as "category" FROM products INNER JOIN suppliers ON products."supplierId" = suppliers."id" INNER JOIN categories ON products."categoryId" = categories."id" WHERE products."id" = (:id) `,
+        {
+          replacements: { id: req.params.id },
+          type: db.sequelize.QueryTypes.SELECT,
+        }
+      );
+      res.send(product[0]);
     } else {
       return res.status(409).json({
         status: "error",
@@ -182,4 +193,44 @@ const deleteFile = (fileName) => {
     console.log("File deleted!");
   });
 };
-module.exports = { getProducts, getProductById, createProduct, updateProduct, deleteProduct };
+
+const getStockById = async (req, res) => {
+  // 1 if (null -> query get by id)
+  try {
+    const sumIn = await db.sequelize.query(
+      `SELECT orders."type", sum(orderdetails.quantity), products."name" FROM orders INNER JOIN orderdetails ON orders."id" = orderdetails."orderId" INNER JOIN products ON orderdetails."productId" = products."id" WHERE orders."type" = 'IN' AND products."id" = (:id) GROUP BY orders."type", products."id"`,
+      {
+        replacements: { id: "f21e18d8-b9ac-4648-8f82-e4637e6a04fc" },
+        type: db.sequelize.QueryTypes.SELECT,
+      }
+    );
+    // console.log(sumIn);
+    res.send(sumIn);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const getAllStock = async (req, res) => {
+  try {
+    const sumAll = await db.sequelize.query(
+      `SELECT products.sku, products."name", products."id", products.min_stock, sum(orderdetails.quantity) AS "stock" FROM orderdetails RIGHT JOIN products ON orderdetails."productId" = products."id" GROUP BY products."id"`,
+      {
+        type: db.sequelize.QueryTypes.SELECT,
+      }
+    );
+    // console.log(sumIn);
+    res.send(sumAll);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+module.exports = {
+  getProducts,
+  getProductById,
+  createProduct,
+  updateProduct,
+  deleteProduct,
+  getAllStock,
+};

@@ -37,6 +37,7 @@ const DetailProduct = () => {
       const response = await axios.get(`http://localhost:5000/products/${id}`);
       //get response data
       const data = await response.data;
+
       //assign data to state
       setSku(data.sku);
       setName(data.name);
@@ -45,8 +46,8 @@ const DetailProduct = () => {
       setUrl_photo(data.url_photo);
       setPrice(data.price);
       setStatus(data.status);
-      setCategory(data.category.name);
-      setSupplier(data.supplier.name);
+      setCategory(data.category);
+      setSupplier(data.supplier);
     } catch (error) {
       navigate("/not-found");
     }
@@ -62,55 +63,66 @@ const DetailProduct = () => {
         </div>
 
         <div className="flex flex-wrap mt-8 mx-8 mb-10">
-          <div role="status" className="w-full space-y-8 md:space-y-0 md:space-x-8 md:flex">
-            <div className="flex  justify-center w-full rounded md:w-2/5">
-              <img
-                src={
-                  url_photo
-                    ? `http://localhost:5000/images/${url_photo}`
-                    : `https://source.unsplash.com/600x400?computer`
-                }
-                alt={name}
-                className=" text-gray-200 rounded-md"
-              />
+          <div className="overflow-hidden bg-white shadow rounded-lg">
+            <div className="px-4 py-5 sm:px-6">
+              <h3 className="text-base font-semibold leading-6 text-gray-900">Product Information</h3>
             </div>
-            <div className="w-3/5">
-              <ul className=" text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white">
-                <li className="w-full px-4 py-2 border-b border-gray-200 dark:border-gray-600">
-                  <span className="font-bold">Status :</span> {status}
-                </li>
-                <li className="w-full px-4 py-2 border-b border-gray-200 rounded-t-lg dark:border-gray-600">
-                  <span className="font-bold">SKU : </span> {sku}
-                </li>
-                <li className="w-full px-4 py-2 border-b border-gray-200 dark:border-gray-600">
-                  <span className="font-bold">Name : </span> {name}
-                </li>
-                <li className="w-full px-4 py-2 border-b border-gray-200 dark:border-gray-600">
-                  <span className="font-bold">Stock :</span> {stock}
-                </li>
-                <li className="w-full px-4 py-2 border-b border-gray-200 dark:border-gray-600">
-                  <span className="font-bold">Minimal Stock :</span> {min_stock}
-                </li>
-                <li className="w-full px-4 py-2 border-b border-gray-200 dark:border-gray-600">
-                  <span className="font-bold">Price :</span> Rp {price.toLocaleString()}
-                </li>
-                <li className="w-full px-4 py-2 border-b border-gray-200 dark:border-gray-600">
-                  <span className="font-bold">Category :</span> {category}
-                </li>
-                <li className="w-full px-4 py-2 border-b border-gray-200 dark:border-gray-600 rounded-b-lg">
-                  <span className="font-bold">Supplier :</span> {supplier}
-                </li>
-              </ul>
-              <div className="mt-4">
-                <Link
-                  to="/products"
-                  className=" text-white bg-gray-500 hover:bg-gray-600 rounded-md font-medium text-sm px-5 py-2.5 mr-2 mb-2"
-                >
-                  Back
-                </Link>
+            <div className="md:flex border-t border-gray-200">
+              <div className="justify-center w-full md:rounded md:w-2/5 md:m-3 ">
+                <img
+                  src={
+                    url_photo
+                      ? `http://localhost:5000/images/${url_photo}`
+                      : `https://source.unsplash.com/600x400?computer`
+                  }
+                  alt={name}
+                  className=" text-gray-200 md:rounded-md"
+                />
+              </div>
+              <div className="w-full mr-3 md:w-3/5 my-3">
+                <dl>
+                  <div className="border-b-2 border-gray-100 px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 hover:bg-gray-100">
+                    <dt className="text-sm font-medium text-gray-500">SKU</dt>
+                    <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">{sku}</dd>
+                  </div>
+                  <div className="border-b-2 border-gray-100 px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 hover:bg-gray-100">
+                    <dt className="text-sm font-medium text-gray-500">Product Name</dt>
+                    <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">{name}</dd>
+                  </div>
+                  <div className="border-b-2 border-gray-100 px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 hover:bg-gray-100">
+                    <dt className="text-sm font-medium text-gray-500">Status</dt>
+                    <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0 capitalize">{status}</dd>
+                  </div>
+                  <div className="border-b-2 border-gray-100 px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 hover:bg-gray-100">
+                    <dt className="text-sm font-medium text-gray-500">Stock</dt>
+                    <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">{stock}</dd>
+                  </div>
+                  <div className="border-b-2 border-gray-100 px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 hover:bg-gray-100">
+                    <dt className="text-sm font-medium text-gray-500">Minimal Stock</dt>
+                    <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">{min_stock}</dd>
+                  </div>
+                  <div className="border-b-2 border-gray-100 px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 hover:bg-gray-100">
+                    <dt className="text-sm font-medium text-gray-500">Price</dt>
+                    <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">Rp {price.toLocaleString()}</dd>
+                  </div>
+                  <div className="border-b-2 border-gray-100 px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 hover:bg-gray-100">
+                    <dt className="text-sm font-medium text-gray-500">Category</dt>
+                    <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">{category}</dd>
+                  </div>
+                  <div className="px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 hover:bg-gray-100">
+                    <dt className="text-sm font-medium text-gray-500">Supplier</dt>
+                    <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">{supplier}</dd>
+                  </div>
+                </dl>
               </div>
             </div>
           </div>
+          <Link
+            to="/products"
+            className=" text-white bg-gray-500 hover:bg-gray-600 rounded-md font-medium text-sm px-5 py-2.5 mr-2 my-3"
+          >
+            Back
+          </Link>
         </div>
       </div>
     </section>

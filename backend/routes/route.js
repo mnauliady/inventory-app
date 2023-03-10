@@ -17,6 +17,7 @@ const {
   createProduct,
   updateProduct,
   deleteProduct,
+  getAllStock,
 } = require("../controllers/ProductController.js");
 
 const { getUsers, getUserById, createUser, updateUser, deleteUser } = require("../controllers/UserController.js");
@@ -73,6 +74,9 @@ router.delete("/categories/:id", deleteCategory);
 const imageUpload = require("../middleware/uploadImage");
 // Route Products ============================================
 router.get("/products", getProducts);
+// router.get("/products/in", getStockIn);
+// router.get("/products/out", getStockOut);
+router.get("/products/all", getAllStock);
 router.get("/products/:id", getProductById);
 
 router.post("/products", imageUpload.single("url_photo"), createProduct, (error, req, res, next) => {

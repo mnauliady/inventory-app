@@ -15,11 +15,13 @@ import Blank from "./page/blank";
 
 import Customer from "./page/customer";
 import AddCustomer from "./page/customer/add";
+import DetailCustomer from "./page/customer/detail";
 import EditCustomer from "./page/customer/edit";
 
 import Supplier from "./page/supplier";
 import AddSupplier from "./page/supplier/add";
 import EditSupplier from "./page/supplier/edit";
+import DetailSupplier from "./page/supplier/detail";
 
 import Transaction from "./page/transaction";
 import AddTransaction from "./page/transaction/add";
@@ -52,11 +54,13 @@ const Main = () => {
           <Route path="/customer" element={<Customer />} />
           <Route path="/customer/add" element={<AddCustomer />} />
           <Route path="/customer/edit/:id" element={<EditCustomer />} />
+          <Route path="/customer/:id" element={<DetailCustomer />} />
 
           {/* Supplier page */}
           <Route path="/supplier" element={<Supplier />} />
           <Route path="/supplier/add" element={<AddSupplier />} />
           <Route path="/supplier/edit/:id" element={<EditSupplier />} />
+          <Route path="/supplier/:id" element={<DetailSupplier />} />
 
           <Route path="/supplier" element={<Product />} />
           <Route path="/not-found" element={<Blank />} />

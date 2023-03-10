@@ -19,10 +19,11 @@ const Product = () => {
   //function "fetchData"
   const fectData = async () => {
     //fetching
-    const response = await axios.get("http://localhost:5000/products");
+    const response = await axios.get("http://localhost:5000/products/all");
     //get response data
     const data = await response.data;
 
+    console.log(response.data);
     //assign response data to state "products"
     setProducts(data);
   };

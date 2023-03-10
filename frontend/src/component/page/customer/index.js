@@ -84,6 +84,12 @@ const Customer = () => {
                     <td className="px-6 py-4">{customer.name}</td>
                     <td className="px-6 py-4">
                       <Link
+                        to={`/customer/${customer.id}`}
+                        className="text-white bg-green-700 hover:bg-green-800 rounded-md text-sm px-2 py-1.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700"
+                      >
+                        Detail
+                      </Link>
+                      <Link
                         to={`/customer/edit/${customer.id}`}
                         className=" text-white bg-yellow-500 hover:bg-yellow-600 rounded-md text-sm px-2 py-1.5 mr-2 mb-2 dark:bg-yellow-600 dark:hover:bg-yellow-700"
                       >

@@ -2,6 +2,7 @@
 // import OrderDetail from "../models/OrderDetail.js";
 const { v4: uuidv4 } = require("uuid");
 const OrderDetail = require("../models").orderdetail;
+const Order = require("../models").order;
 
 // Get semua orderdetail
 const getOrderDetails = async (req, res) => {
@@ -32,14 +33,18 @@ const getOrderDetailById = async (req, res) => {
 
 // Create orderdetail baru
 const createOrderDetail = async (req, res) => {
+  console.log(req.body);
+
   try {
+    // const checkType = await Order
+
     await OrderDetail.create({
       id: uuidv4(),
-      code: req.body.code,
-      productId: req.body.productId,
-      productName: req.body.productName,
-      peoductPrice: req.body.peoductPrice,
       orderId: req.body.orderId,
+      productId: req.body.productId,
+      quantity: req.body.quantity,
+      productName: req.body.productName,
+      productPrice: req.body.productPrice,
     });
     res.json({
       message: "Order Detail Created",

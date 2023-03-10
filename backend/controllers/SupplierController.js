@@ -1,8 +1,7 @@
-// Import model Supplier
-// import Supplier from "../models/Supplier.js";
 const Supplier = require("../models").supplier;
 const Product = require("../models").product;
 const { v4: uuidv4 } = require("uuid");
+const uuid = require("uuid");
 const { check, validationResult } = require("express-validator");
 
 // Get semua supplier
@@ -17,6 +16,10 @@ const getSuppliers = async (req, res) => {
 
 // Get supplier berdasarkan id
 const getSupplierById = async (req, res) => {
+  if (!uuid.validate(req.params.id)) {
+    return res.status(400).json({ status: "error", message: "Supplier not found" });
+  }
+
   try {
     // mengecek supplier by id
     const supplier = await Supplier.findByPk(req.params.id);

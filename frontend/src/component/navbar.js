@@ -36,7 +36,7 @@ const Navbar = () => {
   useEffect(() => {
     // jika error, maka arahkan ke halaman utama
     if (isError) {
-      navigate("/category");
+      navigate("/login");
     }
   }, [isError, navigate]);
 
@@ -46,8 +46,6 @@ const Navbar = () => {
     navigate("/login");
   };
 
-  // const { user } = useSelector((state) => state.auth);
-  console.log(useSelector((state) => state.auth));
   return (
     <Disclosure as="nav" className="bg-gray-800">
       {({ open }) => (

@@ -3,6 +3,7 @@
 const Customer = require("../models").customer;
 const Order = require("../models").order;
 const { v4: uuidv4 } = require("uuid");
+const uuid = require("uuid");
 const { check, validationResult } = require("express-validator");
 
 // Get semua customer
@@ -17,6 +18,10 @@ const getCustomers = async (req, res) => {
 
 // Get customer berdasarkan id
 const getCustomerById = async (req, res) => {
+  if (!uuid.validate(req.params.id)) {
+    return res.status(400).json({ status: "error", message: "Customer not found" });
+  }
+
   try {
     const customer = await Customer.findByPk(req.params.id);
 
