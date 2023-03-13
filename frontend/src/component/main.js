@@ -25,6 +25,8 @@ import DetailSupplier from "./page/supplier/detail";
 
 import Transaction from "./page/transaction";
 import AddTransaction from "./page/transaction/add";
+import AddTransactionDetail from "./page/transactionDetail/add";
+import Final from "./page/transactionDetail/final";
 
 const Main = () => {
   return (
@@ -49,6 +51,9 @@ const Main = () => {
 
           <Route path="/transaction" element={<Transaction />} />
           <Route path="/transaction/add" element={<AddTransaction />} />
+          <Route path="/transaction/final/:id" element={<Final />} />
+
+          <Route path="/transaction/add/detail/:id" element={<AddTransactionDetail />} />
 
           {/* customer page */}
           <Route path="/customer" element={<Customer />} />

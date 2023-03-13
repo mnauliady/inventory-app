@@ -7,16 +7,15 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 
 //import hook history dari react router dom
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const AddTransaction = () => {
   // Proses Add data ===================================
   //state
   const [type, setType] = useState("");
-  const [code, setCode] = useState("");
   const [date, setDate] = useState("");
-  const [status, setStatus] = useState("");
-  const [user, setUser] = useState("");
+  const [userId, setUserId] = useState("");
   const [customer, setCustomer] = useState([]);
   const [selectedCustomer, setSelectedCustomer] = useState();
 
@@ -46,28 +45,32 @@ const AddTransaction = () => {
     setSelectedCustomer(e.target.value);
   };
 
+  const { user } = useSelector((state) => state.auth);
+  const { id } = useParams();
+
   //method "storeTransaction"
   const storeTransaction = async (e) => {
     e.preventDefault();
 
-    console.log(type);
-    console.log(selectedCustomer);
     //send data to server
-    // await axios
-    //   .post("http://localhost:5000/transactions", {
-    //     type,
-    //     code,
-    //     date,
-    //     status,
-    //   })
-    //   .then(() => {
-    //     //redirect ke halaman transaction
-    //     navigate("/transaction");
-    //   })
-    //   .catch((error) => {
-    //     //assign validation on state
-    //     setValidation(error.response.data);
-    //   });
+    await axios
+      .post("http://localhost:5000/orders", {
+        type,
+        date,
+        userId: user.id,
+        customerId: selectedCustomer,
+      })
+      .then(async () => {
+        //redirect ke halaman transaction
+        //get ID from parameter URL
+        const response = await axios.get(`http://localhost:5000/orderlast`);
+        const id = response.data.id;
+        navigate(`/transaction/add/detail/${id}`);
+      })
+      .catch((error) => {
+        //assign validation on state
+        setValidation(error.response.data);
+      });
   };
 
   return (
@@ -117,6 +120,7 @@ const AddTransaction = () => {
                 </select>
               </div>
 
+              {/* date */}
               <div>
                 <label htmlFor="type" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                   Date
@@ -163,7 +167,7 @@ const AddTransaction = () => {
                 type="submit"
                 className="w-24 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
               >
-                Submit
+                Next
               </button>
             </form>
           </div>

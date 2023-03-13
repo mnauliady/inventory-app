@@ -197,15 +197,15 @@ const deleteFile = (fileName) => {
 const getStockById = async (req, res) => {
   // 1 if (null -> query get by id)
   try {
-    const sumIn = await db.sequelize.query(
-      `SELECT orders."type", sum(orderdetails.quantity), products."name" FROM orders INNER JOIN orderdetails ON orders."id" = orderdetails."orderId" INNER JOIN products ON orderdetails."productId" = products."id" WHERE orders."type" = 'IN' AND products."id" = (:id) GROUP BY orders."type", products."id"`,
+    const stockById = await db.sequelize.query(
+      `SELECT sum(orderdetails.quantity), products."name" FROM orderdetails INNER JOIN products ON orderdetails."productId" = products."id" WHERE products."id" = (:id) GROUP BY products."id"`,
       {
-        replacements: { id: "f21e18d8-b9ac-4648-8f82-e4637e6a04fc" },
+        replacements: { id: req.params.id },
         type: db.sequelize.QueryTypes.SELECT,
       }
     );
-    // console.log(sumIn);
-    res.send(sumIn);
+    // console.log(stockById);
+    res.send(stockById);
   } catch (error) {
     console.log(error);
   }
@@ -219,13 +219,26 @@ const getAllStock = async (req, res) => {
         type: db.sequelize.QueryTypes.SELECT,
       }
     );
-    // console.log(sumIn);
+    // console.log(stockById);
     res.send(sumAll);
   } catch (error) {
     console.log(error);
   }
 };
 
+const getAvailableStock = async (req, res) => {
+  try {
+    const query = await db.sequelize.query(
+      `SELECT products.*, sum(orderdetails.quantity) FROM products INNER JOIN orderdetails ON products."id" = orderdetails."productId" GROUP BY products."id"`,
+      {
+        type: db.sequelize.QueryTypes.SELECT,
+      }
+    );
+    res.send(query);
+  } catch (error) {
+    console.log(error);
+  }
+};
 module.exports = {
   getProducts,
   getProductById,
@@ -233,4 +246,6 @@ module.exports = {
   updateProduct,
   deleteProduct,
   getAllStock,
+  getStockById,
+  getAvailableStock,
 };

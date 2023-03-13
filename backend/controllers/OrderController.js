@@ -2,6 +2,7 @@
 // import Order from "../models/Order.js";
 const { v4: uuidv4 } = require("uuid");
 const Order = require("../models").order;
+const Customer = require("../models").customer;
 const OrderDetail = require("../models").orderdetail;
 const { check, validationResult } = require("express-validator");
 
@@ -21,7 +22,13 @@ const getOrders = async (req, res) => {
 const getOrderById = async (req, res) => {
   try {
     // cek order by id
-    const order = await Order.findByPk(req.params.id);
+    const order = await Order.findByPk(req.params.id, {
+      include: [
+        { model: OrderDetail, as: "orderdetail" },
+        { model: Customer, as: "customer" },
+      ],
+    });
+
     if (order) {
       res.send(order);
     } else {
@@ -37,13 +44,13 @@ const getOrderById = async (req, res) => {
 
 // Create order baru
 const createOrder = async (req, res) => {
+  console.log(req.body);
   // validasi inputan
-  await check("code").isLength({ min: 3 }).withMessage("Minimal 3 character").run(req);
   // await check("type").isEmail().withMessage("Wrong email format").run(req);
-  await check("date").isLength({ min: 10, max: 13 }).run(req);
-  await check("status").notEmpty().withMessage("Address is required").run(req);
-  await check("userId").notEmpty().withMessage("Address is required").run(req);
-  await check("customerId").notEmpty().withMessage("Address is required").run(req);
+  // await check("date").isLength({ min: 10, max: 13 }).run(req);
+  // await check("status").notEmpty().withMessage("Address is required").run(req);
+  await check("userId").notEmpty().withMessage("User id is required").run(req);
+  await check("customerId").notEmpty().withMessage("Customer id is required").run(req);
 
   // jika ada error
   const result = validationResult(req);
@@ -52,6 +59,7 @@ const createOrder = async (req, res) => {
   }
 
   const code = `${req.body.type}-${Date.now()}`;
+
   const status = "Delivered";
   try {
     await Order.create({
@@ -68,6 +76,20 @@ const createOrder = async (req, res) => {
     });
   } catch (err) {
     console.log(err);
+  }
+};
+
+const getLastData = async (req, res) => {
+  try {
+    const lastData = await Order.findAll({
+      limit: 1,
+      order: [["createdAt", "DESC"]],
+      include: [{ model: OrderDetail, as: "orderdetail" }],
+    });
+    res.send(lastData[0]);
+    console.log(lastData[0].orderdetail.length);
+  } catch (error) {
+    console.log(error);
   }
 };
 
@@ -111,4 +133,4 @@ const deleteOrder = async (req, res) => {
   }
 };
 
-module.exports = { getOrders, getOrderById, createOrder, updateOrder, deleteOrder };
+module.exports = { getOrders, getOrderById, createOrder, updateOrder, deleteOrder, getLastData };

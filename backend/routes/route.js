@@ -18,6 +18,8 @@ const {
   updateProduct,
   deleteProduct,
   getAllStock,
+  getStockById,
+  getAvailableStock,
 } = require("../controllers/ProductController.js");
 
 const { getUsers, getUserById, createUser, updateUser, deleteUser } = require("../controllers/UserController.js");
@@ -38,7 +40,14 @@ const {
   deleteSupplier,
 } = require("../controllers/SupplierController.js");
 
-const { getOrders, getOrderById, createOrder, updateOrder, deleteOrder } = require("../controllers/OrderController.js");
+const {
+  getOrders,
+  getOrderById,
+  createOrder,
+  updateOrder,
+  deleteOrder,
+  getLastData,
+} = require("../controllers/OrderController.js");
 
 const {
   getOrderDetails,
@@ -75,8 +84,9 @@ const imageUpload = require("../middleware/uploadImage");
 // Route Products ============================================
 router.get("/products", getProducts);
 // router.get("/products/in", getStockIn);
-// router.get("/products/out", getStockOut);
+router.get("/products/available", getAvailableStock);
 router.get("/products/all", getAllStock);
+router.get("/stock/:id", getStockById);
 router.get("/products/:id", getProductById);
 
 router.post("/products", imageUpload.single("url_photo"), createProduct, (error, req, res, next) => {
@@ -115,6 +125,7 @@ router.delete("/suppliers/:id", deleteSupplier);
 // Route Order ===============================================
 router.get("/orders", getOrders);
 router.get("/orders/:id", getOrderById);
+router.get("/orderlast", getLastData);
 router.post("/orders", createOrder);
 router.put("/orders/:id", updateOrder);
 router.delete("/orders/:id", deleteOrder);
