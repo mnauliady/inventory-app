@@ -229,7 +229,7 @@ const getAllStock = async (req, res) => {
 const getAvailableStock = async (req, res) => {
   try {
     const query = await db.sequelize.query(
-      `SELECT products.*, sum(orderdetails.quantity) FROM products INNER JOIN orderdetails ON products."id" = orderdetails."productId" GROUP BY products."id"`,
+      `SELECT products.*, sum(orderdetails.quantity) FROM products INNER JOIN orderdetails ON products."id" = orderdetails."productId" GROUP BY products."id" HAVING sum(orderdetails.quantity) > 0`,
       {
         type: db.sequelize.QueryTypes.SELECT,
       }

@@ -15,13 +15,10 @@ const Sidebar = () => {
             {/* dashboard / home / / */}
             <li className="mr-3 flex-1">
               <NavLink
-                className={({ isActive }) =>
-                  [
-                    "block py-1 md:py-3 pl-1 align-middle text-gray-300 no-underline border-b-2 border-gray-800 hover:border-blue-800 ",
-                    isActive ? "text-blue-600 border-b-2 border-blue-600" : null,
-                  ]
-                    .filter(Boolean)
-                    .join(" ")
+                className={(navData) =>
+                  navData.isActive
+                    ? "active block py-1 md:py-3 pl-1 align-middle text-blue-600 border-b-2 border-blue-600"
+                    : "block py-1 md:py-3 pl-1 align-middle text-gray-300 no-underline border-b-2 border-gray-800 hover:border-blue-800"
                 }
                 to="/"
               >
@@ -35,13 +32,10 @@ const Sidebar = () => {
             {/* category */}
             <li className="mr-3 flex-1">
               <NavLink
-                className={({ isActive }) =>
-                  [
-                    "block py-1 md:py-3 pl-1 align-middle text-gray-300 no-underline border-b-2 border-gray-800 hover:border-blue-800 ",
-                    isActive ? "text-blue-600 border-b-2 border-blue-600" : null,
-                  ]
-                    .filter(Boolean)
-                    .join(" ")
+                className={(navData) =>
+                  navData.isActive
+                    ? "active block py-1 md:py-3 pl-1 align-middle text-blue-600 border-b-2 border-blue-600"
+                    : "block py-1 md:py-3 pl-1 align-middle text-gray-300 no-underline border-b-2 border-gray-800 hover:border-blue-800"
                 }
                 to="/category"
               >
@@ -55,13 +49,10 @@ const Sidebar = () => {
             {/* product */}
             <li className="mr-3 flex-1">
               <NavLink
-                className={({ isActive }) =>
-                  [
-                    "block py-1 md:py-3 pl-1 align-middle text-gray-300 no-underline border-b-2 border-gray-800 hover:border-blue-800 ",
-                    isActive ? "text-blue-600 border-b-2 border-blue-600" : null,
-                  ]
-                    .filter(Boolean)
-                    .join(" ")
+                className={(navData) =>
+                  navData.isActive
+                    ? "active block py-1 md:py-3 pl-1 align-middle text-blue-600 border-b-2 border-blue-600"
+                    : "block py-1 md:py-3 pl-1 align-middle text-gray-300 no-underline border-b-2 border-gray-800 hover:border-blue-800"
                 }
                 to="/products"
               >
@@ -75,13 +66,10 @@ const Sidebar = () => {
             {/* transaction */}
             <li className="mr-3 flex-1">
               <NavLink
-                className={({ isActive }) =>
-                  [
-                    "block py-1 md:py-3 pl-1 align-middle text-gray-300 no-underline border-b-2 border-gray-800 hover:border-blue-800 ",
-                    isActive ? "text-blue-600 border-b-2 border-blue-600" : null,
-                  ]
-                    .filter(Boolean)
-                    .join(" ")
+                className={(navData) =>
+                  navData.isActive
+                    ? "active block py-1 md:py-3 pl-1 align-middle text-blue-600 border-b-2 border-blue-600"
+                    : "block py-1 md:py-3 pl-1 align-middle text-gray-300 no-underline border-b-2 border-gray-800 hover:border-blue-800"
                 }
                 to="/transaction"
               >
@@ -95,13 +83,10 @@ const Sidebar = () => {
             {/* customer */}
             <li className="mr-3 flex-1">
               <NavLink
-                className={({ isActive }) =>
-                  [
-                    "block py-1 md:py-3 pl-1 align-middle text-gray-300 no-underline border-b-2 border-gray-800 hover:border-blue-800 ",
-                    isActive ? "text-blue-600 border-b-2 border-blue-600" : null,
-                  ]
-                    .filter(Boolean)
-                    .join(" ")
+                className={(navData) =>
+                  navData.isActive
+                    ? "active block py-1 md:py-3 pl-1 align-middle text-blue-600 border-b-2 border-blue-600"
+                    : "block py-1 md:py-3 pl-1 align-middle text-gray-300 no-underline border-b-2 border-gray-800 hover:border-blue-800"
                 }
                 to="/customer"
               >
@@ -115,13 +100,10 @@ const Sidebar = () => {
             {/* supplier */}
             <li className="mr-3 flex-1">
               <NavLink
-                className={({ isActive }) =>
-                  [
-                    "block py-1 md:py-3 pl-1 align-middle text-gray-300 no-underline border-b-2 border-gray-800 hover:border-blue-800 ",
-                    isActive ? "text-blue-600 border-b-2 border-blue-600" : null,
-                  ]
-                    .filter(Boolean)
-                    .join(" ")
+                className={(navData) =>
+                  navData.isActive
+                    ? "active block py-1 md:py-3 pl-1 align-middle text-blue-600 border-b-2 border-blue-600"
+                    : "block py-1 md:py-3 pl-1 align-middle text-gray-300 no-underline border-b-2 border-gray-800 hover:border-blue-800"
                 }
                 to="/supplier"
               >
@@ -135,13 +117,10 @@ const Sidebar = () => {
             {/* report */}
             <li className="mr-3 flex-1">
               <NavLink
-                className={({ isActive }) =>
-                  [
-                    "block py-1 md:py-3 pl-1 align-middle text-gray-300 no-underline border-b-2 border-gray-800 hover:border-blue-800 ",
-                    isActive ? "text-blue-600 border-b-2 border-blue-600" : null,
-                  ]
-                    .filter(Boolean)
-                    .join(" ")
+                className={(navData) =>
+                  navData.isActive
+                    ? "active block py-1 md:py-3 pl-1 align-middle text-blue-600 border-b-2 border-blue-600"
+                    : "block py-1 md:py-3 pl-1 align-middle text-gray-300 no-underline border-b-2 border-gray-800 hover:border-blue-800"
                 }
                 to="/report"
               >

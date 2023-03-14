@@ -31,8 +31,8 @@ const AddTransactionDetail = () => {
 
   const navigate = useNavigate();
 
-  //function "fetchData"
-  const fectData = async () => {
+  //function "getOrder"
+  const getOrder = async () => {
     //fetching
     const response = await axios.get(`http://localhost:5000/orders/${id}`);
     //get response data
@@ -41,26 +41,38 @@ const AddTransactionDetail = () => {
     setType(data.type);
     //assign response data to state "orderdetail"
     setOrderdetail(data.orderdetail);
+
+    let response2;
+    if (data.type === "OUT") {
+      response2 = await axios.get(`http://localhost:5000/products/available`);
+    } else {
+      response2 = await axios.get(`http://localhost:5000/products`);
+    }
+
+    //get response data
+    const dataProduct = await response2.data;
+
+    //assign response data to state "product"
+    setProduct(dataProduct);
   };
 
   // fungsi untuk menampilkan seluruh data supplier untuk dropdown pada form
-  const dataProduct = async () => {
-    //get data from server
-    const response = await axios.get(`http://localhost:5000/products/available`);
+  // const dataProduct = async () => {
+  //   console.log(type);
+  //   //get data from server
+  //   const response = await axios.get(`http://localhost:5000/products/available`);
 
-    //get response data
-    const data = await response.data;
+  //   //get response data
+  //   const data = await response.data;
 
-    //assign response data to state "product"
-    setProduct(data);
-  };
+  //   //assign response data to state "product"
+  //   setProduct(data);
+  // };
 
   //useEffect hook
   useEffect(() => {
-    //panggil method "fetchData"
-    fectData();
-    //panggil method "dataProduct"
-    dataProduct();
+    //panggil method "getOrder"
+    getOrder();
   }, []);
 
   // fungsi untuk handle form select product
@@ -72,6 +84,7 @@ const AddTransactionDetail = () => {
     // set nilai max quantity menjadi 1000
     setMaxQuantity(1000);
 
+    console.log(type);
     // jika type transaksi keluar maka maxQuantitry adalah <= jumlah stok
     if (type == "OUT") {
       const response = await axios.get(`http://localhost:5000/stock/${e.target.value}`);
@@ -100,30 +113,25 @@ const AddTransactionDetail = () => {
         productPrice: price,
       })
       .then(async () => {
-        //redirect ke halaman transaction
-        //get ID from parameter URL
-        fectData();
+        document.getElementById("quantity").disabled = true;
+        setQuantity("");
+        setProduct([]);
+        getOrder();
       })
       .catch((error) => {
         //assign validation on state
         setValidation(error.response.data);
       });
-
-    // document.getElementById("add-form").reset();
-    // e.target.reset();
-    document.getElementById("quantity").disabled = true;
-    setQuantity("");
-    setProduct([]);
-
-    dataProduct();
   };
+  // document.getElementById("add-form").reset();
+  // e.target.reset();
 
   const deleteTransaction = async (id) => {
     //sending
     await axios.delete(`http://localhost:5000/orderdetails/${id}`);
 
-    //panggil function "fetchData"
-    fectData();
+    //panggil function "getOrder"
+    getOrder();
   };
 
   return (
@@ -238,12 +246,16 @@ const AddTransactionDetail = () => {
                 </button>
               </div>
             </form>
-            <Link
-              className="w-24 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 mt"
-              to={`/transaction/final/${id}`}
-            >
-              Next
-            </Link>
+            {orderdetail.length ? (
+              <Link
+                className="w-24 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 mt"
+                to={`/transaction/final/${id}`}
+              >
+                Next
+              </Link>
+            ) : (
+              ""
+            )}
           </div>
         </div>
       </div>

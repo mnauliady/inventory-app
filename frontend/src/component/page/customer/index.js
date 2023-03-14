@@ -4,23 +4,125 @@ import { useState, useEffect } from "react";
 //import axios
 import axios from "axios";
 // import Link
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+
+import jwtDecode from "jwt-decode";
 
 const Customer = () => {
+  const navigate = useNavigate();
+
+  // token access for header Authorization
+  const [token, setToken] = useState("");
+  // token expire
+  const [expire, setExpire] = useState("");
+
   //define state
   const [customers, setCustomers] = useState([]);
 
   //useEffect hook
   useEffect(() => {
+    // jalankan refresh token untuk mengambil token dan expired
+    refreshToken();
     //panggil method "fetchData"
     fectData();
   }, []);
 
+  // get fresh access token
+  const axiosJWT = axios.create();
+
+  const refreshToken = async () => {
+    try {
+      // ambil token user
+      const response = await axios.get("http://localhost:5000/token", {
+        withCredentials: true,
+      });
+
+      setToken(response.data.accessToken);
+      // decode dari token yang sudah diambil
+      const decoded = jwtDecode(response.data.accessToken);
+      // set expire token
+      setExpire(decoded.exp);
+    } catch (error) {
+      if (error.response) {
+        navigate("/");
+      }
+    }
+  };
+
+  axiosJWT.interceptors.request.use(
+    async (config) => {
+      const currentDate = new Date();
+      if (expire * 1000 < currentDate.getTime()) {
+        const response = await axios.get("http://localhost:5000/token", { withCredentials: true });
+        config.headers.Authorization = `Bearer ${response.data.accessToken}`;
+
+        setToken(response.data.accessToken);
+        const decoded = jwtDecode(response.data.accessToken);
+
+        setExpire(decoded.exp);
+      }
+      return config;
+    },
+    (error) => {
+      return Promise.reject(error);
+    }
+  );
+
+  // const tokens = () => {
+  //   (async () => {
+  //     try {
+  //       // ambil token user
+  //       const response = await axios.get("http://localhost:5000/token", {
+  //         withCredentials: true,
+  //       });
+
+  //       setToken(response.data.accessToken);
+  //       // decode dari token yang sudah diambil
+  //       const decoded = jwtDecode(response.data.accessToken);
+  //       // set expire token
+  //       setExpire(decoded.exp);
+  //     } catch (error) {
+  //       if (error.response) {
+  //         navigate("/");
+  //       }
+  //     }
+  //   })();
+
+  //   const axiosJWT = axios.create();
+
+  //   axiosJWT.interceptors.request.use(
+  //     async (config) => {
+  //       const currentDate = new Date();
+  //       if (expire * 1000 < currentDate.getTime()) {
+  //         const response = await axios.get("http://localhost:5000/token", { withCredentials: true });
+  //         config.headers.Authorization = `Bearer ${response.data.accessToken}`;
+
+  //         setToken(response.data.accessToken);
+  //         const decoded = jwtDecode(response.data.accessToken);
+
+  //         setExpire(decoded.exp);
+  //       }
+  //       return config;
+  //     },
+  //     (error) => {
+  //       return Promise.reject(error);
+  //     }
+  //   );
+  // };
+
   //function "fetchData"
   const fectData = async () => {
     //fetching
-    const response = await axios.get("http://localhost:5000/customers");
-    //get response data
+    const response = await axiosJWT(
+      "http://localhost:5000/customers",
+      // { withCredentials: true },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    //get response
     const data = await response.data;
 
     //assign response data to state "customers"

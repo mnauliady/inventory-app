@@ -6,6 +6,8 @@ import axios from "axios";
 // import Link
 import { Link } from "react-router-dom";
 
+import moment from "moment/moment";
+
 const Transaction = () => {
   //define state
   const [transactions, setTransactions] = useState([]);
@@ -22,6 +24,18 @@ const Transaction = () => {
     const response = await axios.get("http://localhost:5000/orders");
     //get response data
     const data = await response.data;
+
+    // delete data transaksi jika tidak memiliki data detail transaksi
+    data.map(
+      (d, index) => {
+        if (!d.orderdetail.length) {
+          deleteTransaction(d.id);
+          // console.log(d.id, d.orderdetail);
+        }
+      }
+
+      // console.log(index)
+    );
 
     //assign response data to state "transactions"
     setTransactions(data);
@@ -89,7 +103,7 @@ const Transaction = () => {
                     </td>
                     <td className="px-6 py-4">{transaction.type}</td>
                     <td className="px-6 py-4">{transaction.code}</td>
-                    <td className="px-6 py-4">{transaction.date}</td>
+                    <td className="px-6 py-4">{moment(transaction.date).format("LL")}</td>
                     <td className="px-6 py-4">
                       <Link
                         to={`/transactions/${transaction.id}`}

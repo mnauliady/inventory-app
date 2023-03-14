@@ -110,7 +110,7 @@ router.delete("/users/:id", deleteUser);
 // Route Customer ============================================
 router.get("/customers", getCustomers);
 router.get("/customers/:id", getCustomerById);
-router.post("/customers", createCustomer);
+router.post("/customers", verifyToken, createCustomer);
 router.put("/customers/:id", updateCustomer);
 router.delete("/customers/:id", deleteCustomer);
 // ===========================================================

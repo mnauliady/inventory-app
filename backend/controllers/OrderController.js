@@ -10,6 +10,7 @@ const { check, validationResult } = require("express-validator");
 const getOrders = async (req, res) => {
   try {
     const order = await Order.findAll({
+      order: [["createdAt", "ASC"]],
       include: [{ model: OrderDetail, as: "orderdetail" }],
     });
     res.send(order);
