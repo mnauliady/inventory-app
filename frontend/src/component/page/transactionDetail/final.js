@@ -44,14 +44,17 @@ const Final = () => {
       setCustomerPhone(data.customer.phone);
       setCustomerAdress(data.customer.address);
       setOrderdetail(data.orderdetail);
-      //   setUrl_photo(data.url_photo);
-      //   setPrice(data.price);
-      //   setStatus(data.status);
-      //   setCategory(data.category);
-      //   setSupplier(data.supplier);
     } catch (error) {
-      //   navigate("/not-found");
+      navigate("/not-found");
     }
+  };
+
+  const deleteTransaction = async (id) => {
+    //sending
+    await axios.delete(`http://localhost:5000/orders/${id}`);
+
+    //navigate ke page transaction
+    navigate("/transaction");
   };
 
   return (
@@ -78,7 +81,9 @@ const Final = () => {
                   <dt className="text-sm font-medium text-gray-500">Date</dt>
                   <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">{date}</dd>
                 </div>
-                <h3 className="sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">Receiver</h3>
+                <h3 className="text-base font-semibold leading-6 text-gray-900 px-4 py-5 sm:gap-4 sm:px-6 bg-gray-200">
+                  Receiver
+                </h3>
                 <div className="border-b-2 border-gray-100 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 hover:bg-gray-100">
                   <dt className="text-sm font-medium text-gray-500">Name</dt>
                   <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">{customerName}</dd>
@@ -92,7 +97,6 @@ const Final = () => {
                   <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">{customerAddress}</dd>
                 </div>
               </dl>
-
               <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                 <thead className=" text-sm text-gray-700 uppercase bg-gray-200 dark:bg-gray-700 dark:text-gray-400">
                   <tr>
@@ -130,21 +134,39 @@ const Final = () => {
                       </td>
                     </tr>
                   ))}
-                  Total
+                  <tr className="bg-gray-200">
+                    <td scope="row" className="px-6 py-4" colSpan={3}></td>
+                    <td className="text-base font-semibold leading-6 text-gray-900 px-4 py-2 sm:gap-2 sm:px-6">
+                      Total
+                    </td>
+                    <td className="text-base font-semibold leading-6 text-gray-900 px-4 py-2 sm:gap-2 sm:px-6">
+                      Rp ....
+                    </td>
+                  </tr>
                 </tbody>
               </table>
             </div>
           </div>
         </div>
         <Link
-          to="/transaction"
+          to={`/transaction/add/detail/${id}`}
           className=" text-white bg-gray-500 hover:bg-gray-600 rounded-md font-medium text-sm px-5 py-2.5 ml-8"
         >
           Back
         </Link>
         <Link
+          onClick={() => {
+            if (window.confirm("Cancel the transaction?")) {
+              deleteTransaction(id);
+            }
+          }}
+          className=" text-white bg-red-500 hover:bg-red-600 rounded-md font-medium text-sm px-5 py-2.5 ml-2"
+        >
+          Cancel Transaction
+        </Link>
+        <Link
           to="/transaction"
-          className=" text-white bg-gray-500 hover:bg-gray-600 rounded-md font-medium text-sm px-5 py-2.5 ml-8"
+          className=" text-white bg-blue-500 hover:bg-blue-600 rounded-md font-medium text-sm px-5 py-2.5 ml-2"
         >
           Ok
         </Link>

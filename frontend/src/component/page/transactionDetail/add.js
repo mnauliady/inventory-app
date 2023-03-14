@@ -27,6 +27,8 @@ const AddTransactionDetail = () => {
   // state validation
   const [validation, setValidation] = useState({});
 
+  const [orderdetail, setOrderdetail] = useState([]);
+
   const navigate = useNavigate();
 
   //function "fetchData"
@@ -61,10 +63,16 @@ const AddTransactionDetail = () => {
     dataProduct();
   }, []);
 
-  const [orderdetail, setOrderdetail] = useState([]);
-
   // fungsi untuk handle form select product
   const handleSelectProduct = async (e) => {
+    if (e.target.value) {
+      document.getElementById("quantity").disabled = false;
+    }
+
+    // set nilai max quantity menjadi 1000
+    setMaxQuantity(1000);
+
+    // jika type transaksi keluar maka maxQuantitry adalah <= jumlah stok
     if (type == "OUT") {
       const response = await axios.get(`http://localhost:5000/stock/${e.target.value}`);
       setMaxQuantity(response.data[0].sum);
@@ -101,8 +109,13 @@ const AddTransactionDetail = () => {
         setValidation(error.response.data);
       });
 
-    document.getElementById("add-form").reset();
+    // document.getElementById("add-form").reset();
     // e.target.reset();
+    document.getElementById("quantity").disabled = true;
+    setQuantity("");
+    setProduct([]);
+
+    dataProduct();
   };
 
   const deleteTransaction = async (id) => {
@@ -128,7 +141,7 @@ const AddTransactionDetail = () => {
             <hr />
 
             {/* form */}
-            <form className="space-y-6 " onSubmit={storeData} id="add-form">
+            <form className="space-y-6 mb-4" onSubmit={storeData} id="add-form">
               {/* error handling */}
               {validation.errors && (
                 <div className="bg-red-500 rounded-md w-1/2">
@@ -192,6 +205,7 @@ const AddTransactionDetail = () => {
                   id="product"
                   name="productId"
                   onChange={handleSelectProduct}
+                  required
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg  block w-1/2 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mr-3"
                 >
                   <option value="">Select the product</option>
@@ -212,6 +226,8 @@ const AddTransactionDetail = () => {
                   onChange={(e) => setQuantity(e.target.value)}
                   placeholder="Quantity"
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-1/4 p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white mr-3"
+                  disabled
+                  required
                 />
 
                 <button

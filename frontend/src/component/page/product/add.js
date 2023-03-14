@@ -60,7 +60,6 @@ const AddProduct = () => {
       window.alert("Please upload a file smaller than 3 MB");
       return false;
     }
-    console.log(image.size);
     setFile(image);
     setPreview(URL.createObjectURL(image));
   };
@@ -94,7 +93,6 @@ const AddProduct = () => {
   const storePost = async (e) => {
     e.preventDefault();
 
-    // const sku =
     //send data to server
     await axios
       .post(
@@ -270,7 +268,7 @@ const AddProduct = () => {
                         ></path>
                       </svg>
                       <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
-                        <span className="font-semibold">Click to upload</span> or drag and drop
+                        <span className="font-semibold">Click to upload</span>
                       </p>
                       <p className="text-xs text-gray-500 dark:text-gray-400">JPEG, PNG, or JPG (MAX. 3 MB)</p>
                     </div>

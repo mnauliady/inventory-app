@@ -2,6 +2,7 @@ const Users = require("../models").user;
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { v4: uuidv4 } = require("uuid");
+const { check, validationResult } = require("express-validator");
 
 // hapus ===============================
 const getUser = async (req, res) => {
@@ -17,38 +18,44 @@ const getUser = async (req, res) => {
 
 // fungsi untuk register user baru
 const Register = async (req, res) => {
+  await check("name").isLength({ min: 3 }).withMessage("Minimal 3 character").run(req);
+  await check("email").isEmail().withMessage("Wrong email format").run(req);
+  await check("mobile").notEmpty().isLength({ min: 9, max: 15 }).withMessage("length must between 9-15").run(req);
+  await check("role")
+    .isIn(["super admin", "admin", "manager"])
+    .withMessage("Only accept super/admin/manager role")
+    .run(req);
+
   // mengecek email sudah ada di db
   const email = await Users.findOne({
     where: { email: req.body.email.toLowerCase() },
   });
 
   if (email) {
+    const result = { msg: "Email already registered", param: "email" };
     return res.status(409).json({
-      status: "error",
-      message: "username already registered",
-    });
-  }
-
-  // mengecek username sudah ada di db
-  const username = await Users.findOne({
-    where: { username: req.body.username.toLowerCase() },
-  });
-
-  if (username) {
-    return res.status(409).json({
-      status: "error",
-      message: "username already registered",
+      errors: [result],
     });
   }
 
   // mengecek password dan confirm password sama
-  if (req.body.password !== req.body.confPassword) {
-    return res.status(409).json({ status: "error", message: "Password and Confirm Password not match" });
+  // if (req.body.password !== req.body.confPassword) {
+  //   const result = { msg: "Password and Confirm Password not match", param: "password" };
+  //   return res.status(409).json({
+  //     errors: [result],
+  //   });
+  // }
+
+  // tampilkan jika ada error
+  const result = validationResult(req);
+  if (!result.isEmpty()) {
+    return res.status(400).json({ errors: result.array() });
   }
 
+  const password = "123456";
   // hashing password
   const salt = await bcrypt.genSalt();
-  const hashPassword = await bcrypt.hash(req.body.password, salt);
+  const hashPassword = await bcrypt.hash(password, salt);
   try {
     // create/add ke db
     await Users.create({
@@ -76,6 +83,8 @@ const Login = async (req, res) => {
         email: req.body.email,
       },
     });
+
+    console.log(user);
     // mengecek password
     const match = await bcrypt.compare(req.body.password, user[0].password);
     // jika tidak sesuai
@@ -111,6 +120,7 @@ const Login = async (req, res) => {
     });
     res.json({ accessToken });
   } catch (error) {
+    console.log(error);
     res.status(404).json({ msg: "Failed to login" });
   }
 };
@@ -153,4 +163,49 @@ const Me = async (req, res) => {
   res.status(200).json(user);
 };
 
-module.exports = { getUser, Register, Login, Logout, Me };
+const resetPass = async (req, res) => {
+  if (req.body.email) {
+    // mengecek email sudah ada di db
+    const email = await Users.findOne({
+      where: { email: req.body.email.toLowerCase() },
+    });
+
+    if (email) {
+      return res.status(409).json({
+        status: "error",
+        message: "email sudah terdaftar",
+      });
+    }
+  }
+
+  // hashing password
+  const password = "123456";
+  const salt = await bcrypt.genSalt();
+  const hashPassword = await bcrypt.hash(password, salt);
+  try {
+    const cek = await Users.update(
+      {
+        password: hashPassword,
+      },
+      {
+        where: {
+          id: req.params.id,
+        },
+      }
+    );
+    if (cek == 1) {
+      res.json({
+        message: "Data berhasil diupdate",
+      });
+    } else {
+      // jika id user tidak ditemukan
+      res.status(409).json({
+        status: "error",
+        message: "id user tidak ada",
+      });
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};
+module.exports = { getUser, Register, Login, Logout, Me, resetPass };

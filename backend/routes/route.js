@@ -61,10 +61,11 @@ const {
 const { verifyToken, adminRole, superAdminRole } = require("../middleware/verifyToken");
 
 const refreshToken = require("../controllers/RefreshToken");
-const { getUser, Register, Login, Logout, Me } = require("../controllers/AuthController");
+const { getUser, Register, Login, Logout, Me, resetPass } = require("../controllers/AuthController");
 
 // router.get("/alluser", verifyToken, getUser);
 router.get("/alluser", getUser);
+router.put("/reset/:id", resetPass);
 router.post("/register", Register);
 router.post("/login", Login);
 router.get("/token", refreshToken);

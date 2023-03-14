@@ -1,7 +1,12 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 
+import { useSelector } from "react-redux";
+
 const Sidebar = () => {
+  // ambil data isError untuk pengecekan status ambil data user, dan var user untuk data user login
+  const { user } = useSelector((state) => state.auth);
+
   return (
     <nav aria-label="alternative nav">
       <div className="bg-gray-800 shadow-xl h-20 fixed bottom-0 mt-12 md:relative md:h-screen z-10 w-full md:w-48 content-center">
@@ -146,6 +151,30 @@ const Sidebar = () => {
                 </span>
               </NavLink>
             </li>
+
+            {user && user.role === "super admin" && (
+              <div>
+                {/* User */}
+                <li className="mr-3 flex-1">
+                  <NavLink
+                    className={({ isActive }) =>
+                      [
+                        "block py-1 md:py-3 pl-1 align-middle text-gray-300 no-underline border-b-2 border-gray-800 hover:border-blue-800 ",
+                        isActive ? "text-blue-600 border-b-2 border-blue-600" : null,
+                      ]
+                        .filter(Boolean)
+                        .join(" ")
+                    }
+                    to="/user"
+                  >
+                    <i className="fa-solid fa-user pr-0 md:pr-3"></i>
+                    <span className="pb-1 md:pb-0 text-xs md:text-base text-gray-400 md:text-gray-200 block md:inline-block">
+                      User Management
+                    </span>
+                  </NavLink>
+                </li>
+              </div>
+            )}
           </ul>
         </div>
       </div>

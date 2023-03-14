@@ -27,6 +27,9 @@ import Transaction from "./page/transaction";
 import AddTransaction from "./page/transaction/add";
 import AddTransactionDetail from "./page/transactionDetail/add";
 import Final from "./page/transactionDetail/final";
+import User from "./page/user";
+import AddUser from "./page/user/add";
+import Forbidden from "./page/forbidden";
 
 const Main = () => {
   return (
@@ -67,8 +70,11 @@ const Main = () => {
           <Route path="/supplier/edit/:id" element={<EditSupplier />} />
           <Route path="/supplier/:id" element={<DetailSupplier />} />
 
-          <Route path="/supplier" element={<Product />} />
+          <Route path="/user" element={<User />} />
+          <Route path="/user/add" element={<AddUser />} />
+
           <Route path="/not-found" element={<Blank />} />
+          <Route path="/forbidden" element={<Forbidden />} />
         </Routes>
       </div>
     </main>
