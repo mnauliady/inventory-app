@@ -23,7 +23,6 @@ const Product = () => {
     //get response data
     const data = await response.data;
 
-    console.log(response.data);
     //assign response data to state "products"
     setProducts(data);
   };
@@ -78,6 +77,9 @@ const Product = () => {
                     Min Stock
                   </th>
                   <th scope="col" className="px-6 py-3">
+                    Status
+                  </th>
+                  <th scope="col" className="px-6 py-3">
                     Action
                   </th>
                 </tr>
@@ -93,8 +95,25 @@ const Product = () => {
                     </td>
                     <td className="px-6 py-4">{product.sku}</td>
                     <td className="px-6 py-4">{product.name}</td>
-                    <td className="px-6 py-4">{product.stock}</td>
+                    <td className="px-6 py-4">
+                      {product.stock < product.min_stock ? (
+                        <span className="text-red-500">
+                          <i className="fa-solid fa-circle-exclamation pr-0 md:pr-3"></i>
+                        </span>
+                      ) : (
+                        ""
+                      )}
+                      {product.stock}
+                    </td>
                     <td className="px-6 py-4">{product.min_stock}</td>
+                    <td className="px-6 py-4 ">
+                      {product.status == "active" ? (
+                        <span className="bg-green-500 px-1 py-0.5 rounded-md text-white">{product.status}</span>
+                      ) : (
+                        <span className="bg-red-500 px-1 py-0.5 rounded-md text-white">{product.status}</span>
+                      )}
+                    </td>
+
                     <td className="px-6 py-4">
                       <Link
                         to={`/products/${product.id}`}

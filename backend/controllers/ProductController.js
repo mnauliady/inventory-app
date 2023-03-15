@@ -81,7 +81,7 @@ const createProduct = async (req, res) => {
     return res.status(400).json({ errors: result.array() });
   }
 
-  const sku = `${req.body.sku}-${Date.now()}`;
+  const sku = `${req.body.sku.toLowerCase().replaceAll(" ", "")}-${Date.now()}`;
 
   try {
     // input ke dalam db
@@ -107,12 +107,62 @@ const createProduct = async (req, res) => {
 
 // Update product berdasarkan id
 const updateProduct = async (req, res) => {
+  // validasi inputan
+  await check("name").isLength({ min: 3 }).withMessage("minimal 3 character").run(req);
+  await check("min_stock").notEmpty().isNumeric().withMessage("Minimal stock is required").run(req);
+  await check("price").notEmpty().isNumeric().withMessage("Price is required").run(req);
+  await check("categoryId").notEmpty().withMessage("Category ID is required").run(req);
+
+  // tampilkan jika ada error
+  const result = validationResult(req);
+  if (!result.isEmpty()) {
+    // jika ada error hapus file gambar
+    // karena file gambar terlebih dahulu disimpan sebelum data masuk ke db
+    if (req.file) {
+      deleteFile(req.file.filename);
+    }
+    return res.status(400).json({ errors: result.array() });
+  }
+
   try {
-    await Product.update(req.body, {
-      where: {
-        id: req.params.id,
+    const query = await Product.findByPk(req.params.id);
+
+    // set nilai photo
+    let photo = query.url_photo;
+    // set nilai sku
+    let sku = query.sku;
+
+    // jika category berubah maka sku juga berubah ()
+    if (req.body.categoryId != query.categoryId) {
+      sku = `${req.body.sku.toLowerCase().replaceAll(" ", "")}-${Date.now()}`;
+    }
+
+    // jika ada data foto baru (update foto)
+    if (req.file) {
+      // hapus foto lama
+      if (query) {
+        deleteFile(query.url_photo);
+      }
+      // set nilai photo menjadi photo baru
+      photo = req.file.filename;
+    }
+
+    // proses update
+    await Product.update(
+      {
+        sku,
+        name: req.body.name,
+        url_photo: photo,
+        price: req.body.price,
+        min_stock: req.body.min_stock,
+        categoryId: req.body.categoryId,
       },
-    });
+      {
+        where: {
+          id: req.params.id,
+        },
+      }
+    );
     res.json({
       message: "Product Updated",
     });
@@ -195,7 +245,6 @@ const deleteFile = (fileName) => {
 };
 
 const getStockById = async (req, res) => {
-  // 1 if (null -> query get by id)
   try {
     const stockById = await db.sequelize.query(
       `SELECT sum(orderdetails.quantity), products."name" FROM orderdetails INNER JOIN products ON orderdetails."productId" = products."id" WHERE products."id" = (:id) GROUP BY products."id"`,
@@ -214,7 +263,7 @@ const getStockById = async (req, res) => {
 const getAllStock = async (req, res) => {
   try {
     const sumAll = await db.sequelize.query(
-      `SELECT products.sku, products."name", products."id", products.min_stock, sum(orderdetails.quantity) AS "stock" FROM orderdetails RIGHT JOIN products ON orderdetails."productId" = products."id" GROUP BY products."id"`,
+      `SELECT products.*, sum(orderdetails.quantity) AS "stock" FROM orderdetails RIGHT JOIN products ON orderdetails."productId" = products."id" GROUP BY products."id" ORDER BY "updatedAt"`,
       {
         type: db.sequelize.QueryTypes.SELECT,
       }
@@ -239,6 +288,20 @@ const getAvailableStock = async (req, res) => {
     console.log(error);
   }
 };
+
+const checkProductOrder = async (req, res) => {
+  try {
+    const query = await db.sequelize.query(
+      `SELECT products."id" FROM orderdetails INNER JOIN products ON orderdetails."productId" = products."id" GROUP BY products."id"`,
+      {
+        type: db.sequelize.QueryTypes.SELECT,
+      }
+    );
+    res.send(query);
+  } catch (error) {
+    console.log(error);
+  }
+};
 module.exports = {
   getProducts,
   getProductById,
@@ -248,4 +311,5 @@ module.exports = {
   getAllStock,
   getStockById,
   getAvailableStock,
+  checkProductOrder,
 };

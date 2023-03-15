@@ -18,6 +18,14 @@ const EditProduct = () => {
   const [selectedCategory, setSelectedCategory] = useState();
   const [selectedSupplier, setSelectedSupplier] = useState();
 
+  //state
+  const [name, setName] = useState("");
+  const [price, setPrice] = useState("");
+  const [min_stock, setMin_Stock] = useState("");
+  const [sku, setSku] = useState("");
+  const [status, setStatus] = useState("");
+  const [url_photo, setUrl_photo] = useState("");
+  const [categoryId, setCategoryId] = useState("");
   //useEffect hook
   useEffect(() => {
     //panggil method "dataCategory"
@@ -40,10 +48,13 @@ const EditProduct = () => {
       const data = await response.data;
       //assign data to state
       setSku(data.sku);
+      setPrice(data.price);
       setName(data.name);
-      //   setStock(data.stock);
+      setStatus(data.status);
+      setCategoryId(data.categoryId);
+      setSelectedCategory(data.categoryId);
       setMin_Stock(data.min_stock);
-      //   setUrl_photo(data.url_photo);
+      setUrl_photo(data.url_photo);
       // setSuppliers(data.supplier.name);
     } catch (error) {
       navigate("/not-found");
@@ -51,6 +62,16 @@ const EditProduct = () => {
   };
 
   const dataCategory = async () => {
+    // cek product memiliki transaksi atau order
+    const res = await axios.get(`http://localhost:5000/products/order`);
+
+    for (let i = 0; i < res.data.length; i++) {
+      // jika ada
+      if (id == res.data[i].id) {
+        document.getElementById("category").classList.add("hidden");
+      }
+    }
+
     //get data from server
     const response = await axios.get(`http://localhost:5000/categories`);
     //get response data
@@ -81,60 +102,61 @@ const EditProduct = () => {
   // ===================================================
 
   // Proses Add data ===================================
-  //state
-  const [name, setName] = useState("");
-  const [min_stock, setMin_Stock] = useState("");
-  const [sku, setSku] = useState("");
-  const [category, setCategory] = useState("");
 
   //state validation
-  //   const [validation, setValidation] = useState({});
+  const [validation, setValidation] = useState({});
 
   const navigate = useNavigate();
 
   const handleSelectCategory = (e) => {
     setSelectedCategory(e.target.value);
+
     setSku(e.target.selectedOptions[0].getAttribute("data-set"));
-    // console.log(e.target.dataset.tag);
   };
 
   const handleSelectSupplier = (e) => {
     setSelectedSupplier(e.target.value);
   };
 
-  //method "storePost"
-  const storePost = async (e) => {
+  //method "updateProduct"
+  const updateProduct = async (e) => {
     e.preventDefault();
 
-    // const sku =
+    console.log(sku);
     //send data to server
     await axios
-      .post(
-        "http://localhost:5000/products",
+      .put(
+        `http://localhost:5000/products/${id}`,
         {
           sku,
           name,
+          price,
+          status,
           min_stock,
           categoryId: selectedCategory,
-          supplierId: selectedSupplier,
+          // supplierId: selectedSupplier,
           url_photo: file,
         },
         {
           headers: {
-            "Content-Type": "multipart/form-data",
+            "Content-type": "multipart/form-data",
           },
         }
       )
       .then(() => {
         //redirect
         navigate("/products");
+      })
+      .catch((error) => {
+        //assign validation on state
+        setValidation(error.response.data);
       });
-    //   .catch((error) => {
-    //     //assign validation on state
-    //     setValidation(error.response.data);
-    //   });
   };
 
+  const cancel = () => {
+    setFile();
+    setPreview();
+  };
   return (
     <section className="w-full">
       <div id="main" className="main-content flex-1 bg-gray-100 mt-12 md:mt-2 pb-24 md:pb-5">
@@ -147,9 +169,24 @@ const EditProduct = () => {
         {/* form */}
         <div className="flex flex-wrap mx-8 mt-8">
           <div className="w-full relative overflow-x-auto shadow-md sm:rounded-lg bg-white border border-gray-200 p-4">
-            <form className="space-y-6" onSubmit={storePost}>
+            <form className="space-y-6" onSubmit={updateProduct}>
               <h5 className="text-xl font-medium text-gray-900 dark:text-white">Edit Product</h5>
               <hr />
+
+              {/* error handling */}
+              {validation.errors && (
+                <div className="bg-red-500 rounded-md w-1/2">
+                  <ul className="py-2 px-4 text-white">
+                    {validation.errors.map((error, index) => (
+                      <li key={index}>
+                        <span className="font-semibold">{error.param}</span> : {error.msg}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              {/* product name */}
               <div>
                 <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                   Product Name
@@ -164,6 +201,28 @@ const EditProduct = () => {
                   required
                 />
               </div>
+
+              {/* Status */}
+              <div>
+                <label htmlFor="status" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                  Status
+                </label>
+                <select
+                  id="status"
+                  name="status"
+                  onChange={(e) => setStatus(e.target.value)}
+                  // defaultValue={{ value: "active", label: "Active" }}
+                  value={status}
+                  required
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-1/2 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                >
+                  <option value="">Select status</option>
+                  <option value="active">Active</option>
+                  <option value="not active">Not Active</option>
+                </select>
+              </div>
+
+              {/* minimal storck */}
               <div>
                 <label htmlFor="min_stock" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                   Minimal Stock
@@ -180,18 +239,35 @@ const EditProduct = () => {
                 />
               </div>
 
+              {/* price */}
               <div>
+                <label htmlFor="price" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                  Price
+                </label>
+                <input
+                  value={price}
+                  onChange={(e) => setPrice(e.target.value)}
+                  type="number"
+                  name="price"
+                  id="price"
+                  min="1"
+                  className="w-48 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                  required
+                />
+              </div>
+
+              {/* category */}
+              <div id="category">
                 <label htmlFor="category" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                  Select an option
+                  Select Category
                 </label>
                 <select
-                  id="category"
                   name="categoryId"
                   value={selectedCategory}
                   onChange={handleSelectCategory}
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-1/2 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 >
-                  <option defaultValue>Choose a category</option>
+                  <option>Choose a category</option>
                   {categories.map((category) => (
                     <option key={category.id} data-set={category.name} value={category.id}>
                       {category.name}
@@ -200,6 +276,7 @@ const EditProduct = () => {
                 </select>
               </div>
 
+              {/* supplier */}
               <div>
                 <label htmlFor="supplier" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                   Select an option
@@ -219,6 +296,7 @@ const EditProduct = () => {
                 </select>
               </div>
 
+              {/* Picture/photo */}
               <div>
                 <div className="flex w-full">
                   <label
@@ -243,7 +321,7 @@ const EditProduct = () => {
                         ></path>
                       </svg>
                       <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
-                        <span className="font-semibold">Click to upload</span> or drag and drop
+                        <span className="font-semibold">Click to upload</span>
                       </p>
                       <p className="text-xs text-gray-500 dark:text-gray-400">JPEG, PNG, or JPG (MAX. 3 MB)</p>
                     </div>
@@ -251,10 +329,39 @@ const EditProduct = () => {
                   </label>
                 </div>
 
+                <figure className="mt-2 w-1/2">
+                  <p className="mb-2 text-sm font-medium text-gray-900 dark:text-white">Old Photo</p>
+                  <img
+                    src={url_photo ? `http://localhost:5000/images/${url_photo}` : ``}
+                    alt={name}
+                    className=" text-gray-200 md:rounded-md"
+                  />
+                </figure>
+
                 {/* preview gambar yg diupload */}
                 {preview ? (
-                  <figure className="mt-2 w-1/2">
-                    <img src={preview} alt="Preview Image" />
+                  <figure className="mt-3 w-1/2 relative">
+                    <hr />
+                    <p className="mt-3 text-sm font-medium text-gray-900 dark:text-white">New Photo</p>
+                    <button
+                      onClick={() => {
+                        cancel();
+                      }}
+                    >
+                      <span className="absolute mt-3 right-2 p-0.5 bg-red-500 rounded-full text-white hover:bg-red-600">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          strokeWidth="1.5"
+                          stroke="currentColor"
+                          className="w-6 h-6"
+                        >
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                      </span>
+                    </button>
+                    <img src={preview} alt="Preview Image" className=" text-gray-200 md:rounded-md" />
                   </figure>
                 ) : (
                   ""

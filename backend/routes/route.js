@@ -20,6 +20,7 @@ const {
   getAllStock,
   getStockById,
   getAvailableStock,
+  checkProductOrder,
 } = require("../controllers/ProductController.js");
 
 const { getUsers, getUserById, createUser, updateUser, deleteUser } = require("../controllers/UserController.js");
@@ -87,6 +88,7 @@ router.get("/products", getProducts);
 // router.get("/products/in", getStockIn);
 router.get("/products/available", getAvailableStock);
 router.get("/products/all", getAllStock);
+router.get("/products/order", checkProductOrder);
 router.get("/stock/:id", getStockById);
 router.get("/products/:id", getProductById);
 
@@ -95,7 +97,10 @@ router.post("/products", imageUpload.single("url_photo"), createProduct, (error,
   return res.status(400).send({ error: error.message });
 });
 
-router.put("/products/:id", updateProduct);
+router.put("/products/:id", imageUpload.single("url_photo"), updateProduct, (error, req, res, next) => {
+  // send error image input
+  return res.status(400).send({ error: error.message });
+});
 router.delete("/products/:id", deleteProduct);
 // ===========================================================
 
