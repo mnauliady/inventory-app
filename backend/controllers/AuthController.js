@@ -38,14 +38,6 @@ const Register = async (req, res) => {
     });
   }
 
-  // mengecek password dan confirm password sama
-  // if (req.body.password !== req.body.confPassword) {
-  //   const result = { msg: "Password and Confirm Password not match", param: "password" };
-  //   return res.status(409).json({
-  //     errors: [result],
-  //   });
-  // }
-
   // tampilkan jika ada error
   const result = validationResult(req);
   if (!result.isEmpty()) {
@@ -53,6 +45,7 @@ const Register = async (req, res) => {
   }
 
   const password = "123456";
+
   // hashing password
   const salt = await bcrypt.genSalt();
   const hashPassword = await bcrypt.hash(password, salt);

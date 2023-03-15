@@ -22,7 +22,6 @@ const User = () => {
     const response = await axios.get("http://localhost:5000/users");
     //get response data
     const data = await response.data;
-
     //assign response data to state "users"
     setUsers(data);
   };
@@ -109,16 +108,20 @@ const User = () => {
                       >
                         Reset Password
                       </Link>
-                      <Link
-                        onClick={() => {
-                          if (window.confirm("Delete the item?")) {
-                            deleteUser(user.id);
-                          }
-                        }}
-                        className=" text-white bg-red-500 hover:bg-red-600 rounded-md text-sm px-2 py-1.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-res-700"
-                      >
-                        Delete
-                      </Link>
+                      {user.order.length ? (
+                        ""
+                      ) : (
+                        <Link
+                          onClick={() => {
+                            if (window.confirm("Delete the item?")) {
+                              deleteUser(user.id);
+                            }
+                          }}
+                          className=" text-white bg-red-500 hover:bg-red-600 rounded-md text-sm px-2 py-1.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-res-700"
+                        >
+                          Delete
+                        </Link>
+                      )}
                     </td>
                   </tr>
                 ))}

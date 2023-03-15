@@ -118,6 +118,19 @@ const updateUser = async (req, res) => {
 
 // Delete user berdasarkan id
 const deleteUser = async (req, res) => {
+  const user = await Users.findByPk(req.params.id, {
+    include: [{ model: Order, as: "order" }],
+  });
+
+  // jika user memiliki pernah melakukan transaksi tidak bisa dihapus
+  if (user.order.length) {
+    res.status(409).json({
+      status: "error",
+      message: "User terikat dengan tabel transaksi sehingga tidak bisa di hapus",
+    });
+  }
+
+  // jika user sbelum pernah transaksi
   try {
     const cek = await Users.destroy({
       where: {

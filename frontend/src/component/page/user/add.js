@@ -42,8 +42,6 @@ const AddUser = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [mobile, setMobile] = useState("");
-  const [password, setPassword] = useState("");
-  const [confPassword, setConfPassword] = useState("");
   const [role, setRole] = useState("");
 
   // state validation
@@ -59,11 +57,9 @@ const AddUser = () => {
       .post("http://localhost:5000/register", {
         name,
         email,
-        password,
         mobile,
         role,
         username: name,
-        confPassword,
       })
       .then(() => {
         //redirect ke halaman user
@@ -150,41 +146,8 @@ const AddUser = () => {
                   name="mobile"
                   id="mobile"
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-1/2 p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                  required
                 />
               </div>
-
-              {/* Password */}
-              {/* <div>
-                <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                  Password
-                </label>
-                <input
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  type="password"
-                  name="password"
-                  id="password"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-1/2 p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                  required
-                />
-              </div> */}
-
-              {/* Confirm Password */}
-              {/* <div>
-                <label htmlFor="confPassword" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                  Confirm Password
-                </label>
-                <input
-                  value={confPassword}
-                  onChange={(e) => setConfPassword(e.target.value)}
-                  type="password"
-                  name="confPassword"
-                  id="confPassword"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-1/2 p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                  required
-                />
-              </div> */}
 
               {/* Role */}
               <div>
