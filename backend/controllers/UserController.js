@@ -6,6 +6,8 @@ const user = require("../models/user");
 const Users = require("../models").user;
 const Order = require("../models").order;
 const bcrypt = require("bcrypt");
+const uuid = require("uuid");
+const { check, validationResult } = require("express-validator");
 
 // Get semua user
 const getUsers = async (req, res) => {
@@ -21,8 +23,13 @@ const getUsers = async (req, res) => {
 
 // Get user berdasarkan id
 const getUserById = async (req, res) => {
+  if (!uuid.validate(req.params.id)) {
+    return res.status(400).json({ status: "error", message: "User not found" });
+  }
+
   try {
     const user = await Users.findByPk(req.params.id);
+
     // jika user ditemukan (ada pada db)
     if (user) {
       res.send(user);
@@ -52,47 +59,21 @@ const createUser = async (req, res) => {
 
 // Update user berdasarkan id
 const updateUser = async (req, res) => {
-  if (req.body.email) {
-    // mengecek email sudah ada di db
-    const email = await Users.findOne({
-      where: { email: req.body.email.toLowerCase() },
-    });
+  await check("name").isLength({ min: 3 }).withMessage("Minimal 3 character").run(req);
+  await check("mobile").notEmpty().isLength({ min: 9, max: 15 }).withMessage("length must between 9-15").run(req);
 
-    if (email) {
-      return res.status(409).json({
-        status: "error",
-        message: "email sudah terdaftar",
-      });
-    }
+  // tampilkan jika ada error
+  const result = validationResult(req);
+  if (!result.isEmpty()) {
+    return res.status(400).json({ errors: result.array() });
   }
 
-  if (req.body.username) {
-    // mengecek username sudah ada di db
-    const username = await Users.findOne({
-      where: { username: req.body.username.toLowerCase() },
-    });
-
-    // kalau ada username orang lain sama(username)
-    // tapi lolos jika usernmae = usernmae dia
-    if (username) {
-      return res.status(409).json({
-        status: "error",
-        message: "username sudah terdaftar",
-      });
-    }
-  }
-  // hashing password
-  const salt = await bcrypt.genSalt();
-  const hashPassword = await bcrypt.hash(req.body.password, salt);
   try {
     const cek = await Users.update(
       {
         name: req.body.name,
-        username: req.body.username,
         email: req.body.email,
         mobile: req.body.mobile,
-        role: req.body.role,
-        password: hashPassword,
       },
       {
         where: {
@@ -154,4 +135,60 @@ const deleteUser = async (req, res) => {
   }
 };
 
-module.exports = { getUsers, getUserById, createUser, updateUser, deleteUser };
+const changePassword = async (req, res) => {
+  try {
+    // mencari email berdasrkan input
+    const user = await Users.findAll({
+      where: {
+        id: req.params.id,
+      },
+    });
+
+    // mengecek password
+    const match = await bcrypt.compare(req.body.password, user[0].password);
+
+    // jika tidak sesuai
+    if (!match) {
+      const result = { msg: "Wrong Password", param: "password" };
+      return res.status(400).json({
+        errors: [result],
+      });
+    }
+
+    await check("newPassword").isLength({ min: 6 }).withMessage("Password minimal 6 character").run(req);
+    // tampilkan jika ada error
+    const result = validationResult(req);
+    if (!result.isEmpty()) {
+      return res.status(400).json({ errors: result.array() });
+    }
+
+    if (req.body.newPassword !== req.body.confPassword) {
+      const result = { msg: "New password and confirm password not match", param: "New password" };
+      return res.status(400).json({
+        errors: [result],
+      });
+    }
+
+    // hashing password
+    const salt = await bcrypt.genSalt();
+    const hashPassword = await bcrypt.hash(req.body.newPassword, salt);
+
+    const update = await Users.update(
+      {
+        password: hashPassword,
+      },
+      {
+        where: {
+          id: req.params.id,
+        },
+      }
+    );
+    res.json({
+      message: "Data berhasil diupdate",
+    });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+module.exports = { getUsers, getUserById, createUser, updateUser, deleteUser, changePassword };

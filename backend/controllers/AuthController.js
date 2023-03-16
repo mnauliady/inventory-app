@@ -77,7 +77,6 @@ const Login = async (req, res) => {
       },
     });
 
-    console.log(user);
     // mengecek password
     const match = await bcrypt.compare(req.body.password, user[0].password);
     // jika tidak sesuai

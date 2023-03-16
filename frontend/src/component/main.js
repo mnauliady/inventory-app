@@ -30,6 +30,9 @@ import Final from "./page/transactionDetail/final";
 import User from "./page/user";
 import AddUser from "./page/user/add";
 import Forbidden from "./page/forbidden";
+import Profile from "./page/profile";
+import EditProfile from "./page/profile/edit";
+import ChangePassword from "./page/profile/changePassword";
 
 const Main = () => {
   return (
@@ -72,6 +75,10 @@ const Main = () => {
 
           <Route path="/user" element={<User />} />
           <Route path="/user/add" element={<AddUser />} />
+
+          <Route path="/profile/edit/:id" element={<EditProfile />} />
+          <Route path="/profile/change/password/:id" element={<ChangePassword />} />
+          <Route path="/profile/:id" element={<Profile />} />
 
           <Route path="/not-found" element={<Blank />} />
           <Route path="/forbidden" element={<Forbidden />} />
