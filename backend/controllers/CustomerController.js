@@ -129,4 +129,10 @@ const deleteCustomer = async (req, res) => {
   }
 };
 
-module.exports = { getCustomers, getCustomerById, createCustomer, updateCustomer, deleteCustomer };
+const getCustomerType = async (req, res) => {
+  const type = await Customer.findAll({
+    where: { type: req.params.type },
+  });
+  res.send(type);
+};
+module.exports = { getCustomers, getCustomerById, createCustomer, updateCustomer, deleteCustomer, getCustomerType };

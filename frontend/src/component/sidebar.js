@@ -136,13 +136,10 @@ const Sidebar = () => {
                 {/* User */}
                 <li className="mr-3 flex-1">
                   <NavLink
-                    className={({ isActive }) =>
-                      [
-                        "block py-1 md:py-3 pl-1 align-middle text-gray-300 no-underline border-b-2 border-gray-800 hover:border-blue-800 ",
-                        isActive ? "text-blue-600 border-b-2 border-blue-600" : null,
-                      ]
-                        .filter(Boolean)
-                        .join(" ")
+                    className={(navData) =>
+                      navData.isActive
+                        ? "active block py-1 md:py-3 pl-1 align-middle text-blue-600 border-b-2 border-blue-600"
+                        : "block py-1 md:py-3 pl-1 align-middle text-gray-300 no-underline border-b-2 border-gray-800 hover:border-blue-800"
                     }
                     to="/user"
                   >

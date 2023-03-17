@@ -78,7 +78,7 @@ const ChangePassword = () => {
         <div className="flex flex-wrap mx-8 mt-8">
           <div className="w-full relative overflow-x-auto shadow-md sm:rounded-lg bg-white border border-gray-200 p-4">
             <form className="space-y-6" onSubmit={changePassword}>
-              <h5 className="text-xl font-medium text-gray-900 dark:text-white">Edit Profile</h5>
+              <h5 className="text-xl font-medium text-gray-900 dark:text-white">Change Password</h5>
               <hr />
 
               {/* error handling */}

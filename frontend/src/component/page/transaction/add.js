@@ -15,7 +15,6 @@ const AddTransaction = () => {
   //state
   const [type, setType] = useState("");
   const [date, setDate] = useState("");
-  const [userId, setUserId] = useState("");
   const [customer, setCustomer] = useState([]);
   const [selectedCustomer, setSelectedCustomer] = useState();
 
@@ -37,12 +36,35 @@ const AddTransaction = () => {
   //useEffect hook
   useEffect(() => {
     //panggil method "dataCustomer"
-    dataCustomer();
+    // dataCustomer();
   }, []);
 
-  // fungsi untuk handle form select supplier
   const handleSelectCustomer = (e) => {
     setSelectedCustomer(e.target.value);
+  };
+
+  // fungsi untuk handle form select supplier
+  const handleTypeTransaction = async (e) => {
+    setType(e.target.value);
+
+    if (e.target.value) {
+      document.getElementById("customer").disabled = false;
+    } else {
+      document.getElementById("customer").disabled = true;
+    }
+
+    let customerType = "customer";
+    if (e.target.value === "IN") {
+      customerType = "supplier";
+    }
+
+    const response = await axios.get(`http://localhost:5000/customers/type/${customerType}`);
+
+    //get response data
+    const data = await response.data;
+
+    //assign response data to state "customer"
+    setCustomer(data);
   };
 
   const { user } = useSelector((state) => state.auth);
@@ -75,7 +97,7 @@ const AddTransaction = () => {
 
   return (
     <section className="w-full">
-      <div id="main" className="main-content flex-1 bg-gray-100 mt-12 md:mt-2 pb-24 md:pb-5">
+      <div id="main" className="main-content h-full flex-1 bg-gray-100 mt-12 md:mt-2 pb-24 md:pb-5">
         <div className="bg-gray-800 pt-3">
           <div className=" bg-blue-800 p-4 shadow text-2xl text-white">
             <h1 className="font-bold pl-2">Transaction</h1>
@@ -110,7 +132,7 @@ const AddTransaction = () => {
                 <select
                   id="type"
                   name="type"
-                  onChange={(e) => setType(e.target.value)}
+                  onChange={handleTypeTransaction}
                   required
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-1/2 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 >
@@ -145,6 +167,7 @@ const AddTransaction = () => {
                   id="customer"
                   name="customerId"
                   onChange={handleSelectCustomer}
+                  disabled
                   required
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-1/2 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 >

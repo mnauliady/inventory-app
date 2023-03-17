@@ -7,7 +7,7 @@ import axios from "axios";
 //import hook history dan params dari react router dom
 import { Link, useParams, useNavigate } from "react-router-dom";
 
-const Final = () => {
+const DetailTransaction = () => {
   //state
   const [code, setCode] = useState("");
   const [date, setDate] = useState("");
@@ -64,16 +64,8 @@ const Final = () => {
     }
   };
 
-  const deleteTransaction = async (id) => {
-    //sending
-    await axios.delete(`http://localhost:5000/orders/${id}`);
-
-    //navigate ke page transaction
-    navigate("/transaction");
-  };
-
   return (
-    <section className="w-full">
+    <section className="w-full" id="section-print">
       <div id="main" className="main-content flex-1 bg-gray-100 mt-12 md:mt-2 pb-24 md:pb-5 h-full">
         <div className="bg-gray-800 pt-3">
           <div className="bg-blue-800 p-4 shadow text-2xl text-white ">
@@ -164,30 +156,25 @@ const Final = () => {
           </div>
         </div>
         <Link
-          to={`/transaction/add/detail/${id}`}
+          to={`/transaction`}
+          id="back-button"
           className=" text-white bg-gray-500 hover:bg-gray-600 rounded-md font-medium text-sm px-5 py-2.5 ml-8"
         >
           Back
         </Link>
         <Link
-          onClick={() => {
-            if (window.confirm("Cancel the transaction?")) {
-              deleteTransaction(id);
-            }
-          }}
-          className=" text-white bg-red-500 hover:bg-red-600 rounded-md font-medium text-sm px-5 py-2.5 ml-2"
-        >
-          Cancel Transaction
-        </Link>
-        <Link
-          to="/transaction"
+          id="print-button"
           className=" text-white bg-blue-500 hover:bg-blue-600 rounded-md font-medium text-sm px-5 py-2.5 ml-2"
+          onClick={() => {
+            window.print();
+            document.title = `INV-${code}`;
+          }}
         >
-          Ok
+          Print
         </Link>
       </div>
     </section>
   );
 };
 
-export default Final;
+export default DetailTransaction;

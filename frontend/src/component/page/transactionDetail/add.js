@@ -9,6 +9,7 @@ import axios from "axios";
 //import hook history dari react router dom
 import { useNavigate, Link, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
+import Select from "react-select";
 
 const AddTransactionDetail = () => {
   // Proses Add data ===================================
@@ -38,7 +39,9 @@ const AddTransactionDetail = () => {
     //get response data
     const data = await response.data;
 
+    // set tipe transaksi
     setType(data.type);
+
     //assign response data to state "orderdetail"
     setOrderdetail(data.orderdetail);
 
@@ -52,22 +55,22 @@ const AddTransactionDetail = () => {
     //get response data
     const dataProduct = await response2.data;
 
-    //assign response data to state "product"
     setProduct(dataProduct);
   };
 
-  // fungsi untuk menampilkan seluruh data supplier untuk dropdown pada form
-  // const dataProduct = async () => {
-  //   console.log(type);
-  //   //get data from server
-  //   const response = await axios.get(`http://localhost:5000/products/available`);
-
-  //   //get response data
-  //   const data = await response.data;
-
-  //   //assign response data to state "product"
-  //   setProduct(data);
-  // };
+  const optionList = product.map((product) => {
+    return {
+      label: `${product.name} -- (sku :${product.sku})`,
+      value: product.id,
+      dataName: product.name,
+      dataPrice: product.price,
+      dataSku: product.sku,
+    };
+  });
+  // console.log(optionList);
+  const optionDefault = [{ label: "Select Productss", value: "null" }];
+  const optionDefaults = optionDefault.concat(optionList);
+  // console.log(optionDefaults);
 
   //useEffect hook
   useEffect(() => {
@@ -77,8 +80,11 @@ const AddTransactionDetail = () => {
 
   // fungsi untuk handle form select product
   const handleSelectProduct = async (e) => {
-    if (e.target.value) {
+    console.log(e.dataName);
+    if (e.value) {
       document.getElementById("quantity").disabled = false;
+    } else {
+      document.getElementById("quantity").disabled = true;
     }
 
     // set nilai max quantity menjadi 1000
@@ -87,13 +93,13 @@ const AddTransactionDetail = () => {
     console.log(type);
     // jika type transaksi keluar maka maxQuantitry adalah <= jumlah stok
     if (type == "OUT") {
-      const response = await axios.get(`http://localhost:5000/stock/${e.target.value}`);
+      const response = await axios.get(`http://localhost:5000/stock/${e.value}`);
       setMaxQuantity(response.data[0].sum);
     }
 
-    setSelectedProduct(e.target.value);
-    setName(e.target.selectedOptions[0].getAttribute("data-name"));
-    setPrice(e.target.selectedOptions[0].getAttribute("data-price"));
+    setSelectedProduct(e.value);
+    setName(e.dataName);
+    setPrice(e.dataPrice);
   };
 
   const { user } = useSelector((state) => state.auth);
@@ -116,22 +122,29 @@ const AddTransactionDetail = () => {
         document.getElementById("quantity").disabled = true;
         setQuantity("");
         setProduct([]);
+        setValidation({});
         getOrder();
+        console.log(selectedProduct);
       })
       .catch((error) => {
         //assign validation on state
         setValidation(error.response.data);
       });
   };
-  // document.getElementById("add-form").reset();
-  // e.target.reset();
 
-  const deleteTransaction = async (id) => {
+  const deleteTransactionDetail = async (id) => {
     //sending
     await axios.delete(`http://localhost:5000/orderdetails/${id}`);
 
     //panggil function "getOrder"
     getOrder();
+  };
+
+  const deleteTransaction = async (id) => {
+    //sending
+    await axios.delete(`http://localhost:5000/orders/${id}`);
+
+    navigate("/transaction/add");
   };
 
   return (
@@ -144,9 +157,9 @@ const AddTransactionDetail = () => {
         </div>
 
         <div className="flex flex-wrap mx-8 mt-8">
-          <div className="w-full relative overflow-x-auto shadow-md sm:rounded-lg bg-white border border-gray-200 p-4">
+          <div className="w-full relative shadow-md sm:rounded-lg bg-white border border-gray-200 p-4">
             <h5 className="text-xl font-medium text-gray-900 dark:text-white">Add Detail Transaction</h5>
-            <hr />
+            <hr className="mb-2" />
 
             {/* form */}
             <form className="space-y-6 mb-4" onSubmit={storeData} id="add-form">
@@ -163,53 +176,57 @@ const AddTransactionDetail = () => {
                 </div>
               )}
 
-              <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                <thead className=" text-sm text-gray-700 uppercase bg-gray-200 dark:bg-gray-700 dark:text-gray-400">
-                  <tr>
-                    <th scope="col" className="px-6 py-3">
-                      #
-                    </th>
-                    <th scope="col" className="px-6 py-3">
-                      Product Name
-                    </th>
-                    <th scope="col" className="px-6 py-3">
-                      Quantity
-                    </th>
-                    <th scope="col" className="px-6 py-3">
-                      Action
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {orderdetail.map((detail, index) => (
-                    <tr
-                      className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-                      key={detail.id}
-                    >
-                      <td scope="row" className="px-6 py-4 whitespace-nowrap">
-                        {index + 1}
-                      </td>
-                      <td className="px-6 py-4">{detail.productName}</td>
-                      <td className="px-6 py-4">{Math.abs(detail.quantity)}</td>
-                      <td className="px-6 py-4">
-                        <Link
-                          onClick={() => {
-                            if (window.confirm("Delete the item?")) {
-                              deleteTransaction(detail.id);
-                            }
-                          }}
-                          className=" text-white bg-red-500 hover:bg-red-600 rounded-md text-sm px-2 py-1.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-res-700"
-                        >
-                          Delete
-                        </Link>
-                      </td>
+              {orderdetail.length ? (
+                <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                  <thead className=" text-sm text-gray-700 uppercase bg-gray-200 dark:bg-gray-700 dark:text-gray-400">
+                    <tr>
+                      <th scope="col" className="px-6 py-3">
+                        #
+                      </th>
+                      <th scope="col" className="px-6 py-3">
+                        Product Name
+                      </th>
+                      <th scope="col" className="px-6 py-3">
+                        Quantity
+                      </th>
+                      <th scope="col" className="px-6 py-3">
+                        Action
+                      </th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody>
+                    {orderdetail.map((detail, index) => (
+                      <tr
+                        className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+                        key={detail.id}
+                      >
+                        <td scope="row" className="px-6 py-4 whitespace-nowrap">
+                          {index + 1}
+                        </td>
+                        <td className="px-6 py-4">{detail.productName}</td>
+                        <td className="px-6 py-4">{Math.abs(detail.quantity)}</td>
+                        <td className="px-6 py-4">
+                          <Link
+                            onClick={() => {
+                              if (window.confirm("Delete the item?")) {
+                                deleteTransactionDetail(detail.id);
+                              }
+                            }}
+                            className=" text-white bg-red-500 hover:bg-red-600 rounded-md text-sm px-2 py-1.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-res-700"
+                          >
+                            Delete
+                          </Link>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              ) : (
+                ""
+              )}
 
               <div className="flex">
-                <select
+                {/* <select
                   id="product"
                   name="productId"
                   onChange={handleSelectProduct}
@@ -219,10 +236,20 @@ const AddTransactionDetail = () => {
                   <option value="">Select the product</option>
                   {product.map((product) => (
                     <option key={product.id} data-name={product.name} data-price={product.price} value={product.id}>
-                      {product.name}
+                      {product.name} (sku: {product.sku})
                     </option>
                   ))}
-                </select>
+                </select> */}
+                <Select
+                  inputId="product"
+                  className="bg-gray-50  text-gray-900 text-sm rounded-lg  block w-1/2 dark:bg-gray-700  dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mr-3"
+                  options={optionDefaults}
+                  placeholder={`Select Product`}
+                  // value={selectedProduct || ""}
+                  onChange={handleSelectProduct}
+                  isSearchable={true}
+                  required
+                />
 
                 <input
                   id="quantity"
@@ -233,22 +260,30 @@ const AddTransactionDetail = () => {
                   value={quantity}
                   onChange={(e) => setQuantity(e.target.value)}
                   placeholder="Quantity"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-1/4 p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white mr-3"
+                  className=" border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-1/4 p-1 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white mr-3"
                   disabled
                   required
                 />
 
                 <button
                   type="submit"
-                  className="w-24 text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800 "
+                  className="w-20 text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800 "
                 >
                   Add
                 </button>
               </div>
             </form>
+            <Link
+              onClick={() => {
+                deleteTransaction(id);
+              }}
+              className=" text-white bg-red-500 hover:bg-red-600 rounded-md text-sm px-2 py-1.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-res-700"
+            >
+              Back
+            </Link>
             {orderdetail.length ? (
               <Link
-                className="w-24 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 mt"
+                className="w-24 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-md text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 mt"
                 to={`/transaction/final/${id}`}
               >
                 Next

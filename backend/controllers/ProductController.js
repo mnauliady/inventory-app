@@ -153,6 +153,7 @@ const updateProduct = async (req, res) => {
         sku,
         name: req.body.name,
         url_photo: photo,
+        status: req.body.status,
         price: req.body.price,
         min_stock: req.body.min_stock,
         categoryId: req.body.categoryId,
@@ -278,7 +279,7 @@ const getAllStock = async (req, res) => {
 const getAvailableStock = async (req, res) => {
   try {
     const query = await db.sequelize.query(
-      `SELECT products.*, sum(orderdetails.quantity) FROM products INNER JOIN orderdetails ON products."id" = orderdetails."productId" GROUP BY products."id" HAVING sum(orderdetails.quantity) > 0`,
+      `SELECT products.*, sum(orderdetails.quantity) FROM products INNER JOIN orderdetails ON products."id" = orderdetails."productId" WHERE products.status = 'active' GROUP BY products."id" HAVING sum(orderdetails.quantity) > 0`,
       {
         type: db.sequelize.QueryTypes.SELECT,
       }

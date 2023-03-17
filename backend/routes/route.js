@@ -38,6 +38,7 @@ const {
   createCustomer,
   updateCustomer,
   deleteCustomer,
+  getCustomerType,
 } = require("../controllers/CustomerController.js");
 
 const {
@@ -123,7 +124,8 @@ router.delete("/users/:id", deleteUser);
 // Route Customer ============================================
 router.get("/customers", getCustomers);
 router.get("/customers/:id", getCustomerById);
-router.post("/customers", verifyToken, createCustomer);
+router.get("/customers/type/:type", getCustomerType);
+router.post("/customers", createCustomer);
 router.put("/customers/:id", updateCustomer);
 router.delete("/customers/:id", deleteCustomer);
 // ===========================================================

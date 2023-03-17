@@ -33,6 +33,7 @@ import Forbidden from "./page/forbidden";
 import Profile from "./page/profile";
 import EditProfile from "./page/profile/edit";
 import ChangePassword from "./page/profile/changePassword";
+import DetailTransaction from "./page/transaction/detail";
 
 const Main = () => {
   return (
@@ -42,7 +43,7 @@ const Main = () => {
 
         <Routes>
           <Route exact path="/" element={<Home />} />
-          <Route path="/home" element={<Home />} />
+          {/* <Route path="/home" element={<Home />} /> */}
 
           {/* Product Page */}
           <Route path="/products" element={<Product />} />
@@ -57,6 +58,7 @@ const Main = () => {
 
           <Route path="/transaction" element={<Transaction />} />
           <Route path="/transaction/add" element={<AddTransaction />} />
+          <Route path="/transaction/:id" element={<DetailTransaction />} />
           <Route path="/transaction/final/:id" element={<Final />} />
 
           <Route path="/transaction/add/detail/:id" element={<AddTransactionDetail />} />
@@ -82,6 +84,7 @@ const Main = () => {
 
           <Route path="/not-found" element={<Blank />} />
           <Route path="/forbidden" element={<Forbidden />} />
+          <Route path="/*" element={<Blank />} />
         </Routes>
       </div>
     </main>
