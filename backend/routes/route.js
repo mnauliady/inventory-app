@@ -21,6 +21,7 @@ const {
   getStockById,
   getAvailableStock,
   checkProductOrder,
+  getProductBySupplier,
 } = require("../controllers/ProductController.js");
 
 const {
@@ -97,6 +98,7 @@ router.get("/products", getProducts);
 router.get("/products/available", getAvailableStock);
 router.get("/products/all", getAllStock);
 router.get("/products/order", checkProductOrder);
+router.get("/products/in/:id", getProductBySupplier);
 router.get("/stock/:id", getStockById);
 router.get("/products/:id", getProductById);
 

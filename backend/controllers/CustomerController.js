@@ -2,6 +2,7 @@
 // import Customer from "../models/Customer.js";
 const Customer = require("../models").customer;
 const Order = require("../models").order;
+const db = require("../models/index");
 const { v4: uuidv4 } = require("uuid");
 const uuid = require("uuid");
 const { check, validationResult } = require("express-validator");
@@ -9,7 +10,10 @@ const { check, validationResult } = require("express-validator");
 // Get semua customer
 const getCustomers = async (req, res) => {
   try {
-    const customer = await Customer.findAll();
+    const customer = await Customer.findAll({
+      where: { type: "customer" },
+      include: [{ model: Order, as: "order" }],
+    });
     res.send(customer);
   } catch (err) {
     console.log(err);
@@ -57,6 +61,7 @@ const createCustomer = async (req, res) => {
     await Customer.create({
       id: uuidv4(),
       name: req.body.name,
+      type: "customer",
       phone: req.body.phone,
       email: req.body.email,
       address: req.body.address,
@@ -130,9 +135,22 @@ const deleteCustomer = async (req, res) => {
 };
 
 const getCustomerType = async (req, res) => {
-  const type = await Customer.findAll({
-    where: { type: req.params.type },
-  });
-  res.send(type);
+  try {
+    let type;
+    if (req.params.type == "OUT") {
+      type = await Customer.findAll({
+        where: { type: "customer" },
+      });
+    } else {
+      type = await db.sequelize.query(
+        `SELECT suppliers.* FROM suppliers INNER JOIN products ON suppliers."id" = products."supplierId" GROUP BY suppliers."id"`,
+        {
+          type: db.sequelize.QueryTypes.SELECT,
+        }
+      );
+    }
+
+    res.send(type);
+  } catch {}
 };
 module.exports = { getCustomers, getCustomerById, createCustomer, updateCustomer, deleteCustomer, getCustomerType };

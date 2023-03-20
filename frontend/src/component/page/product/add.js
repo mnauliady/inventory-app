@@ -124,7 +124,7 @@ const AddProduct = () => {
 
   return (
     <section className="w-full">
-      <div id="main" className="main-content flex-1 bg-gray-100 mt-12 md:mt-2 pb-24 md:pb-5">
+      <div id="main" className="main-content flex-1 h-full bg-gray-100 mt-12 md:mt-2 pb-24 md:pb-5">
         <div className="bg-gray-800 pt-3">
           <div className=" bg-blue-800 p-4 shadow text-2xl text-white">
             <h1 className="font-bold pl-2">Product</h1>
@@ -208,7 +208,7 @@ const AddProduct = () => {
               {/* Supplier */}
               <div>
                 <label htmlFor="supplier" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                  Select the category
+                  Select the Supplier
                 </label>
                 <select
                   id="supplier"
@@ -217,7 +217,7 @@ const AddProduct = () => {
                   required
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-1/2 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 >
-                  <option value="">Select the category</option>
+                  <option value="">Select the supplier</option>
                   {suppliers.map((supplier) => (
                     <option key={supplier.id} value={supplier.id}>
                       {supplier.name}

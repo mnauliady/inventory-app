@@ -172,42 +172,29 @@ const updateProduct = async (req, res) => {
   }
 };
 
-// Delete product berdasarkan id
-// const deleteProduct = async (req, res) => {
-//   try {
-//     // cek apakah id yg diinputkan ada di db
-//     const getFile = await Product.findByPk(req.params.id);
-
-//     // jika ada
-//     if (getFile) {
-//       // hapus data pada db
-//       await Product.destroy({
-//         where: {
-//           id: req.params.id,
-//         },
-//       });
-
-//       // memanggil fungsi delete file untuk hapus data di storage
-//       deleteFile(getFile.url_photo);
-//       //mengirimkan pesan sukses
-//       res.json({
-//         message: "Product Deleted",
-//       });
-//     } else {
-//       // jika id tidak ditemukan
-//       return res.status(409).json({
-//         status: "error",
-//         message: "product not found",
-//       });
-//     }
-//   } catch (err) {
-//     console.log(err);
-//   }
-// };
-
 // Delete product berdasarkan id (hanya mengupdate status product menjadi 'not active')
 const deleteProduct = async (req, res) => {
   try {
+    const query = await Product.findByPk(req.params.id, {
+      include: [{ model: OrderDetail, as: "orderdetail" }],
+    });
+
+    if (!query.orderdetail.length) {
+      // hapus data pada db
+      await Product.destroy({
+        where: {
+          id: req.params.id,
+        },
+      });
+
+      // memanggil fungsi delete file untuk hapus data di storage
+      deleteFile(query.url_photo);
+      //mengirimkan pesan sukses
+      res.json({
+        message: "Product Deleted",
+      });
+    }
+
     const product = await Product.update(
       {
         status: "not active",
@@ -290,6 +277,21 @@ const getAvailableStock = async (req, res) => {
   }
 };
 
+const getProductBySupplier = async (req, res) => {
+  try {
+    const query = await db.sequelize.query(
+      `SELECT products.* FROM products INNER JOIN suppliers ON products."supplierId" = suppliers."id" WHERE suppliers."id" = (:id) AND products."status" = 'active'`,
+      {
+        replacements: { id: req.params.id },
+        type: db.sequelize.QueryTypes.SELECT,
+      }
+    );
+    res.send(query);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 const checkProductOrder = async (req, res) => {
   try {
     const query = await db.sequelize.query(
@@ -303,6 +305,7 @@ const checkProductOrder = async (req, res) => {
     console.log(error);
   }
 };
+
 module.exports = {
   getProducts,
   getProductById,
@@ -313,4 +316,5 @@ module.exports = {
   getStockById,
   getAvailableStock,
   checkProductOrder,
+  getProductBySupplier,
 };

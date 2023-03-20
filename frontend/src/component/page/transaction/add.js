@@ -53,12 +53,12 @@ const AddTransaction = () => {
       document.getElementById("customer").disabled = true;
     }
 
-    let customerType = "customer";
-    if (e.target.value === "IN") {
-      customerType = "supplier";
-    }
+    // let customerType = "customer";
+    // if (e.target.value === "IN") {
+    //   customerType = "supplier";
+    // }
 
-    const response = await axios.get(`http://localhost:5000/customers/type/${customerType}`);
+    const response = await axios.get(`http://localhost:5000/customers/type/${e.target.value}`);
 
     //get response data
     const data = await response.data;

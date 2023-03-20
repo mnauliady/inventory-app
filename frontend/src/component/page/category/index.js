@@ -6,9 +6,13 @@ import axios from "axios";
 // import Link
 import { Link } from "react-router-dom";
 
+import DeleteModal from "./deleteModal";
+
 const Category = () => {
   //define state
   const [categories, setCategories] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+  const [idDelete, setIdDelete] = useState();
 
   //useEffect hook
   useEffect(() => {
@@ -27,12 +31,15 @@ const Category = () => {
     setCategories(data);
   };
 
-  const deleteCategory = async (id) => {
+  const deleteCategory = (id, nama) => {
     //sending
-    await axios.delete(`http://localhost:5000/categories/${id}`);
+    // set modal ke true
+    setShowModal(true);
+    // set id dari produk yang akan dihapus
+    setIdDelete(id);
 
     //panggil function "fetchData"
-    fectData();
+    // fectData();
   };
 
   return (
@@ -83,22 +90,29 @@ const Category = () => {
                     </td>
                     <td className="px-6 py-4">{category.name}</td>
                     <td className="px-6 py-4">
-                      <Link
-                        to={`/category/edit/${category.id}`}
-                        className=" text-white bg-yellow-500 hover:bg-yellow-600 rounded-md text-sm px-2 py-1.5 mr-2 mb-2 dark:bg-yellow-600 dark:hover:bg-yellow-700"
-                      >
-                        Edit
-                      </Link>
-                      <Link
-                        onClick={() => {
-                          if (window.confirm("Delete the item?")) {
-                            deleteCategory(category.id);
-                          }
-                        }}
-                        className=" text-white bg-red-500 hover:bg-red-600 rounded-md text-sm px-2 py-1.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-res-700"
-                      >
-                        Delete
-                      </Link>
+                      {!category.product.length ? (
+                        <div>
+                          <Link
+                            to={`/category/edit/${category.id}`}
+                            className=" text-white bg-yellow-500 hover:bg-yellow-600 rounded-md text-sm px-2 py-1.5 mr-2 mb-2 dark:bg-yellow-600 dark:hover:bg-yellow-700"
+                          >
+                            Edit
+                          </Link>
+                          <Link
+                            onClick={() => {
+                              // if (window.confirm("Delete the item?")) {
+                              deleteCategory(category.id, category.name);
+                              // }
+                            }}
+                            // onClick={() => setShowModal(true)}
+                            className=" text-white bg-red-500 hover:bg-red-600 rounded-md text-sm px-2 py-1.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-res-700"
+                          >
+                            Delete
+                          </Link>
+                        </div>
+                      ) : (
+                        ""
+                      )}
                     </td>
                   </tr>
                 ))}
@@ -106,6 +120,8 @@ const Category = () => {
             </table>
           </div>
         </div>
+
+        {showModal && <DeleteModal id={setIdDelete} setShowModal={setShowModal} />}
 
         <nav aria-label="Page navigation example" className="pt-6 text-center">
           <ul className="inline-flex -space-x-px">

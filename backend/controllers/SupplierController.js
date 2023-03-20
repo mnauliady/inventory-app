@@ -1,5 +1,6 @@
 const Supplier = require("../models").supplier;
 const Product = require("../models").product;
+const Customer = require("../models").customer;
 const { v4: uuidv4 } = require("uuid");
 const uuid = require("uuid");
 const { check, validationResult } = require("express-validator");
@@ -7,7 +8,9 @@ const { check, validationResult } = require("express-validator");
 // Get semua supplier
 const getSuppliers = async (req, res) => {
   try {
-    const supplier = await Supplier.findAll();
+    const supplier = await Supplier.findAll({
+      include: [{ model: Product, as: "product" }],
+    });
     res.send(supplier);
   } catch (err) {
     console.log(err);
@@ -61,6 +64,21 @@ const createSupplier = async (req, res) => {
       email: req.body.email,
       address: req.body.address,
     });
+
+    const supplier = await Supplier.findAll({
+      limit: 1,
+      order: [["createdAt", "DESC"]],
+    });
+
+    await Customer.create({
+      id: supplier[0].id,
+      name: supplier[0].name,
+      type: "supplier",
+      phone: supplier[0].name,
+      email: supplier[0].email,
+      address: supplier[0].address,
+    });
+
     res.json({
       message: "Supplier Created",
     });
@@ -92,6 +110,12 @@ const updateSupplier = async (req, res) => {
 
     // jika ditemukan
     if (supplier == 1) {
+      await Customer.update(req.body, {
+        where: {
+          id: req.params.id,
+        },
+      });
+
       res.json({
         message: "Supplier Updated",
       });
@@ -115,6 +139,13 @@ const deleteSupplier = async (req, res) => {
         id: req.params.id,
       },
     });
+
+    await Customer.destroy({
+      where: {
+        id: req.params.id,
+      },
+    });
+
     res.json({
       message: "Supplier Deleted",
     });

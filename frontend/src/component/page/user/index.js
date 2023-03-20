@@ -64,7 +64,7 @@ const User = () => {
 
         {/* Table */}
         <div className="flex flex-wrap mx-8">
-          <div className=" relative overflow-x-auto shadow-md sm:rounded-lg">
+          <div className=" relative overflow-x-auto shadow-md sm:rounded-lg w-full">
             <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
               <thead className=" text-sm text-gray-700 uppercase bg-gray-200 dark:bg-gray-700 dark:text-gray-400">
                 <tr>

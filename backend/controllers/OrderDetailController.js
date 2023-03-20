@@ -59,6 +59,7 @@ const createOrderDetail = async (req, res) => {
       orderId: req.body.orderId,
       productId: req.body.productId,
       quantity: quantity,
+      productSku: req.body.productSku,
       productName: req.body.productName,
       productPrice: req.body.productPrice,
     });

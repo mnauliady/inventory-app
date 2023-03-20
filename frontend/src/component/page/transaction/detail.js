@@ -167,7 +167,7 @@ const DetailTransaction = () => {
           className=" text-white bg-blue-500 hover:bg-blue-600 rounded-md font-medium text-sm px-5 py-2.5 ml-2"
           onClick={() => {
             window.print();
-            document.title = `INV-${code}`;
+            document.title = `${code}`;
           }}
         >
           Print

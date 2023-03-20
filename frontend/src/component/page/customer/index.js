@@ -159,7 +159,7 @@ const Customer = () => {
 
         {/* Table */}
         <div className="flex flex-wrap mx-8">
-          <div className="w-3/5 relative overflow-x-auto shadow-md sm:rounded-lg">
+          <div className="w-full relative overflow-x-auto shadow-md sm:rounded-lg">
             <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
               <thead className=" text-sm text-gray-700 uppercase bg-gray-200 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
@@ -197,16 +197,20 @@ const Customer = () => {
                       >
                         Edit
                       </Link>
-                      <Link
-                        onClick={() => {
-                          if (window.confirm("Delete the item?")) {
-                            deleteCustomer(customer.id);
-                          }
-                        }}
-                        className=" text-white bg-red-500 hover:bg-red-600 rounded-md text-sm px-2 py-1.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-res-700"
-                      >
-                        Delete
-                      </Link>
+                      {!customer.order.length ? (
+                        <Link
+                          onClick={() => {
+                            if (window.confirm("Delete the item?")) {
+                              deleteCustomer(customer.id);
+                            }
+                          }}
+                          className=" text-white bg-red-500 hover:bg-red-600 rounded-md text-sm px-2 py-1.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-res-700"
+                        >
+                          Delete
+                        </Link>
+                      ) : (
+                        ""
+                      )}
                     </td>
                   </tr>
                 ))}

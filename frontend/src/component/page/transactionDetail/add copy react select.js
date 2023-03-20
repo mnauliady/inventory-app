@@ -17,7 +17,6 @@ const AddTransactionDetail = () => {
   const [quantity, setQuantity] = useState("");
   const [maxQuantity, setMaxQuantity] = useState("");
 
-  const [sku, setSku] = useState("");
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
 
@@ -39,6 +38,7 @@ const AddTransactionDetail = () => {
     const response = await axios.get(`http://localhost:5000/orders/${id}`);
     //get response data
     const data = await response.data;
+
     // set tipe transaksi
     setType(data.type);
 
@@ -49,14 +49,38 @@ const AddTransactionDetail = () => {
     if (data.type === "OUT") {
       response2 = await axios.get(`http://localhost:5000/products/available`);
     } else {
-      response2 = await axios.get(`http://localhost:5000/products/in/${data.customerId}`);
+      response2 = await axios.get(`http://localhost:5000/products`);
     }
 
     //get response data
     const dataProduct = await response2.data;
 
     setProduct(dataProduct);
+    //   dataProduct.map((product) => {
+    //     return {
+    //       label: `${product.name} -- (sku :${product.sku})`,
+    //       value: product.id,
+    //       dataName: product.name,
+    //       dataPrice: product.price,
+    //       dataSku: product.sku,
+    //     };
+    //   })
+    // );
   };
+
+  const optionList = product.map((product) => {
+    return {
+      label: `${product.name} -- (sku :${product.sku})`,
+      value: product.id,
+      dataName: product.name,
+      dataPrice: product.price,
+      dataSku: product.sku,
+    };
+  });
+  console.log(optionList);
+  const optionDefault = [{ label: "Select Productss", value: "null" }];
+  const optionDefaults = optionDefault.concat(optionList);
+  console.log(optionDefaults);
 
   //useEffect hook
   useEffect(() => {
@@ -66,7 +90,7 @@ const AddTransactionDetail = () => {
 
   // fungsi untuk handle form select product
   const handleSelectProduct = async (e) => {
-    if (e.target.value) {
+    if (e.value) {
       document.getElementById("quantity").disabled = false;
     } else {
       document.getElementById("quantity").disabled = true;
@@ -77,15 +101,13 @@ const AddTransactionDetail = () => {
 
     // jika type transaksi keluar maka maxQuantitry adalah <= jumlah stok
     if (type == "OUT") {
-      const response = await axios.get(`http://localhost:5000/stock/${e.target.value}`);
+      const response = await axios.get(`http://localhost:5000/stock/${e.value}`);
       setMaxQuantity(response.data[0].sum);
-      document.getElementById("max").classList.remove("hidden");
     }
 
-    setSelectedProduct(e.target.value);
-    setSku(e.target.selectedOptions[0].getAttribute("data-sku"));
-    setName(e.target.selectedOptions[0].getAttribute("data-name"));
-    setPrice(e.target.selectedOptions[0].getAttribute("data-price"));
+    setSelectedProduct(e.value);
+    setName(e.dataName);
+    setPrice(e.dataPrice);
   };
 
   const { user } = useSelector((state) => state.auth);
@@ -101,16 +123,17 @@ const AddTransactionDetail = () => {
         orderId: id,
         productId: selectedProduct,
         productName: name,
-        productSku: sku,
         quantity,
         productPrice: price,
       })
       .then(async () => {
         document.getElementById("quantity").disabled = true;
-        document.getElementById("max").classList.add("hidden");
         setQuantity("");
         setProduct([]);
+        setSelectedProduct("");
         setValidation({});
+        console.log(product);
+        console.log(selectedProduct);
         getOrder();
       })
       .catch((error) => {
@@ -213,7 +236,7 @@ const AddTransactionDetail = () => {
               )}
 
               <div className="flex">
-                <select
+                {/* <select
                   id="product"
                   name="productId"
                   onChange={handleSelectProduct}
@@ -222,17 +245,21 @@ const AddTransactionDetail = () => {
                 >
                   <option value="">Select the product</option>
                   {product.map((product) => (
-                    <option
-                      key={product.id}
-                      data-sku={product.sku}
-                      data-name={product.name}
-                      data-price={product.price}
-                      value={product.id}
-                    >
+                    <option key={product.id} data-name={product.name} data-price={product.price} value={product.id}>
                       {product.name} (sku: {product.sku})
                     </option>
                   ))}
-                </select>
+                </select> */}
+                <Select
+                  inputId="product"
+                  className="bg-gray-50 border-gray-400  text-gray-900 text-sm rounded-lg  block w-1/2 dark:bg-gray-700  dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mr-3"
+                  options={optionDefaults}
+                  placeholder={`Select Product`}
+                  // value={selectedProduct || ""}
+                  onChange={handleSelectProduct}
+                  isSearchable={true}
+                  required
+                />
 
                 <input
                   id="quantity"
@@ -243,17 +270,15 @@ const AddTransactionDetail = () => {
                   value={quantity}
                   onChange={(e) => setQuantity(e.target.value)}
                   placeholder="Quantity"
-                  className=" border bg-white border-gray-400 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-1/4 p-1 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white mr-1"
+                  className=" border bg-white border-gray-400 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-1/4 p-1 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white mr-3"
                   disabled
                   required
                 />
-                <div id="max" className="text-gray-500 text-xs hidden">
-                  Max. {maxQuantity}
-                </div>
+                <div className="text-gray-500">Example help text goes outside the input group.</div>
 
                 <button
                   type="submit"
-                  className="w-20 text-white bg-green-700 hover:bg-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800 ml-2"
+                  className="w-20 text-white bg-green-700 hover:bg-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800 "
                 >
                   Add
                 </button>
