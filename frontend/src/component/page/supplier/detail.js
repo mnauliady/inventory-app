@@ -15,6 +15,7 @@ const DetailSupplier = () => {
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [address, setAddress] = useState("");
+  const [product, setProduct] = useState([]);
 
   const navigate = useNavigate();
 
@@ -39,6 +40,8 @@ const DetailSupplier = () => {
       setPhone(data.phone);
       setEmail(data.email);
       setAddress(data.address);
+      setProduct(data.product);
+      console.log(data.product);
     } catch (error) {
       // jika id (tidak ditemukan maka akan redirect ke blank page)
       navigate("/not-found");
@@ -47,7 +50,7 @@ const DetailSupplier = () => {
 
   return (
     <section className="w-full">
-      <div id="main" className="main-content flex-1 bg-gray-100 mt-12 md:mt-2 pb-24 md:pb-5 h-full">
+      <div id="main" className="main-content flex-1 bg-gray-100 pb-24 md:pb-5 h-full">
         <div className="bg-gray-800 pt-3">
           <div className="bg-blue-800 p-4 shadow text-2xl text-white ">
             <h1 className="font-bold pl-2">Supplier</h1>
@@ -55,7 +58,7 @@ const DetailSupplier = () => {
         </div>
 
         <div className="flex flex-wrap mt-8 mx-8 mb-4">
-          <div className="overflow-hidden bg-white shadow sm:rounded-lg w-1/2">
+          <div className="overflow-hidden bg-white shadow sm:rounded-lg w-full">
             <div className="px-4 py-5 sm:px-6 bg-gray-200">
               <h3 className="text-base font-semibold leading-6 text-gray-900">Supplier Information</h3>
             </div>
@@ -78,6 +81,43 @@ const DetailSupplier = () => {
                   <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">{address}</dd>
                 </div>
               </dl>
+              {product.length ? (
+                <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                  <thead className=" text-sm text-gray-700 bg-gray-200 dark:bg-gray-700 dark:text-gray-400">
+                    <tr>
+                      <th scope="col" className="px-6 py-3">
+                        #
+                      </th>
+                      <th scope="col" className="px-6 py-3">
+                        Product SKU
+                      </th>
+                      <th scope="col" className="px-6 py-3">
+                        Product Name
+                      </th>
+                      <th scope="col" className="px-6 py-3">
+                        Price
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {product.map((p, index) => (
+                      <tr
+                        className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600"
+                        key={p.id}
+                      >
+                        <td scope="row" className="px-6 py-4 whitespace-nowrap">
+                          {index + 1}
+                        </td>
+                        <td className="px-6 py-4">{p.sku}</td>
+                        <td className="px-6 py-4">{p.name}</td>
+                        <td className="px-6 py-4">Rp {p.price.toLocaleString()}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              ) : (
+                ""
+              )}
             </div>
           </div>
         </div>
