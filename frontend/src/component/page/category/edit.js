@@ -28,6 +28,7 @@ const EditCategory = () => {
       const data = await response.data;
       //assign data to state
       setName(data.name);
+      setOldName(data.name);
     } catch (error) {
       // jika id (tidak ditemukan maka akan redirect ke blank page)
       navigate("/not-found");
@@ -37,6 +38,7 @@ const EditCategory = () => {
   // Proses Update data ===================================
   //state
   const [name, setName] = useState("");
+  const [oldName, setOldName] = useState("");
 
   //state validation
   const [validation, setValidation] = useState({});
@@ -51,6 +53,7 @@ const EditCategory = () => {
     await axios
       .put(`http://localhost:5000/categories/${id}`, {
         name,
+        oldName,
       })
       .then(() => {
         //redirect ke halaman category
@@ -64,7 +67,7 @@ const EditCategory = () => {
 
   return (
     <section className="w-full">
-      <div id="main" className="h-full main-content flex-1 bg-gray-100 mt-12 md:mt-2 pb-24 md:pb-5">
+      <div id="main" className="h-full main-content flex-1 bg-gray-100 pb-24 md:pb-5">
         <div className="bg-gray-800 pt-3">
           <div className=" bg-blue-800 p-4 shadow text-2xl text-white">
             <h1 className="font-bold pl-2">Product</h1>

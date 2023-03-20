@@ -5,6 +5,7 @@ const Product = require("../models").product;
 const { v4: uuidv4 } = require("uuid");
 const uuid = require("uuid");
 const { check, validationResult } = require("express-validator");
+const db = require("../models/index");
 
 // Get semua category
 const getCategories = async (req, res) => {
@@ -43,6 +44,18 @@ const getCategoryById = async (req, res) => {
 const createCategory = async (req, res) => {
   // validasi inputan
   await check("name").isLength({ min: 3 }).withMessage("Minimal 3 character").run(req);
+  // mengecek email sudah ada di db
+  const name = await db.sequelize.query(`SELECT "name" FROM categories WHERE LOWER(name) = (:name)`, {
+    replacements: { name: req.body.name.toLowerCase() },
+    type: db.sequelize.QueryTypes.SELECT,
+  });
+
+  if (name.length) {
+    const result = { msg: "Category name already exist", param: "Category Name" };
+    return res.status(409).json({
+      errors: [result],
+    });
+  }
 
   // tampilkan jika ada error
   const result = validationResult(req);
@@ -69,6 +82,18 @@ const updateCategory = async (req, res) => {
   // validasi inputan
   await check("name").isLength({ min: 3 }).withMessage("Minimal 3 character").run(req);
 
+  // mengecek email sudah ada di db
+  const name = await db.sequelize.query(`SELECT "name" FROM categories WHERE LOWER(name) = (:name)`, {
+    replacements: { name: req.body.name.toLowerCase() },
+    type: db.sequelize.QueryTypes.SELECT,
+  });
+
+  if (name.length && req.body.name != req.body.oldName) {
+    const result = { msg: "Category name already exist", param: "Category Name" };
+    return res.status(409).json({
+      errors: [result],
+    });
+  }
   // tampilkan jika ada error
   const result = validationResult(req);
   if (!result.isEmpty()) {

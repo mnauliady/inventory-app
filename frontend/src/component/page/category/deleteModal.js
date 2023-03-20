@@ -1,23 +1,25 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-const DeleteModal = ({ id, setShowModal }) => {
+const DeleteModal = ({ id, name, setStatusDelete, setShowModal }) => {
   const deleteCategory = async () => {
-    console.log(id);
-    //sending
-    // await axios.delete(`http://localhost:5000/categories/${id}`);
+    // sending
+    await axios.delete(`http://localhost:5000/categories/${id}`);
 
-    //panggil function "fetchData"
-    // fectData();
+    setShowModal(false);
+
+    setStatusDelete(true);
   };
 
   return (
     <>
-      <div className="flex justify-center items-center overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
-        <div className="relative w-auto my-6 mx-auto max-w-3xl">
-          <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-slate-100 outline-none focus:outline-none">
+      <div className="flex justify-center items-center overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none bg-transparent">
+        <div className="relative w-2/5 my-6 mx-auto max-w-3xl">
+          <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-gray-50 drop-shadow-2xl bg-opacity-80 backdrop-blur-sm outline-none focus:outline-none">
             <div className="flex items-start justify-between p-5 border-b border-solid border-gray-300 rounded-t ">
-              <h3 className="text-xl font-base">Delete the item?</h3>
+              <h3 className="text-xl font-base">
+                Delete Category <span className="font-semibold">{name}</span>?
+              </h3>
               <button className="bg-transparent -mt-5 -mr-2" onClick={() => setShowModal(false)}>
                 <span className="absolute mt-3 right-2 p-0.5 bg-red-500 rounded-full text-white hover:bg-red-600">
                   <svg

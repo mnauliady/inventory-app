@@ -7,9 +7,12 @@ import axios from "axios";
 //import hook history dan params dari react router dom
 import { Link, useParams, useNavigate } from "react-router-dom";
 
+import moment from "moment/moment";
+
 const Final = () => {
   //state
   const [code, setCode] = useState("");
+  const [type, setType] = useState("");
   const [date, setDate] = useState("");
   const [customerName, setCustomerName] = useState("");
   const [customerPhone, setCustomerPhone] = useState("");
@@ -51,6 +54,7 @@ const Final = () => {
 
       //assign data to state
       setCode(data.code);
+      setType(data.type);
       setDate(data.date);
       setCustomerName(data.customer.name);
       setCustomerPhone(data.customer.phone);
@@ -74,7 +78,7 @@ const Final = () => {
 
   return (
     <section className="w-full">
-      <div id="main" className="main-content flex-1 bg-gray-100 mt-12 md:mt-2 pb-24 md:pb-5 h-full">
+      <div id="main" className="main-content flex-1 bg-gray-100 pb-24 md:pb-5 h-full">
         <div className="bg-gray-800 pt-3">
           <div className="bg-blue-800 p-4 shadow text-2xl text-white ">
             <h1 className="font-bold pl-2">Transaction</h1>
@@ -94,10 +98,10 @@ const Final = () => {
                 </div>
                 <div className="px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 hover:bg-gray-100">
                   <dt className="text-sm font-medium text-gray-500">Date</dt>
-                  <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">{date}</dd>
+                  <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">{moment(date).format("LL")}</dd>
                 </div>
                 <h3 className="text-base font-semibold leading-6 text-gray-900 px-4 py-3 sm:gap-4 sm:px-6 bg-gray-200">
-                  Receiver
+                  {type == "OUT" ? "Receiver" : "Sender"}
                 </h3>
                 <div className="border-b-2 border-gray-100 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 hover:bg-gray-100">
                   <dt className="text-sm font-medium text-gray-500">Name</dt>

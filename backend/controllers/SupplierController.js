@@ -25,7 +25,9 @@ const getSupplierById = async (req, res) => {
 
   try {
     // mengecek supplier by id
-    const supplier = await Supplier.findByPk(req.params.id);
+    const supplier = await Supplier.findByPk(req.params.id, {
+      include: [{ model: Product, as: "product" }],
+    });
 
     // jika ditemukan
     if (supplier) {

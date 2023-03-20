@@ -139,8 +139,8 @@ const Customer = () => {
 
   return (
     // index page
-    <section className="w-full">
-      <div id="main" className="h-full main-content flex-1 bg-gray-100 mt-12 md:mt-2 pb-24 md:pb-5">
+    <section className="w-full max-h-fit">
+      <div id="main" className="main-content flex-1 bg-gray-100 pb-24 md:pb-0">
         <div className="bg-gray-800 pt-3">
           <div className=" bg-blue-800 p-4 shadow text-2xl text-white">
             <h1 className="font-bold pl-2">Customer</h1>

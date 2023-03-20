@@ -12,13 +12,15 @@ const Category = () => {
   //define state
   const [categories, setCategories] = useState([]);
   const [showModal, setShowModal] = useState(false);
+  const [statusDelete, setStatusDelete] = useState("");
   const [idDelete, setIdDelete] = useState();
+  const [nameDelete, setNameDelete] = useState();
 
   //useEffect hook
   useEffect(() => {
     //panggil method "fetchData"
     fectData();
-  }, []);
+  }, [statusDelete]);
 
   //function "fetchData"
   const fectData = async () => {
@@ -38,19 +40,27 @@ const Category = () => {
     // set id dari produk yang akan dihapus
     setIdDelete(id);
 
+    setNameDelete(nama);
+
+    setStatusDelete(false);
+
     //panggil function "fetchData"
     // fectData();
   };
 
   return (
     // index page
+
     <section className="w-full">
-      <div id="main" className="h-full main-content flex-1 bg-gray-100 mt-12 md:mt-2 pb-24 md:pb-5">
+      <div id="main" className=" main-content flex-1 bg-gray-100 pb-24">
         <div className="bg-gray-800 pt-3">
           <div className=" bg-blue-800 p-4 shadow text-2xl text-white">
             <h1 className="font-bold pl-2">Category</h1>
           </div>
         </div>
+        {showModal && (
+          <DeleteModal id={idDelete} name={nameDelete} setStatusDelete={setStatusDelete} setShowModal={setShowModal} />
+        )}
 
         {/* button Add */}
         <div className="flex flex-wrap mt-8 mx-8">
@@ -120,8 +130,6 @@ const Category = () => {
             </table>
           </div>
         </div>
-
-        {showModal && <DeleteModal id={setIdDelete} setShowModal={setShowModal} />}
 
         <nav aria-label="Page navigation example" className="pt-6 text-center">
           <ul className="inline-flex -space-x-px">

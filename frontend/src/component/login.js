@@ -25,7 +25,7 @@ const Login = () => {
   };
 
   return (
-    <div className="bg-gray-800 w-full h-full">
+    <div className="bg-gray-800 w-full">
       <div className="w-1/2 m-auto py-36 md:flex">
         <div className="relative oferflow-hidden md:flex w-1/2 rounded-l-lg bg-blue-400 py-6 hidden ">
           <img src={loginImage} alt="login" />

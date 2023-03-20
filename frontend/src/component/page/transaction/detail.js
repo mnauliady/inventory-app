@@ -7,6 +7,8 @@ import axios from "axios";
 //import hook history dan params dari react router dom
 import { Link, useParams, useNavigate } from "react-router-dom";
 
+import moment from "moment/moment";
+
 const DetailTransaction = () => {
   //state
   const [code, setCode] = useState("");
@@ -66,7 +68,7 @@ const DetailTransaction = () => {
 
   return (
     <section className="w-full" id="section-print">
-      <div id="main" className="main-content flex-1 bg-gray-100 mt-12 md:mt-2 pb-24 md:pb-5 h-full">
+      <div id="main" className="main-content flex-1 bg-gray-100 pb-24 md:pb-5 h-full">
         <div className="bg-gray-800 pt-3">
           <div className="bg-blue-800 p-4 shadow text-2xl text-white ">
             <h1 className="font-bold pl-2">Transaction</h1>
@@ -86,7 +88,7 @@ const DetailTransaction = () => {
                 </div>
                 <div className="px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 hover:bg-gray-100">
                   <dt className="text-sm font-medium text-gray-500">Date</dt>
-                  <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">{date}</dd>
+                  <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">{moment(date).format("LL")}</dd>
                 </div>
                 <h3 className="text-base font-semibold leading-6 text-gray-900 px-4 py-3 sm:gap-4 sm:px-6 bg-gray-200">
                   Receiver
