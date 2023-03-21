@@ -72,8 +72,8 @@ const AddTransactionDetail = () => {
       document.getElementById("quantity").disabled = true;
     }
 
-    // set nilai max quantity menjadi 1000
-    setMaxQuantity(1000);
+    // set nilai max quantity menjadi 10000
+    setMaxQuantity(10000);
 
     // jika type transaksi keluar maka maxQuantitry adalah <= jumlah stok
     if (type == "OUT") {

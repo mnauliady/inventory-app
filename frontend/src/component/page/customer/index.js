@@ -170,6 +170,9 @@ const Customer = () => {
                     Customer Name
                   </th>
                   <th scope="col" className="px-6 py-3">
+                    Email
+                  </th>
+                  <th scope="col" className="px-6 py-3">
                     Action
                   </th>
                 </tr>
@@ -184,6 +187,7 @@ const Customer = () => {
                       {index + 1}
                     </td>
                     <td className="px-6 py-4">{customer.name}</td>
+                    <td className="px-6 py-4">{customer.email}</td>
                     <td className="px-6 py-4">
                       <Link
                         to={`/customer/${customer.id}`}

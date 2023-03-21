@@ -151,104 +151,108 @@ const AddProduct = () => {
                 </div>
               )}
 
-              {/* Product Name */}
-              <div>
-                <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                  Product Name
-                </label>
-                <input
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  type="text"
-                  name="name"
-                  id="name"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-1/2 p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                  required
-                />
+              <div className="w-full md:flex">
+                {/* Product Name */}
+                <div className="md:w-4/6 md:mr-2 w-full">
+                  <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                    Product Name
+                  </label>
+                  <input
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    type="text"
+                    name="name"
+                    id="name"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                    required
+                  />
+                </div>
+
+                {/* Minimal Stock */}
+                <div className="md:w-1/6 w-full md:mr-2">
+                  <label htmlFor="min_stock" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                    Minimal Stock
+                  </label>
+                  <input
+                    value={min_stock}
+                    onChange={(e) => setMin_Stock(e.target.value)}
+                    type="number"
+                    name="min_stock"
+                    id="min_stock"
+                    min="1"
+                    className="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                    required
+                  />
+                </div>
+
+                {/* price */}
+                <div className="md:w-1/6 w-full">
+                  <label htmlFor="price" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                    Price (IDR)
+                  </label>
+                  <input
+                    value={price}
+                    onChange={(e) => setPrice(e.target.value)}
+                    type="number"
+                    name="price"
+                    id="price"
+                    min="0"
+                    className="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                    required
+                  />
+                </div>
               </div>
 
-              {/* Minimal Stock */}
-              <div>
-                <label htmlFor="min_stock" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                  Minimal Stock
-                </label>
-                <input
-                  value={min_stock}
-                  onChange={(e) => setMin_Stock(e.target.value)}
-                  type="number"
-                  name="min_stock"
-                  id="min_stock"
-                  min="1"
-                  className="w-48 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                  required
-                />
-              </div>
+              <div className="w-full md:flex">
+                {/* Category */}
+                <div className="md:w-2/6 w-full md:mr-2">
+                  <label htmlFor="category" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                    Select the category
+                  </label>
+                  <select
+                    id="category"
+                    name="categoryId"
+                    onChange={handleSelectCategory}
+                    required
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  >
+                    <option value="">Select the category</option>
+                    {categories.map((category) => (
+                      <option key={category.id} data-set={category.name} value={category.id}>
+                        {category.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
 
-              {/* Category */}
-              <div>
-                <label htmlFor="category" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                  Select the category
-                </label>
-                <select
-                  id="category"
-                  name="categoryId"
-                  onChange={handleSelectCategory}
-                  required
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-1/2 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                >
-                  <option value="">Select the category</option>
-                  {categories.map((category) => (
-                    <option key={category.id} data-set={category.name} value={category.id}>
-                      {category.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              {/* Supplier */}
-              <div>
-                <label htmlFor="supplier" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                  Select the Supplier
-                </label>
-                <select
-                  id="supplier"
-                  name="supplierId"
-                  onChange={handleSelectSupplier}
-                  required
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-1/2 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                >
-                  <option value="">Select the supplier</option>
-                  {suppliers.map((supplier) => (
-                    <option key={supplier.id} value={supplier.id}>
-                      {supplier.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              {/* price */}
-              <div>
-                <label htmlFor="price" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                  Price (IDR)
-                </label>
-                <input
-                  value={price}
-                  onChange={(e) => setPrice(e.target.value)}
-                  type="number"
-                  name="price"
-                  id="price"
-                  min="0"
-                  className="w-48 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                  required
-                />
+                {/* Supplier */}
+                <div className="md:w-2/6 w-full md:mr-2">
+                  <label htmlFor="supplier" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                    Select the Supplier
+                  </label>
+                  <select
+                    id="supplier"
+                    name="supplierId"
+                    onChange={handleSelectSupplier}
+                    required
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  >
+                    <option value="">Select the supplier</option>
+                    {suppliers.map((supplier) => (
+                      <option key={supplier.id} value={supplier.id}>
+                        {supplier.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
               </div>
 
               {/* IMage upload */}
-              <div>
-                <div className="flex w-full">
+              <div className="md:flex w-full">
+                <div className="w-full md:w-1/3 md:mr-2">
                   <label
                     htmlFor="dropzone-file"
-                    className="flex flex-col items-center justify-center w-1/2 h-52 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
+                    className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
                   >
                     Upload Picture
                     <div className="flex flex-col items-center justify-center pt-5 pb-6">
@@ -283,14 +287,22 @@ const AddProduct = () => {
                   </label>
                 </div>
 
-                {/* preview gambar yg diupload */}
-                {preview ? (
-                  <figure className="mt-2 w-1/2">
-                    <img src={preview} alt="Preview Image" />
-                  </figure>
-                ) : (
-                  ""
-                )}
+                <div className="w-full md:w-1/3 md:mr-2">
+                  <div className="w-full">
+                    {/* preview gambar yg diupload */}
+                    {preview ? (
+                      <figure className="w-full">
+                        <img
+                          src={preview}
+                          className=" text-gray-200 rounded-md h-64 w-full object-cover"
+                          alt="Preview Image"
+                        />
+                      </figure>
+                    ) : (
+                      ""
+                    )}
+                  </div>
+                </div>
               </div>
 
               <Link

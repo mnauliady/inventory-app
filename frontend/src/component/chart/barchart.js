@@ -2,22 +2,65 @@ import React from "react";
 import Chart from "chart.js/auto";
 import { Bar } from "react-chartjs-2";
 
+//import hook useState dan useEffect from react
+import { useState, useEffect } from "react";
+//import axios
+import axios from "axios";
+
 const BarChart = () => {
-  const labels = ["January", "February", "March", "April", "May", "June"];
+  const [dataBar, setDataBar] = useState([]);
+
+  useEffect(() => {
+    //panggil method "fetchData"
+    fectData();
+  }, []);
+
+  //function "fetchData"
+  const fectData = async () => {
+    //fetching
+    const response = await axios.get("http://localhost:5000/bar");
+    //get response data
+    const data = await response.data;
+    //assign response data to state "products"
+    setDataBar(data);
+  };
+
+  const labels = dataBar && dataBar.dataTotal && dataBar.dataTotal.map((data) => data.name);
+  const total = dataBar && dataBar.dataTotal && dataBar.dataTotal.map((data) => data.total);
+
+  const options = {
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        position: "top",
+      },
+      elements: {
+        bar: {
+          borderWidth: 2,
+        },
+      },
+      title: {
+        display: false,
+        text: "Chart.js Bar Chart",
+      },
+    },
+  };
+
   const data = {
-    labels: labels,
+    labels,
     datasets: [
       {
-        label: "My First dataset",
-        backgroundColor: "rgb(255, 99, 132)",
-        borderColor: "rgb(255, 99, 132)",
-        data: [0, 10, 5, 2, 20, 30, 45],
+        label: "Total Product",
+        data: total,
+        borderColor: "rgb(59, 130, 246)",
+        backgroundColor: "rgba(59, 130, 246, 0.5)",
       },
     ],
   };
+
   return (
-    <div>
-      <Bar data={data} />
+    <div className="w-full h-72">
+      <Bar options={options} data={data} />
     </div>
   );
 };

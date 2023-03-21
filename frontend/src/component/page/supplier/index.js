@@ -68,6 +68,9 @@ const Supplier = () => {
                     Supplier Name
                   </th>
                   <th scope="col" className="px-6 py-3">
+                    Email
+                  </th>
+                  <th scope="col" className="px-6 py-3">
                     Action
                   </th>
                 </tr>
@@ -82,6 +85,7 @@ const Supplier = () => {
                       {index + 1}
                     </td>
                     <td className="px-6 py-4">{supplier.name}</td>
+                    <td className="px-6 py-4">{supplier.email}</td>
                     <td className="px-6 py-4">
                       <Link
                         to={`/supplier/${supplier.id}`}

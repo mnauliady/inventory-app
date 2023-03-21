@@ -157,5 +157,11 @@ router.put("/orderdetails/:id", updateOrderDetail);
 router.delete("/orderdetails/:id", deleteOrderDetail);
 // ===========================================================
 
+const { getDashboard, getLineChart, getBarChart, getBarChart2 } = require("../controllers/DashboardController");
+router.get("/dashboard", getDashboard);
+router.get("/line", getLineChart);
+router.get("/bar", getBarChart);
+router.get("/bar2", getBarChart2);
+
 // export router
 module.exports = router;
