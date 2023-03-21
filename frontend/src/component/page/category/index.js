@@ -51,7 +51,7 @@ const Category = () => {
   return (
     // index page
 
-    <section className="w-full">
+    <section className="w-full bg-gray-100 md:h-[calc(100vh-48px)]">
       <div id="main" className=" main-content flex-1 bg-gray-100 pb-24">
         <div className="bg-gray-800 pt-3">
           <div className=" bg-blue-800 p-4 shadow text-2xl text-white">
@@ -100,26 +100,24 @@ const Category = () => {
                     </td>
                     <td className="px-6 py-4">{category.name}</td>
                     <td className="px-6 py-4">
+                      <Link
+                        to={`/category/edit/${category.id}`}
+                        className=" text-white bg-yellow-500 hover:bg-yellow-600 rounded-md text-sm px-2 py-1.5 mr-2 mb-2 dark:bg-yellow-600 dark:hover:bg-yellow-700"
+                      >
+                        Edit
+                      </Link>
                       {!category.product.length ? (
-                        <div>
-                          <Link
-                            to={`/category/edit/${category.id}`}
-                            className=" text-white bg-yellow-500 hover:bg-yellow-600 rounded-md text-sm px-2 py-1.5 mr-2 mb-2 dark:bg-yellow-600 dark:hover:bg-yellow-700"
-                          >
-                            Edit
-                          </Link>
-                          <Link
-                            onClick={() => {
-                              // if (window.confirm("Delete the item?")) {
-                              deleteCategory(category.id, category.name);
-                              // }
-                            }}
-                            // onClick={() => setShowModal(true)}
-                            className=" text-white bg-red-500 hover:bg-red-600 rounded-md text-sm px-2 py-1.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-res-700"
-                          >
-                            Delete
-                          </Link>
-                        </div>
+                        <Link
+                          onClick={() => {
+                            // if (window.confirm("Delete the item?")) {
+                            deleteCategory(category.id, category.name);
+                            // }
+                          }}
+                          // onClick={() => setShowModal(true)}
+                          className=" text-white bg-red-500 hover:bg-red-600 rounded-md text-sm px-2 py-1.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-res-700"
+                        >
+                          Delete
+                        </Link>
                       ) : (
                         ""
                       )}

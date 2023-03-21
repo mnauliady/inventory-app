@@ -8,8 +8,8 @@ const Sidebar = () => {
   const { user } = useSelector((state) => state.auth);
 
   return (
-    <nav aria-label="alternative nav" className="bg-gray-800 md:min-h-screen">
-      <div className="bg-gray-800 shadow-xl h-20 fixed bottom-0 mt-12 md:relative w-full md:w-48 content-center">
+    <nav aria-label="alternative nav" className="bg-gray-800 z-10 md:h-[calc(100vh-74px)]">
+      <div className="bg-gray-800 h-20 fixed bottom-0 mt-12 md:relative w-full md:w-48 content-center">
         <div className="md:mt-12 md:w-48 md:fixed md:left-0 md:top-0 content-center md:content-start text-left justify-between">
           <ul className="list-reset flex flex-row md:flex-col pt-3 md:py-3 px-1 md:px-2 text-center md:text-left">
             {/* dashboard / home / / */}

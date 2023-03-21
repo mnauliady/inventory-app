@@ -26,21 +26,22 @@ const EditProduct = () => {
   const [status, setStatus] = useState("");
   const [url_photo, setUrl_photo] = useState("");
   const [categoryId, setCategoryId] = useState("");
+  const [supplierId, setSupplierId] = useState("");
   //useEffect hook
   useEffect(() => {
     //panggil method "dataCategory"
     dataCategory();
     //panggil method "dataSupplier"
     dataSupplier();
-    //panggil function "getPOstById"
-    getPostById();
+    //panggil function "getProductById"
+    getProductById();
   }, []);
 
   //get ID from parameter URL
   const { id } = useParams();
 
-  //function "getPostById"
-  const getPostById = async () => {
+  //function "getProductById"
+  const getProductById = async () => {
     try {
       //get data from server
       const response = await axios.get(`http://localhost:5000/products/${id}`);
@@ -55,7 +56,8 @@ const EditProduct = () => {
       setSelectedCategory(data.categoryId);
       setMin_Stock(data.min_stock);
       setUrl_photo(data.url_photo);
-      // setSuppliers(data.supplier.name);
+      setSupplierId(data.supplierId);
+      setSelectedSupplier(data.supplierId);
     } catch (error) {
       navigate("/not-found");
     }
@@ -134,7 +136,7 @@ const EditProduct = () => {
           status,
           min_stock,
           categoryId: selectedCategory,
-          // supplierId: selectedSupplier,
+          supplierId: selectedSupplier,
           url_photo: file,
         },
         {
@@ -159,7 +161,7 @@ const EditProduct = () => {
   };
   return (
     <section className="w-full">
-      <div id="main" className="main-content h-full flex-1 bg-gray-100 pb-24 md:pb-5">
+      <div id="main" className="main-content h-screen flex-1 bg-gray-100 pb-24 md:pb-5">
         <div className="bg-gray-800 pt-3">
           <div className=" bg-blue-800 p-4 shadow text-2xl text-white">
             <h1 className="font-bold pl-2">Product</h1>
@@ -186,124 +188,130 @@ const EditProduct = () => {
                 </div>
               )}
 
-              {/* product name */}
-              <div>
-                <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                  Product Name
-                </label>
-                <input
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  type="text"
-                  name="name"
-                  id="name"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-1/2 p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                  required
-                />
+              <div className="w-full md:flex">
+                {/* product name */}
+                <div className="md:w-2/3 md:mr-2 w-full">
+                  <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                    Product Name
+                  </label>
+                  <input
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    type="text"
+                    name="name"
+                    id="name"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                    required
+                  />
+                </div>
+
+                {/* Status */}
+                <div className="md:w-1/3 w-full">
+                  <label htmlFor="status" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                    Status
+                  </label>
+                  <select
+                    id="status"
+                    name="status"
+                    onChange={(e) => setStatus(e.target.value)}
+                    // defaultValue={{ value: "active", label: "Active" }}
+                    value={status}
+                    required
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  >
+                    <option value="">Select status</option>
+                    <option value="active">Active</option>
+                    <option value="not active">Not Active</option>
+                  </select>
+                </div>
               </div>
 
-              {/* Status */}
-              <div>
-                <label htmlFor="status" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                  Status
-                </label>
-                <select
-                  id="status"
-                  name="status"
-                  onChange={(e) => setStatus(e.target.value)}
-                  // defaultValue={{ value: "active", label: "Active" }}
-                  value={status}
-                  required
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-1/2 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                >
-                  <option value="">Select status</option>
-                  <option value="active">Active</option>
-                  <option value="not active">Not Active</option>
-                </select>
-              </div>
+              <div className="w-full md:flex">
+                <div className="w-full md:w-1/6 md:mr-2">
+                  <label htmlFor="min_stock" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                    Minimal Stock
+                  </label>
+                  <input
+                    value={min_stock}
+                    onChange={(e) => setMin_Stock(e.target.value)}
+                    type="number"
+                    name="min_stock"
+                    id="min_stock"
+                    min="1"
+                    className=" bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg w-full focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                    required
+                  />
+                </div>
 
+                {/* price */}
+                <div className="w-full md:w-1/6 md:mr-2">
+                  <label htmlFor="price" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                    Price
+                  </label>
+                  <input
+                    value={price}
+                    onChange={(e) => setPrice(e.target.value)}
+                    type="number"
+                    name="price"
+                    id="price"
+                    min="1"
+                    className="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                    required
+                  />
+                </div>
+
+                {/* supplier */}
+                <div className="w-full md:w-2/6 md:mr-2">
+                  <label htmlFor="supplier" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                    Select supplier
+                  </label>
+                  <select
+                    id="supplier"
+                    name="supplierId"
+                    value={selectedSupplier}
+                    onChange={handleSelectSupplier}
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  >
+                    <option defaultValue>Choose a supplier</option>
+                    {suppliers.map((supplier) => (
+                      <option key={supplier.id} value={supplier.id}>
+                        {supplier.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                {/* category */}
+                <div id="category" className="w-full md:w-2/6">
+                  <label htmlFor="category" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                    Select Category
+                  </label>
+                  <select
+                    name="categoryId"
+                    value={selectedCategory}
+                    onChange={handleSelectCategory}
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  >
+                    <option>Choose a category</option>
+                    {categories.map((category) => (
+                      <option key={category.id} data-set={category.name} value={category.id}>
+                        {category.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
               {/* minimal storck */}
-              <div>
-                <label htmlFor="min_stock" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                  Minimal Stock
-                </label>
-                <input
-                  value={min_stock}
-                  onChange={(e) => setMin_Stock(e.target.value)}
-                  type="number"
-                  name="min_stock"
-                  id="min_stock"
-                  min="1"
-                  className="w-48 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                  required
-                />
-              </div>
-
-              {/* price */}
-              <div>
-                <label htmlFor="price" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                  Price
-                </label>
-                <input
-                  value={price}
-                  onChange={(e) => setPrice(e.target.value)}
-                  type="number"
-                  name="price"
-                  id="price"
-                  min="1"
-                  className="w-48 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                  required
-                />
-              </div>
-
-              {/* category */}
-              <div id="category">
-                <label htmlFor="category" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                  Select Category
-                </label>
-                <select
-                  name="categoryId"
-                  value={selectedCategory}
-                  onChange={handleSelectCategory}
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-1/2 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                >
-                  <option>Choose a category</option>
-                  {categories.map((category) => (
-                    <option key={category.id} data-set={category.name} value={category.id}>
-                      {category.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              {/* supplier */}
-              <div>
-                <label htmlFor="supplier" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                  Select an option
-                </label>
-                <select
-                  id="supplier"
-                  name="supplierId"
-                  onChange={handleSelectSupplier}
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-1/2 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                >
-                  <option defaultValue>Choose a supplier</option>
-                  {suppliers.map((supplier) => (
-                    <option key={supplier.id} value={supplier.id}>
-                      {supplier.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
 
               {/* Picture/photo */}
-              <div>
-                <div className="flex w-full">
+
+              <div className="md:flex w-full">
+                <div className="w-full md:w-1/3 md:mr-2">
+                  <p className=" text-sm font-medium text-gray-900 dark:text-white">Upload Photo</p>
                   <label
                     htmlFor="dropzone-file"
-                    className="flex flex-col items-center justify-center w-1/2 h-52 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
+                    className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
                   >
-                    Upload Picture
                     <div className="flex flex-col items-center justify-center pt-5 pb-6">
                       <svg
                         aria-hidden="true"
@@ -329,44 +337,57 @@ const EditProduct = () => {
                   </label>
                 </div>
 
-                <figure className="mt-2 w-1/2">
-                  <p className="mb-2 text-sm font-medium text-gray-900 dark:text-white">Old Photo</p>
-                  <img
-                    src={url_photo ? `http://localhost:5000/images/${url_photo}` : ``}
-                    alt={name}
-                    className=" text-gray-200 md:rounded-md"
-                  />
-                </figure>
+                <div className="w-full md:w-1/3 md:mr-2">
+                  <div className="w-full">
+                    <figure>
+                      <p className=" text-sm font-medium text-gray-900 dark:text-white">Old Photo</p>
+                      <img
+                        src={url_photo ? `http://localhost:5000/images/${url_photo}` : ``}
+                        alt={name}
+                        className="text-gray-200 rounded-md h-64 w-full object-cover"
+                      />
+                    </figure>
+                  </div>
+                </div>
 
                 {/* preview gambar yg diupload */}
-                {preview ? (
-                  <figure className="mt-3 w-1/2 relative">
-                    <hr />
-                    <p className="mt-3 text-sm font-medium text-gray-900 dark:text-white">New Photo</p>
-                    <button
-                      onClick={() => {
-                        cancel();
-                      }}
-                    >
-                      <span className="absolute mt-3 right-2 p-0.5 bg-red-500 rounded-full text-white hover:bg-red-600">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          strokeWidth="1.5"
-                          stroke="currentColor"
-                          className="w-6 h-6"
+                <div className="w-full md:w-1/3 ">
+                  {preview ? (
+                    <div>
+                      <p className="text-sm font-medium text-gray-900 dark:text-white">New Photo</p>
+                      <figure className="w-full relative">
+                        <button
+                          className="absolute top-2 right-2 bg-red-500 rounded-full text-white hover:bg-red-600"
+                          onClick={() => {
+                            cancel();
+                          }}
                         >
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-                        </svg>
-                      </span>
-                    </button>
-                    <img src={preview} alt="Preview Image" className=" text-gray-200 md:rounded-md" />
-                  </figure>
-                ) : (
-                  ""
-                )}
+                          <span className="  ">
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              strokeWidth="1.5"
+                              stroke="currentColor"
+                              className="w-6 h-6"
+                            >
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                          </span>
+                        </button>
+                        <img
+                          src={preview}
+                          alt="Preview Image"
+                          className=" text-gray-200 rounded-md h-64 w-full object-cover"
+                        />
+                      </figure>
+                    </div>
+                  ) : (
+                    ""
+                  )}
+                </div>
               </div>
+
               <Link
                 to="/products"
                 className=" text-white bg-gray-500 hover:bg-gray-600 rounded-md font-medium text-sm px-5 py-2.5 mr-2 mb-2"
