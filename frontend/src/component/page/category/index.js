@@ -11,6 +11,8 @@ import DeleteModal from "./deleteModal";
 const Category = () => {
   //define state
   const [categories, setCategories] = useState([]);
+
+  // state untuk modal delete
   const [showModal, setShowModal] = useState(false);
   const [statusDelete, setStatusDelete] = useState("");
   const [idDelete, setIdDelete] = useState();
@@ -39,13 +41,10 @@ const Category = () => {
     setShowModal(true);
     // set id dari produk yang akan dihapus
     setIdDelete(id);
-
+    // set nama produk yang akan dihapus
     setNameDelete(nama);
-
+    // set status delete (jika status delete berubah maka akan menjalankan useEffect)
     setStatusDelete(false);
-
-    //panggil function "fetchData"
-    // fectData();
   };
 
   return (
@@ -109,11 +108,8 @@ const Category = () => {
                       {!category.product.length ? (
                         <Link
                           onClick={() => {
-                            // if (window.confirm("Delete the item?")) {
                             deleteCategory(category.id, category.name);
-                            // }
                           }}
-                          // onClick={() => setShowModal(true)}
                           className=" text-white bg-red-500 hover:bg-red-600 rounded-md text-sm px-2 py-1.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-res-700"
                         >
                           Delete

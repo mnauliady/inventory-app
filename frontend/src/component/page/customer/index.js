@@ -8,6 +8,8 @@ import { Link, useNavigate } from "react-router-dom";
 
 import jwtDecode from "jwt-decode";
 
+import DeleteModal from "./deleteModal";
+
 const Customer = () => {
   const navigate = useNavigate();
 
@@ -19,13 +21,19 @@ const Customer = () => {
   //define state
   const [customers, setCustomers] = useState([]);
 
+  // state untuk modal delete
+  const [showModal, setShowModal] = useState(false);
+  const [statusDelete, setStatusDelete] = useState("");
+  const [idDelete, setIdDelete] = useState();
+  const [nameDelete, setNameDelete] = useState();
+
   //useEffect hook
   useEffect(() => {
     // jalankan refresh token untuk mengambil token dan expired
     refreshToken();
     //panggil method "fetchData"
     fectData();
-  }, []);
+  }, [statusDelete]);
 
   // get fresh access token
   const axiosJWT = axios.create();
@@ -129,12 +137,16 @@ const Customer = () => {
     setCustomers(data);
   };
 
-  const deleteCustomer = async (id) => {
+  const deleteCustomer = (id, nama) => {
     //sending
-    await axios.delete(`http://localhost:5000/customers/${id}`);
-
-    //panggil function "fetchData"
-    fectData();
+    // set modal ke true
+    setShowModal(true);
+    // set id dari produk yang akan dihapus
+    setIdDelete(id);
+    // set nama produk yang akan dihapus
+    setNameDelete(nama);
+    // set status delete (jika status delete berubah maka akan menjalankan useEffect)
+    setStatusDelete(false);
   };
 
   return (
@@ -146,6 +158,10 @@ const Customer = () => {
             <h1 className="font-bold pl-2">Customer</h1>
           </div>
         </div>
+
+        {showModal && (
+          <DeleteModal id={idDelete} name={nameDelete} setStatusDelete={setStatusDelete} setShowModal={setShowModal} />
+        )}
 
         {/* button Add */}
         <div className="flex flex-wrap mt-8 mx-8">
@@ -204,9 +220,7 @@ const Customer = () => {
                       {!customer.order.length ? (
                         <Link
                           onClick={() => {
-                            if (window.confirm("Delete the item?")) {
-                              deleteCustomer(customer.id);
-                            }
+                            deleteCustomer(customer.id, customer.name);
                           }}
                           className=" text-white bg-red-500 hover:bg-red-600 rounded-md text-sm px-2 py-1.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-res-700"
                         >

@@ -6,15 +6,23 @@ import axios from "axios";
 // import Link
 import { Link } from "react-router-dom";
 
+import DeleteModal from "./deleteModal";
+
 const Product = () => {
   //define state
   const [products, setProducts] = useState([]);
+
+  // state untuk modal delete
+  const [showModal, setShowModal] = useState(false);
+  const [statusDelete, setStatusDelete] = useState("");
+  const [idDelete, setIdDelete] = useState();
+  const [nameDelete, setNameDelete] = useState();
 
   //useEffect hook
   useEffect(() => {
     //panggil method "fetchData"
     fectData();
-  }, []);
+  }, [statusDelete]);
 
   //function "fetchData"
   const fectData = async () => {
@@ -27,12 +35,16 @@ const Product = () => {
     setProducts(data);
   };
 
-  const deleteProduct = async (id) => {
+  const deleteProduct = (id, nama) => {
     //sending
-    await axios.delete(`http://localhost:5000/products/${id}`);
-
-    //panggil function "fetchData"
-    fectData();
+    // set modal ke true
+    setShowModal(true);
+    // set id dari produk yang akan dihapus
+    setIdDelete(id);
+    // set nama produk yang akan dihapus
+    setNameDelete(nama);
+    // set status delete (jika status delete berubah maka akan menjalankan useEffect)
+    setStatusDelete(false);
   };
 
   return (
@@ -44,6 +56,10 @@ const Product = () => {
             <h1 className="font-bold pl-2">Product</h1>
           </div>
         </div>
+
+        {showModal && (
+          <DeleteModal id={idDelete} name={nameDelete} setStatusDelete={setStatusDelete} setShowModal={setShowModal} />
+        )}
 
         {/* button Add */}
         <div className="flex flex-wrap mt-8 mx-8">
@@ -129,11 +145,8 @@ const Product = () => {
                       </Link>
                       <Link
                         onClick={() => {
-                          if (window.confirm("Delete the item?")) {
-                            deleteProduct(product.id);
-                          }
+                          deleteProduct(product.id, product.name);
                         }}
-                        // onClick={() => deleteProduct(product.id)}
                         className=" text-white bg-red-500 hover:bg-red-600 rounded-md text-sm px-2 py-1.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-res-700"
                       >
                         Delete

@@ -1,5 +1,3 @@
-// Import model Customer
-// import Customer from "../models/Customer.js";
 const Customer = require("../models").customer;
 const Order = require("../models").order;
 const db = require("../models/index");
@@ -46,9 +44,9 @@ const getCustomerById = async (req, res) => {
 // Create customer baru
 const createCustomer = async (req, res) => {
   // validasi inputan
-  await check("name").isLength({ min: 3 }).withMessage("Minimal 3 character").run(req);
+  await check("name").isLength({ min: 3 }).withMessage("Name at least 3 characters").run(req);
   await check("email").isEmail().withMessage("Wrong email format").run(req);
-  await check("phone").isLength({ min: 10, max: 13 }).run(req);
+  await check("phone").isLength({ min: 7, max: 13 }).withMessage("Phone number between 7-14 characters").run(req);
   await check("address").notEmpty().withMessage("Address is required").run(req);
 
   // jika terdapat error
@@ -77,9 +75,9 @@ const createCustomer = async (req, res) => {
 // Update customer berdasarkan id
 const updateCustomer = async (req, res) => {
   // validasi inputan
-  await check("name").isLength({ min: 3 }).withMessage("Minimal 3 character").run(req);
+  await check("name").isLength({ min: 3 }).withMessage("Name at least 3 characters").run(req);
   await check("email").isEmail().withMessage("Wrong email format").run(req);
-  await check("phone").isLength({ min: 10, max: 13 }).run(req);
+  await check("phone").isLength({ min: 7, max: 13 }).withMessage("Phone number between 7-14 characters").run(req);
   await check("address").notEmpty().withMessage("Address is required").run(req);
 
   // jika terdapat error

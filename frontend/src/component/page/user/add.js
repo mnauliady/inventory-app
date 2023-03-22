@@ -95,7 +95,7 @@ const AddUser = () => {
                   <ul className="py-2 px-4 text-white">
                     {validation.errors.map((error, index) => (
                       <li key={index}>
-                        <span className="font-semibold">{error.param}</span> : {error.msg}
+                        <span className="font-semibold">{error.msg}</span>
                       </li>
                     ))}
                   </ul>

@@ -30,15 +30,24 @@ const BarChart = () => {
 
   const options = {
     maintainAspectRatio: false,
+    scales: {
+      y: {
+        ticks: {
+          // forces step size to be 50 units
+          stepSize: 1,
+        },
+      },
+    },
+    elements: {
+      bar: {
+        borderWidth: 2,
+      },
+    },
     plugins: {
       legend: {
         position: "top",
       },
-      elements: {
-        bar: {
-          borderWidth: 2,
-        },
-      },
+
       title: {
         display: false,
         text: "Chart.js Bar Chart",

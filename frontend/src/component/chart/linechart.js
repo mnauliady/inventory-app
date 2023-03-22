@@ -35,17 +35,18 @@ const LineChart = () => {
 
   const options = {
     maintainAspectRatio: false,
+    scales: {
+      y: {
+        ticks: {
+          // forces step size to be 50 units
+          stepSize: 1,
+        },
+      },
+    },
   };
 
   const data = {
     labels: labels,
-    options: {
-      scales: {
-        y: {
-          stepValue: 1,
-        },
-      },
-    },
     datasets: [
       {
         label: "Incoming Purhase",

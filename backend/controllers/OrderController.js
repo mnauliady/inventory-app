@@ -46,12 +46,9 @@ const getOrderById = async (req, res) => {
 // Create order baru
 const createOrder = async (req, res) => {
   console.log(req.body);
-  // validasi inputan
-  // await check("type").isEmail().withMessage("Wrong email format").run(req);
-  // await check("date").isLength({ min: 10, max: 13 }).run(req);
-  // await check("status").notEmpty().withMessage("Address is required").run(req);
   await check("userId").notEmpty().withMessage("User id is required").run(req);
   await check("customerId").notEmpty().withMessage("Customer id is required").run(req);
+  await check("date").isDate().withMessage("Wrong date format").run(req);
 
   // jika ada error
   const result = validationResult(req);

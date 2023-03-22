@@ -47,9 +47,9 @@ const getSupplierById = async (req, res) => {
 // Create supplier baru
 const createSupplier = async (req, res) => {
   // validasi inputan
-  await check("name").isLength({ min: 3 }).withMessage("Minimal 3 character").run(req);
+  await check("name").isLength({ min: 3 }).withMessage("Name at least 3 characters").run(req);
   await check("email").isEmail().withMessage("Wrong email format").run(req);
-  await check("phone").isLength({ min: 10, max: 13 }).run(req);
+  await check("phone").isLength({ min: 7, max: 13 }).withMessage("Phone number between 7-14 characters").run(req);
   await check("address").notEmpty().withMessage("Address is required").run(req);
 
   // jika terdapat error
@@ -92,9 +92,9 @@ const createSupplier = async (req, res) => {
 // Update supplier berdasarkan id
 const updateSupplier = async (req, res) => {
   // validasi inputan
-  await check("name").isLength({ min: 3 }).withMessage("Minimal 3 character").run(req);
+  await check("name").isLength({ min: 3 }).withMessage("Name at least 3 characters").run(req);
   await check("email").isEmail().withMessage("Wrong email format").run(req);
-  await check("phone").isLength({ min: 10, max: 13 }).run(req);
+  await check("phone").isLength({ min: 7, max: 13 }).withMessage("Phone number between 7-14 characters").run(req);
   await check("address").notEmpty().withMessage("Address is required").run(req);
 
   // jika terdapat error

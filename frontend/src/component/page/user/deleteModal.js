@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import axios from "axios";
 
 const DeleteModal = ({ id, name, setStatusDelete, setShowModal }) => {
-  const deleteCategory = async () => {
+  const deleteUser = async () => {
     // sending
-    await axios.delete(`http://localhost:5000/categories/${id}`);
+    await axios.delete(`http://localhost:5000/users/${id}`);
 
     setShowModal(false);
 
@@ -18,7 +18,7 @@ const DeleteModal = ({ id, name, setStatusDelete, setShowModal }) => {
           <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-slate-300 drop-shadow-2xl bg-opacity-50 backdrop-blur outline-none focus:outline-none">
             <div className="flex items-start justify-between p-5 border-b border-solid border-gray-700 rounded-t ">
               <h3 className="text-xl font-base">
-                Delete Category <span className="font-semibold">{name}</span>?
+                Delete User <span className="font-semibold">{name}</span>?
               </h3>
               <button className="bg-transparent -mt-5 -mr-2" onClick={() => setShowModal(false)}>
                 <span className="absolute mt-3 right-2 p-0.5 bg-red-500 rounded-full text-white hover:bg-red-600">
@@ -46,7 +46,7 @@ const DeleteModal = ({ id, name, setStatusDelete, setShowModal }) => {
               <button
                 className="text-white bg-red-500 hover:bg-red-600 active:bg-red-700 text-base px-4 py-1 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1"
                 type="button"
-                onClick={() => deleteCategory()}
+                onClick={() => deleteUser()}
               >
                 Delete
               </button>

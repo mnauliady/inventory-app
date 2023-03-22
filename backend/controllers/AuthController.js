@@ -18,9 +18,13 @@ const getUser = async (req, res) => {
 
 // fungsi untuk register user baru
 const Register = async (req, res) => {
-  await check("name").isLength({ min: 3 }).withMessage("Minimal 3 character").run(req);
+  await check("name").isLength({ min: 3 }).withMessage("Name at least 3 characters").run(req);
   await check("email").isEmail().withMessage("Wrong email format").run(req);
-  await check("mobile").notEmpty().isLength({ min: 9, max: 15 }).withMessage("length must between 9-15").run(req);
+  await check("mobile")
+    .notEmpty()
+    .isLength({ min: 7, max: 14 })
+    .withMessage("Phone number length must between 7-14")
+    .run(req);
   await check("role")
     .isIn(["super admin", "admin", "manager"])
     .withMessage("Only accept super/admin/manager role")

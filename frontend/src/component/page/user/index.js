@@ -8,9 +8,25 @@ import { useNavigate, Link } from "react-router-dom";
 
 import { useDispatch, useSelector } from "react-redux";
 
+import DeleteModal from "./deleteModal";
+
+import ResetPasswordModal from "./resetPassModal";
+
 const User = () => {
   //define state
   const [users, setUsers] = useState([]);
+
+  // state untuk modal delete
+  const [showModal, setShowModal] = useState(false);
+  const [statusDelete, setStatusDelete] = useState("");
+  const [idDelete, setIdDelete] = useState();
+  const [nameDelete, setNameDelete] = useState();
+
+  // state untuk modal reset pass
+  const [showModalReset, setShowModalReset] = useState(false);
+  const [statusReset, setStatusReset] = useState("");
+  const [idReset, setIdReset] = useState();
+  const [nameReset, setNameReset] = useState();
 
   const { isError, user } = useSelector((state) => state.auth);
 
@@ -27,7 +43,7 @@ const User = () => {
     }
 
     fectData();
-  }, [isError, user, navigate]);
+  }, [isError, user, navigate, statusDelete, statusReset]);
 
   //function "fetchData"
   const fectData = async () => {
@@ -39,20 +55,28 @@ const User = () => {
     setUsers(data);
   };
 
-  const deleteUser = async (id) => {
+  const deleteUser = (id, nama) => {
     //sending
-    await axios.delete(`http://localhost:5000/users/${id}`);
-
-    //panggil function "fetchData"
-    fectData();
+    // set modal ke true
+    setShowModal(true);
+    // set id dari produk yang akan dihapus
+    setIdDelete(id);
+    // set nama produk yang akan dihapus
+    setNameDelete(nama);
+    // set status delete (jika status delete berubah maka akan menjalankan useEffect)
+    setStatusDelete(false);
   };
 
-  const resetPass = async (id) => {
+  const resetPass = (id, nama) => {
     //sending
-    await axios.put(`http://localhost:5000/reset/${id}`);
-
-    //panggil function "fetchData"
-    fectData();
+    // set modal ke true
+    setShowModalReset(true);
+    // set id dari produk yang akan dihapus
+    setIdReset(id);
+    // set nama produk yang akan dihapus
+    setNameReset(nama);
+    // set status delete (jika status delete berubah maka akan menjalankan useEffect)
+    setStatusReset(false);
   };
 
   return (
@@ -64,6 +88,19 @@ const User = () => {
             <h1 className="font-bold pl-2">User</h1>
           </div>
         </div>
+
+        {showModal && (
+          <DeleteModal id={idDelete} name={nameDelete} setStatusDelete={setStatusDelete} setShowModal={setShowModal} />
+        )}
+
+        {showModalReset && (
+          <ResetPasswordModal
+            id={idReset}
+            name={nameReset}
+            setStatusReset={setStatusReset}
+            setShowModalReset={setShowModalReset}
+          />
+        )}
 
         {/* button Add */}
         <div className="flex flex-wrap mt-8 mx-8">
@@ -113,9 +150,7 @@ const User = () => {
                     <td className="px-6 py-4">
                       <Link
                         onClick={() => {
-                          if (window.confirm("Reset password the item?")) {
-                            resetPass(user.id);
-                          }
+                          resetPass(user.id, user.email);
                         }}
                         className=" text-white bg-yellow-500 hover:bg-yellow-600 rounded-md text-sm px-2 py-1.5 mr-2 mb-2 dark:bg-yellow-600 dark:hover:bg-yellow-700"
                       >
@@ -126,9 +161,7 @@ const User = () => {
                       ) : (
                         <Link
                           onClick={() => {
-                            if (window.confirm("Delete the item?")) {
-                              deleteUser(user.id);
-                            }
+                            deleteUser(user.id, user.email);
                           }}
                           className=" text-white bg-red-500 hover:bg-red-600 rounded-md text-sm px-2 py-1.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-res-700"
                         >

@@ -64,13 +64,13 @@ const getProductById = async (req, res) => {
 
 // Create product baru
 const createProduct = async (req, res) => {
-  // validasi inputan
-  await check("sku").notEmpty().withMessage("sku is required").run(req);
-  await check("name").isLength({ min: 3 }).withMessage("minimal 3 character").run(req);
+  // // validasi inputan
+  // await check("sku").notEmpty().withMessage("sku is required").run(req);
+  await check("name").isLength({ min: 3 }).withMessage("Name at least 3 characters").run(req);
   await check("min_stock").notEmpty().isNumeric().withMessage("Minimal stock is required").run(req);
   await check("price").notEmpty().isNumeric().withMessage("Price is required").run(req);
-  await check("categoryId").notEmpty().withMessage("Category ID is required").run(req);
-  await check("supplierId").notEmpty().withMessage("Supplier ID required").run(req);
+  await check("categoryId").notEmpty().withMessage("Category is required").run(req);
+  await check("supplierId").notEmpty().withMessage("Supplier is required").run(req);
 
   // tampilkan jika ada error
   const result = validationResult(req);
@@ -108,10 +108,11 @@ const createProduct = async (req, res) => {
 // Update product berdasarkan id
 const updateProduct = async (req, res) => {
   // validasi inputan
-  await check("name").isLength({ min: 3 }).withMessage("minimal 3 character").run(req);
+  await check("name").isLength({ min: 3 }).withMessage("Name at least 3 characters").run(req);
   await check("min_stock").notEmpty().isNumeric().withMessage("Minimal stock is required").run(req);
   await check("price").notEmpty().isNumeric().withMessage("Price is required").run(req);
-  await check("categoryId").notEmpty().withMessage("Category ID is required").run(req);
+  await check("categoryId").notEmpty().withMessage("Category is required").run(req);
+  await check("supplierId").notEmpty().withMessage("Supplier is required").run(req);
 
   // tampilkan jika ada error
   const result = validationResult(req);

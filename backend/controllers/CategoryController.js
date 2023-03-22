@@ -43,7 +43,7 @@ const getCategoryById = async (req, res) => {
 // Create category baru
 const createCategory = async (req, res) => {
   // validasi inputan
-  await check("name").isLength({ min: 3 }).withMessage("Minimal 3 character").run(req);
+  await check("name").isLength({ min: 3 }).withMessage("Category name at least 3 characters").run(req);
   // mengecek email sudah ada di db
   const name = await db.sequelize.query(`SELECT "name" FROM categories WHERE LOWER(name) = (:name)`, {
     replacements: { name: req.body.name.toLowerCase() },
@@ -80,7 +80,7 @@ const createCategory = async (req, res) => {
 // Update category berdasarkan id
 const updateCategory = async (req, res) => {
   // validasi inputan
-  await check("name").isLength({ min: 3 }).withMessage("Minimal 3 character").run(req);
+  await check("name").isLength({ min: 3 }).withMessage("Category name at least 3 characters").run(req);
 
   // mengecek email sudah ada di db
   const name = await db.sequelize.query(`SELECT "name" FROM categories WHERE LOWER(name) = (:name)`, {
@@ -89,7 +89,7 @@ const updateCategory = async (req, res) => {
   });
 
   if (name.length && req.body.name != req.body.oldName) {
-    const result = { msg: "Category name already exist", param: "Category Name" };
+    const result = { msg: `Category name "${req.body.name}"  already exist` };
     return res.status(409).json({
       errors: [result],
     });

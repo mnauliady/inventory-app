@@ -35,6 +35,11 @@ const DoubleBarChart = () => {
   const options = {
     // responsive: true,
     maintainAspectRatio: false,
+    elements: {
+      bar: {
+        borderWidth: 2,
+      },
+    },
     plugins: {
       legend: {
         position: "top",
@@ -53,13 +58,13 @@ const DoubleBarChart = () => {
         label: "Incoming Purchase",
         data: dataIn,
         backgroundColor: "rgb(59, 130, 246, 0.5)",
-        // borderColor: "rgb(59, 130, 246, 0.5)",
+        borderColor: "rgb(59, 130, 246 )",
       },
       {
         label: "Outgoing Orders",
         data: dataOut,
         backgroundColor: "rgb(244, 63, 94, 0.5)",
-        // borderColor: "rgb(244, 63, 94, 0.5)",
+        borderColor: "rgb(244, 63, 94)",
       },
     ],
   };

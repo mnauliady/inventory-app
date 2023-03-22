@@ -59,8 +59,12 @@ const createUser = async (req, res) => {
 
 // Update user berdasarkan id
 const updateUser = async (req, res) => {
-  await check("name").isLength({ min: 3 }).withMessage("Minimal 3 character").run(req);
-  await check("mobile").notEmpty().isLength({ min: 9, max: 15 }).withMessage("length must between 9-15").run(req);
+  await check("name").isLength({ min: 3 }).withMessage("Name at least 3 characters").run(req);
+  await check("mobile")
+    .notEmpty()
+    .isLength({ min: 7, max: 14 })
+    .withMessage("Phone number length must between 7-14 characters")
+    .run(req);
 
   // tampilkan jika ada error
   const result = validationResult(req);
@@ -149,13 +153,13 @@ const changePassword = async (req, res) => {
 
     // jika tidak sesuai
     if (!match) {
-      const result = { msg: "Wrong Password", param: "password" };
+      const result = { msg: "Wrong old password", param: "password" };
       return res.status(400).json({
         errors: [result],
       });
     }
 
-    await check("newPassword").isLength({ min: 6 }).withMessage("Password minimal 6 character").run(req);
+    await check("newPassword").isLength({ min: 6 }).withMessage("Password at least 6 characters").run(req);
     // tampilkan jika ada error
     const result = validationResult(req);
     if (!result.isEmpty()) {
