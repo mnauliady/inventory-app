@@ -26,8 +26,16 @@ const LineChart = () => {
     //assign response data to state "products"
     setDataLine(data);
   };
-  // moment(transaction.date).format("LL")
-  const labels = dataLine && dataLine.dataIn && dataLine.dataIn.map((data) => moment(data.date).format("LL"));
+
+  const labelIn = dataLine && dataLine.dataIn && dataLine.dataIn.map((data) => `${data.month}`);
+  const labelOut = dataLine && dataLine.dataOut && dataLine.dataOut.map((data) => `${data.month}`);
+
+  let labels;
+  if (labelIn > labelOut) {
+    labels = labelIn;
+  } else {
+    labels = labelOut;
+  }
 
   const incoming = dataLine && dataLine.dataIn && dataLine.dataIn.map((data) => data.total);
 
@@ -46,16 +54,16 @@ const LineChart = () => {
   };
 
   const data = {
-    labels: labels,
+    labels,
     datasets: [
       {
-        label: "Incoming Purhase",
+        label: "Incoming",
         backgroundColor: "rgb(59, 130, 246)",
         borderColor: "rgb(59, 130, 246, 0.5)",
         data: incoming,
       },
       {
-        label: "Outgoing Orders",
+        label: "Outgoing",
         backgroundColor: "rgb(244, 63, 94)",
         borderColor: "rgb(244, 63, 94, 0.5)",
         data: outgoing,

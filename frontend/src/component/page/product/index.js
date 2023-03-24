@@ -119,7 +119,7 @@ const Product = () => {
                       ) : (
                         ""
                       )}
-                      {product.stock}
+                      {product.stock ? product.stock : "0"}
                     </td>
                     <td className="px-6 py-4">{product.min_stock}</td>
                     <td className="px-6 py-4 ">

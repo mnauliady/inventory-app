@@ -27,14 +27,16 @@ const PieChart = () => {
     setDataPie(data);
   };
 
-  const labels = dataPie && dataPie.dataTotal && dataPie.dataTotal.map((data) => data.name);
-  const total = dataPie && dataPie.dataTotal && dataPie.dataTotal.map((data) => data.total);
+  const supplier = dataPie && dataPie.supplier && dataPie.supplier[0].count;
+  const customer = dataPie && dataPie.customer && dataPie.customer[0].count;
+  // const total = dataPie && dataPie.dataTotal && dataPie.dataTotal.map((data) => data.total);
 
   const options = {
     // responsive: true,
+    maintainAspectRatio: false,
     plugins: {
       legend: {
-        position: "right",
+        position: "top",
       },
       title: {
         display: false,
@@ -44,19 +46,19 @@ const PieChart = () => {
   };
 
   const data = {
-    labels: labels,
+    labels: ["Supplier", "Customer"],
     datasets: [
       {
-        label: "My First dataset",
-        backgroundColor: "rgb(16, 185, 129, 0.5)",
-        borderColor: "rgb(16, 185, 129)",
-        data: total,
+        label: "Total",
+        backgroundColor: ["rgb(34, 197, 94, 0.7)", "rgb(245, 158, 11, 0.7)"],
+        // borderColor: "rgb(34, 197, 94)",
+        data: [supplier, customer],
       },
     ],
   };
 
   return (
-    <div className="h-72">
+    <div className="h-72 w-full">
       <Pie options={options} data={data} width={100} height={50} />
     </div>
   );

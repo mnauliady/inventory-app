@@ -13,6 +13,7 @@ const AddCategory = () => {
   // Proses Add data ===================================
   //state
   const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
 
   // state validation
   const [validation, setValidation] = useState({});
@@ -27,6 +28,7 @@ const AddCategory = () => {
     await axios
       .post("http://localhost:5000/categories", {
         name,
+        description,
       })
       .then(() => {
         //redirect ke halaman category
@@ -81,6 +83,21 @@ const AddCategory = () => {
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-1/2 p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                   required
                 />
+              </div>
+
+              {/* Description */}
+              <div>
+                <label htmlFor="description" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                  Description
+                </label>
+                <textarea
+                  id="description"
+                  rows="2"
+                  name="description"
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                  className="block p-2.5 w-1/2 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                ></textarea>
               </div>
 
               <Link

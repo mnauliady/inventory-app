@@ -9,7 +9,8 @@ import { Link } from "react-router-dom";
 import LineChart from "../chart/linechart";
 import BarChart from "../chart/barchart";
 import PieChart from "../chart/piechart";
-import DoubleBarChart from "../chart/dlinechart";
+// import DoubleBarChart from "../chart/dlinechart";
+import DoubleBarChart from "../chart/dbarchart";
 
 const Home = () => {
   const [dataDashboard, setDataDashboard] = useState([]);
@@ -45,16 +46,14 @@ const Home = () => {
               <div className="flex flex-row items-center">
                 <div className="flex-shrink pr-4">
                   <div className="rounded-full p-5 bg-green-600">
-                    <i className="fa fa-wallet fa-2x fa-inverse"></i>
+                    {/* <i className="fa fa-wallet fa-2x fa-inverse"></i> */}
+                    <i className="fa-sharp fa-solid fa-right-left fa-2x fa-inverse"></i>
                   </div>
                 </div>
                 <div className="flex-1 text-right md:text-center">
-                  <h2 className="font-bold uppercase text-gray-600">Total Revenue</h2>
-                  <p className="font-bold text-3xl">
-                    {dataDashboard && dataDashboard.dataIn && dataDashboard.dataIn[0].total}
-                    <span className="text-green-500">
-                      <i className="fas fa-caret-up"></i>
-                    </span>
+                  <h2 className="font-bold text-lg uppercase text-gray-700">Total Transaction</h2>
+                  <p className="font-bold text-3xl text-gray-800">
+                    {dataDashboard && dataDashboard.transaction && dataDashboard.transaction.length}
                   </p>
                 </div>
               </div>
@@ -63,20 +62,17 @@ const Home = () => {
           </div>
           <div className="w-full md:w-1/2 xl:w-1/3 p-6">
             {/* <!--Metric Card--> */}
-            <div className="bg-pink-200 border-b-4 border-pink-500 rounded-lg shadow-xl p-5">
+            <div className="bg-red-200 border-b-4 border-red-500 rounded-lg shadow-xl p-5">
               <div className="flex flex-row items-center">
                 <div className="flex-shrink pr-4">
-                  <div className="rounded-full p-5 bg-pink-600">
-                    <i className="fas fa-users fa-2x fa-inverse"></i>
+                  <div className="rounded-full p-5 bg-red-600">
+                    <i className="fa-solid fa-2x fa-triangle-exclamation fa-inverse"></i>
                   </div>
                 </div>
                 <div className="flex-1 text-right md:text-center">
-                  <h2 className="font-bold uppercase text-gray-600">Total Users</h2>
-                  <p className="font-bold text-3xl">
-                    {dataDashboard && dataDashboard.dataOut && dataDashboard.dataOut[0].total}
-                    <span className="text-pink-500">
-                      <i className="fas fa-exchange-alt"></i>
-                    </span>
+                  <h2 className="font-bold uppercase text-gray-700 text-lg">Low Stock Product</h2>
+                  <p className="font-bold text-3xl text-gray-800">
+                    {dataDashboard && dataDashboard.lowStock && dataDashboard.lowStock.length}
                   </p>
                 </div>
               </div>
@@ -93,9 +89,9 @@ const Home = () => {
                   </div>
                 </div>
                 <div className="flex-1 text-right md:text-center">
-                  <h2 className="font-bold uppercase text-gray-600">Total Product Stock</h2>
-                  <p className="font-bold text-3xl">
-                    {dataDashboard && dataDashboard.dataIn && dataDashboard.totalProduct[0].total}
+                  <h2 className="font-bold uppercase text-gray-700 text-lg">Total Product Stock</h2>
+                  <p className="font-bold text-3xl text-gray-800">
+                    {dataDashboard && dataDashboard.totalProduct && dataDashboard.totalProduct[0].total}
                     <span className="ml-2 text-yellow-600"></span>
                   </p>
                 </div>
@@ -106,29 +102,15 @@ const Home = () => {
         </div>
 
         <div className="flex flex-row flex-wrap flex-grow mt-2">
-          <div className="w-full md:w-1/2 p-6">
+          <div className="w-full p-6">
             {/* <!--Graph Card--> */}
             <div className="bg-white border-transparent rounded-lg shadow-xl">
               <div className="bg-gray-300 uppercase text-gray-800 border-b-2 border-gray-300 rounded-tl-lg rounded-tr-lg p-2">
-                <h2 className="font-bold uppercase text-gray-600">Transaction By Date</h2>
+                <h2 className="font-bold uppercase text-gray-600">Total Transaction By Date</h2>
               </div>
               <div className="p-5">
-                {/* <canvas id="chartjs-7" className="chartjs" width="undefined" height="undefined"></canvas> */}
+                {/* <canvas id="chartjs-1" className="chartjs" width="undefined" height="undefined"></canvas> */}
                 <LineChart />
-              </div>
-            </div>
-            {/* <!--/Graph Card--> */}
-          </div>
-
-          <div className="w-full md:w-1/2 p-6">
-            {/* <!--Graph Card--> */}
-            <div className="bg-white border-transparent rounded-lg shadow-xl">
-              <div className="bg-gray-300 uppercase text-gray-800 border-b-2 border-gray-300 rounded-tl-lg rounded-tr-lg p-2">
-                <h2 className="font-bold uppercase text-gray-600">Product By Category</h2>
-              </div>
-              <div className="p-5">
-                {/* <canvas id="chartjs-0" className="chartjs" width="undefined" height="undefined"></canvas> */}
-                <BarChart />
               </div>
             </div>
             {/* <!--/Graph Card--> */}
@@ -138,11 +120,39 @@ const Home = () => {
             {/* <!--Graph Card--> */}
             <div className="bg-white border-transparent rounded-lg shadow-xl">
               <div className="bg-gray-300 uppercase text-gray-800 border-b-2 border-gray-300 rounded-tl-lg rounded-tr-lg p-2">
-                <h2 className="font-bold uppercase text-gray-600">Total Purchase and Order</h2>
+                <h2 className="font-bold uppercase text-gray-600">Total Stock By Product</h2>
               </div>
               <div className="p-5">
                 {/* <canvas id="chartjs-1" className="chartjs" width="undefined" height="undefined"></canvas> */}
                 <DoubleBarChart />
+              </div>
+            </div>
+            {/* <!--/Graph Card--> */}
+          </div>
+
+          <div className="w-full md:w-1/3 p-6">
+            {/* <!--Graph Card--> */}
+            <div className="bg-white border-transparent rounded-lg shadow-xl">
+              <div className="bg-gray-300 uppercase text-gray-800 border-b-2 border-gray-300 rounded-tl-lg rounded-tr-lg p-2">
+                <h2 className="font-bold uppercase text-gray-600">Total Customer and Supplier</h2>
+              </div>
+              <div className="p-5">
+                {/* <canvas id="chartjs-7" className="chartjs" width="undefined" height="undefined"></canvas> */}
+                <PieChart />
+              </div>
+            </div>
+            {/* <!--/Graph Card--> */}
+          </div>
+
+          <div className="w-full md:w-2/3 p-6">
+            {/* <!--Graph Card--> */}
+            <div className="bg-white border-transparent rounded-lg shadow-xl">
+              <div className="bg-gray-300 uppercase text-gray-800 border-b-2 border-gray-300 rounded-tl-lg rounded-tr-lg p-2">
+                <h2 className="font-bold uppercase text-gray-600">Product By Category</h2>
+              </div>
+              <div className="p-5">
+                {/* <canvas id="chartjs-0" className="chartjs" width="undefined" height="undefined"></canvas> */}
+                <BarChart />
               </div>
             </div>
             {/* <!--/Graph Card--> */}

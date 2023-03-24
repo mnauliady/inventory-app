@@ -68,6 +68,8 @@ const createCategory = async (req, res) => {
     await Category.create({
       id: uuidv4(),
       name: req.body.name,
+      code: req.body.name.substring(0, 3).toLowerCase(),
+      description: req.body.description,
     });
     res.json({
       message: "Category Created",
@@ -94,6 +96,7 @@ const updateCategory = async (req, res) => {
       errors: [result],
     });
   }
+
   // tampilkan jika ada error
   const result = validationResult(req);
   if (!result.isEmpty()) {
@@ -102,11 +105,14 @@ const updateCategory = async (req, res) => {
 
   try {
     // update category
-    const category = await Category.update(req.body, {
-      where: {
-        id: req.params.id,
-      },
-    });
+    const category = await Category.update(
+      { name: req.body.name, code: req.body.name.substring(0, 3).toLowerCase(), description: req.body.description },
+      {
+        where: {
+          id: req.params.id,
+        },
+      }
+    );
 
     // jika berhasil update
     if (category == 1) {

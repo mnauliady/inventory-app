@@ -73,7 +73,7 @@ const Category = () => {
 
         {/* Table */}
         <div className="flex flex-wrap mx-8">
-          <div className="w-3/5 relative overflow-x-auto shadow-md sm:rounded-lg">
+          <div className="w-full relative overflow-x-auto shadow-md sm:rounded-lg">
             <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
               <thead className=" text-sm text-gray-700 uppercase bg-gray-200 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
@@ -81,8 +81,14 @@ const Category = () => {
                     #
                   </th>
                   <th scope="col" className="px-6 py-3">
+                    Category Code
+                  </th>
+                  <th scope="col" className="px-6 py-3">
                     Category Name
                   </th>
+                  {/* <th scope="col" className="px-6 py-3">
+                    Description
+                  </th> */}
                   <th scope="col" className="px-6 py-3">
                     Action
                   </th>
@@ -97,7 +103,11 @@ const Category = () => {
                     <td scope="row" className="px-6 py-4  whitespace-nowrap">
                       {index + 1}
                     </td>
+                    <td className="px-6 py-4">{category.code}</td>
                     <td className="px-6 py-4">{category.name}</td>
+                    {/* <td className="px-6 py-4  ">
+                      <span className="truncate overflow-hidden ...">{category.description}</span>
+                    </td> */}
                     <td className="px-6 py-4">
                       <Link
                         to={`/category/edit/${category.id}`}
