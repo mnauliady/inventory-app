@@ -5,15 +5,62 @@ const Order = require("../models").order;
 const Customer = require("../models").customer;
 const OrderDetail = require("../models").orderdetail;
 const { check, validationResult } = require("express-validator");
+const { Op } = require("sequelize");
 
 // Get semua order
 const getOrders = async (req, res) => {
   try {
-    const order = await Order.findAll({
-      order: [["createdAt", "ASC"]],
-      include: [{ model: OrderDetail, as: "orderdetail" }],
+    const page = parseInt(req.query.page) || 0;
+    const limit = parseInt(req.query.limit) || 10;
+    const search = req.query.search_query || "";
+    const offset = limit * page;
+    const totalRows = await Order.count({
+      where: {
+        [Op.or]: [
+          {
+            code: {
+              [Op.iLike]: "%" + search + "%",
+            },
+          },
+          // {
+          //   date: {
+          //     [Op.like]: "%" + search + "%",
+          //   },
+          // },
+        ],
+      },
+      order: [["date", "DESC"]],
     });
-    res.send(order);
+
+    const totalPage = Math.ceil(totalRows / limit);
+    const order = await Order.findAll({
+      order: [["createdAt", "DESC"]],
+      include: [{ model: OrderDetail, as: "orderdetail" }],
+      where: {
+        [Op.or]: [
+          {
+            code: {
+              [Op.iLike]: "%" + search + "%",
+            },
+          },
+          // {
+          //   date: {
+          //     [Op.like]: "%" + search + "%",
+          //   },
+          // },
+        ],
+      },
+      offset: offset,
+      limit: limit,
+      order: [["date", "DESC"]],
+    });
+    res.json({
+      order,
+      page,
+      limit,
+      totalRows,
+      totalPage,
+    });
   } catch (err) {
     console.log(err);
   }

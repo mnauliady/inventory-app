@@ -251,14 +251,29 @@ const getStockById = async (req, res) => {
 
 const getAllStock = async (req, res) => {
   try {
-    const sumAll = await db.sequelize.query(
-      `SELECT products.*, sum(orderdetails.quantity) AS "stock" FROM orderdetails RIGHT JOIN products ON orderdetails."productId" = products."id" GROUP BY products."id" ORDER BY "updatedAt"`,
+    const page = parseInt(req.query.page) || 0;
+    const limit = parseInt(req.query.limit) || 10;
+    const search = req.query.search_query || "";
+    const offset = limit * page;
+    const query = await db.sequelize.query(
+      `SELECT products.*, sum(orderdetails.quantity) AS stock FROM orderdetails RIGHT JOIN products ON orderdetails."productId" = products."id" WHERE(products.sku ILIKE '%${search}%' OR products."name" ILIKE '%${search}%') GROUP BY products."id" ORDER BY products."updatedAt" ASC`
+    );
+    totalRows = query[0].length;
+    const totalPage = Math.ceil(totalRows / limit);
+    const product = await db.sequelize.query(
+      `SELECT products.*, sum(orderdetails.quantity) AS "stock" FROM orderdetails RIGHT JOIN products ON orderdetails."productId" = products."id" WHERE(products.sku ILIKE '%${search}%' OR products."name" ILIKE '%${search}%') GROUP BY products."id" ORDER BY "updatedAt" ASC`,
+      // `SELECT products.*, sum(orderdetails.quantity) AS "stock" FROM orderdetails RIGHT JOIN products ON orderdetails."productId" = products."id" GROUP BY products."id" ORDER BY "updatedAt"`,
       {
         type: db.sequelize.QueryTypes.SELECT,
       }
     );
-    // console.log(stockById);
-    res.send(sumAll);
+    res.json({
+      product,
+      page,
+      limit,
+      totalRows,
+      totalPage,
+    });
   } catch (error) {
     console.log(error);
   }

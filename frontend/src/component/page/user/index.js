@@ -12,6 +12,8 @@ import DeleteModal from "./deleteModal";
 
 import ResetPasswordModal from "./resetPassModal";
 
+import ReactPaginate from "react-paginate";
+
 const User = () => {
   //define state
   const [users, setUsers] = useState([]);
@@ -28,6 +30,15 @@ const User = () => {
   const [idReset, setIdReset] = useState();
   const [nameReset, setNameReset] = useState();
 
+  // state pagination dan search
+  const [page, setPage] = useState(0);
+  const [limit, setLimit] = useState(10);
+  const [pages, setPages] = useState(0);
+  const [rows, setRows] = useState(0);
+  const [keyword, setKeyword] = useState("");
+  const [query, setQuery] = useState("");
+  const [msg, setMsg] = useState("");
+
   const { isError, user } = useSelector((state) => state.auth);
 
   const navigate = useNavigate();
@@ -43,16 +54,35 @@ const User = () => {
     }
 
     fectData();
-  }, [isError, user, navigate, statusDelete, statusReset]);
+  }, [isError, user, navigate, statusDelete, statusReset, page, keyword]);
 
   //function "fetchData"
   const fectData = async () => {
     //fetching
-    const response = await axios.get("http://localhost:5000/users");
+    const response = await axios.get(`http://localhost:5000/users?search_query=${keyword}&page=${page}&limit=${limit}`);
     //get response data
-    const data = await response.data;
+    const data = await response.data.user;
     //assign response data to state "users"
     setUsers(data);
+    setPage(response.data.page);
+    setPages(response.data.totalPage);
+    setRows(response.data.totalRows);
+  };
+
+  const changePage = ({ selected }) => {
+    setPage(selected);
+    if (selected === 9) {
+      setMsg("Jika tidak menemukan data yang Anda cari, silahkan cari data dengan kata kunci spesifik!");
+    } else {
+      setMsg("");
+    }
+  };
+
+  const searchData = (e) => {
+    e.preventDefault();
+    setPage(0);
+    setMsg("");
+    setKeyword(query);
   };
 
   const deleteUser = (id, nama) => {
@@ -111,6 +141,28 @@ const User = () => {
             Add User
           </Link>
         </div>
+
+        <form onSubmit={searchData}>
+          <div className="mx-8 flex mb-2">
+            <div className="mr-2">
+              <input
+                type="text"
+                className="input py-2 rounded-md pl-2 w-80"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                placeholder="Search ... "
+              />
+            </div>
+            <div className="">
+              <button
+                type="submit"
+                className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-md text-sm py-2.5 px-4 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+              >
+                Search
+              </button>
+            </div>
+          </div>
+        </form>
 
         {/* Table */}
         <div className="flex flex-wrap mx-8">
@@ -176,67 +228,34 @@ const User = () => {
           </div>
         </div>
 
-        <nav aria-label="Page navigation example" className="pt-6 text-center">
-          <ul className="inline-flex -space-x-px">
-            <li>
-              <a
-                href="#"
-                className="px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-              >
-                Previous
-              </a>
-            </li>
-            <li>
-              <a
-                href="#"
-                className="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-              >
-                1
-              </a>
-            </li>
-            <li>
-              <a
-                href="#"
-                className="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-              >
-                2
-              </a>
-            </li>
-            <li>
-              <a
-                href="#"
-                aria-current="page"
-                className="px-3 py-2 text-blue-600 border border-gray-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white"
-              >
-                3
-              </a>
-            </li>
-            <li>
-              <a
-                href="#"
-                className="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-              >
-                4
-              </a>
-            </li>
-            <li>
-              <a
-                href="#"
-                className="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-              >
-                5
-              </a>
-            </li>
-            <li>
-              <a
-                href="#"
-                className="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-              >
-                Next
-              </a>
-            </li>
-          </ul>
-        </nav>
+        <div className="flex pt-2">
+          <p className="text-red-500">{msg}</p>
+          <p className="flex ml-8 pt-1 font-medium">
+            Total Rows: {rows} Page: {rows ? page + 1 : 0} of {pages}
+          </p>
+          <nav className="text-center ml-auto mr-8" key={rows} role="navigation" aria-label="pagination">
+            <ReactPaginate
+              previousLabel={"< Prev"}
+              nextLabel={"Next >"}
+              pageCount={Math.min(10, pages)}
+              onPageChange={changePage}
+              containerClassName={"isolate inline-flex -space-x-px rounded-md shadow-sm"}
+              pageLinkClassName={
+                "relative inline-flex items-center px-4 py-2 text-sm font-semibold text-blue-600 ring-1 ring-inset ring-blue-300 hover:text-blue-700 focus:z-20 focus:outline-offset-0"
+              }
+              previousLinkClassName={
+                "relative inline-flex items-center rounded-l-md text-sm px-4 py-2 text-blue-600 font-semibold ring-1 ring-inset hover:text-blue-700 ring-blue-300 focus:z-20 focus:outline-offset-0"
+              }
+              nextLinkClassName={
+                "relative inline-flex items-center rounded-r-md text-sm px-4 py-2 text-blue-600 font-semibold ring-1 ring-inset hover:text-blue-700 ring-blue-300 focus:z-20 focus:outline-offset-0"
+              }
+              activeLinkClassName={
+                "relative inline-flex items-center bg-blue-700 px-4 py-2 text-sm font-semibold text-white focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+              }
+              disabledLinkClassName={""}
+            />
+          </nav>
+        </div>
       </div>
     </section>
   );

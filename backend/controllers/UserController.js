@@ -8,14 +8,68 @@ const Order = require("../models").order;
 const bcrypt = require("bcrypt");
 const uuid = require("uuid");
 const { check, validationResult } = require("express-validator");
+const { Op } = require("sequelize");
 
 // Get semua user
 const getUsers = async (req, res) => {
   try {
+    const page = parseInt(req.query.page) || 0;
+    const limit = parseInt(req.query.limit) || 10;
+    const search = req.query.search_query || "";
+    const offset = limit * page;
+    const totalRows = await Users.count({
+      where: {
+        [Op.or]: [
+          {
+            name: {
+              [Op.iLike]: "%" + search + "%",
+            },
+          },
+          {
+            email: {
+              [Op.iLike]: "%" + search + "%",
+            },
+          },
+          {
+            role: {
+              [Op.iLike]: "%" + search + "%",
+            },
+          },
+        ],
+      },
+    });
+    const totalPage = Math.ceil(totalRows / limit);
     const user = await Users.findAll({
+      where: {
+        [Op.or]: [
+          {
+            name: {
+              [Op.iLike]: "%" + search + "%",
+            },
+          },
+          {
+            email: {
+              [Op.iLike]: "%" + search + "%",
+            },
+          },
+          {
+            role: {
+              [Op.iLike]: "%" + search + "%",
+            },
+          },
+        ],
+      },
+      offset: offset,
+      limit: limit,
       include: [{ model: Order, as: "order" }],
     });
-    res.send(user);
+    res.json({
+      user,
+      page,
+      limit,
+      totalRows,
+      totalPage,
+    });
   } catch (err) {
     console.log(err);
   }

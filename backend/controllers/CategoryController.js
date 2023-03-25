@@ -6,14 +6,58 @@ const { v4: uuidv4 } = require("uuid");
 const uuid = require("uuid");
 const { check, validationResult } = require("express-validator");
 const db = require("../models/index");
+const { Op } = require("sequelize");
 
 // Get semua category
 const getCategories = async (req, res) => {
   try {
+    const page = parseInt(req.query.page) || 0;
+    const limit = parseInt(req.query.limit) || 10;
+    const search = req.query.search_query || "";
+    const offset = limit * page;
+    const totalRows = await Category.count({
+      where: {
+        [Op.or]: [
+          {
+            name: {
+              [Op.iLike]: "%" + search + "%",
+            },
+          },
+          {
+            code: {
+              [Op.iLike]: "%" + search + "%",
+            },
+          },
+        ],
+      },
+    });
+    const totalPage = Math.ceil(totalRows / limit);
     const category = await Category.findAll({
+      where: {
+        [Op.or]: [
+          {
+            name: {
+              [Op.iLike]: "%" + search + "%",
+            },
+          },
+          {
+            code: {
+              [Op.iLike]: "%" + search + "%",
+            },
+          },
+        ],
+      },
+      offset: offset,
+      limit: limit,
       include: [{ model: Product, as: "product" }],
     });
-    res.send(category);
+    res.json({
+      category,
+      page,
+      limit,
+      totalRows,
+      totalPage,
+    });
   } catch (err) {
     console.log(err);
   }

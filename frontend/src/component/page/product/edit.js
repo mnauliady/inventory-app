@@ -77,7 +77,7 @@ const EditProduct = () => {
     //get data from server
     const response = await axios.get(`http://localhost:5000/categories`);
     //get response data
-    const data = await response.data;
+    const data = await response.data.category;
     //assign response data to state "products"
     setCategories(data);
   };
@@ -86,7 +86,7 @@ const EditProduct = () => {
     //get data from server
     const response = await axios.get(`http://localhost:5000/suppliers`);
     //get response data
-    const data = await response.data;
+    const data = await response.data.supplier;
     //assign response data to state "suppliers"
     setSuppliers(data);
   };

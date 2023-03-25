@@ -33,6 +33,14 @@ const DoubleBarChart = () => {
   const options = {
     // responsive: true,
     maintainAspectRatio: false,
+    scales: {
+      y: {
+        ticks: {
+          // forces step size to be 50 units
+          stepSize: 5,
+        },
+      },
+    },
     elements: {
       bar: {
         borderWidth: 2,

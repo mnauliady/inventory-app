@@ -4,14 +4,59 @@ const Customer = require("../models").customer;
 const { v4: uuidv4 } = require("uuid");
 const uuid = require("uuid");
 const { check, validationResult } = require("express-validator");
+const { Op } = require("sequelize");
 
 // Get semua supplier
 const getSuppliers = async (req, res) => {
   try {
+    const page = parseInt(req.query.page) || 0;
+    const limit = parseInt(req.query.limit) || 10;
+    const search = req.query.search_query || "";
+    const offset = limit * page;
+    const totalRows = await Supplier.count({
+      where: {
+        [Op.or]: [
+          {
+            name: {
+              [Op.iLike]: "%" + search + "%",
+            },
+          },
+          {
+            email: {
+              [Op.iLike]: "%" + search + "%",
+            },
+          },
+        ],
+      },
+    });
+
+    const totalPage = Math.ceil(totalRows / limit);
     const supplier = await Supplier.findAll({
+      where: {
+        [Op.or]: [
+          {
+            name: {
+              [Op.iLike]: "%" + search + "%",
+            },
+          },
+          {
+            email: {
+              [Op.iLike]: "%" + search + "%",
+            },
+          },
+        ],
+      },
+      offset: offset,
+      limit: limit,
       include: [{ model: Product, as: "product" }],
     });
-    res.send(supplier);
+    res.json({
+      supplier,
+      page,
+      limit,
+      totalRows,
+      totalPage,
+    });
   } catch (err) {
     console.log(err);
   }
