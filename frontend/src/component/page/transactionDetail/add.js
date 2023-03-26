@@ -137,7 +137,7 @@ const AddTransactionDetail = () => {
   return (
     <section className="w-full bg-gray-100 md:h-[calc(100vh-48px)]">
       <div id="main" className="main-content flex-1 bg-gray-100 pb-24 md:pb-5">
-        <div className="bg-gray-800 pt-3">
+        <div className="bg-gray-800">
           <div className=" bg-blue-800 p-4 shadow text-2xl text-white">
             <h1 className="font-bold pl-2">Detail Transaction</h1>
           </div>
@@ -264,6 +264,7 @@ const AddTransactionDetail = () => {
               onClick={() => {
                 deleteTransaction(id);
               }}
+              // onClick={() => navigate(-1)}
               className="w-24 text-white bg-red-500 hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-md text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800 mt"
             >
               Back

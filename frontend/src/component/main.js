@@ -9,6 +9,7 @@ import EditProduct from "./page/product/edit";
 
 import Category from "./page/category";
 import AddCategory from "./page/category/add";
+import DetailCategory from "./page/category/detail";
 import EditCategory from "./page/category/edit";
 
 import Blank from "./page/blank";
@@ -37,8 +38,8 @@ import DetailTransaction from "./page/transaction/detail";
 
 const Main = () => {
   return (
-    <main>
-      <div className="flex flex-col md:flex-row">
+    <main className="overflow-y-auto">
+      <div className="flex flex-col md:flex-row ">
         <Sidebar />
 
         <Routes>
@@ -54,6 +55,7 @@ const Main = () => {
           {/* category page */}
           <Route path="/category" element={<Category />} />
           <Route path="/category/add" element={<AddCategory />} />
+          <Route path="/category/:id" element={<DetailCategory />} />
           <Route path="/category/edit/:id" element={<EditCategory />} />
 
           <Route path="/transaction" element={<Transaction />} />

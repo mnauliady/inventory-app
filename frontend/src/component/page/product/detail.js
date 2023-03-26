@@ -56,19 +56,19 @@ const DetailProduct = () => {
   return (
     <section className="w-full bg-gray-100 md:h-[calc(100vh-48px)]">
       <div id="main" className="main-content h-full flex-1 bg-gray-100 pb-24 md:pb-5">
-        <div className="bg-gray-800 pt-3">
+        <div className="bg-gray-800">
           <div className=" bg-blue-800 p-4 shadow text-2xl text-white">
             <h1 className="font-bold pl-2">Product</h1>
           </div>
         </div>
 
-        <div className="flex flex-wrap mt-8 mx-8 mb-10">
-          <div className="overflow-hidden bg-white shadow rounded-lg">
+        <div className="flex flex-wrap mt-8 mx-8 mb-4 ">
+          <div className="overflow-hidden bg-white shadow rounded-lg w-full">
             <div className="px-4 py-5 sm:px-6">
               <h3 className="text-base font-semibold leading-6 text-gray-900">Product Information</h3>
             </div>
             <div className="md:flex border-t border-gray-200">
-              <div className="justify-center w-full md:rounded md:w-2/5 md:m-3 ">
+              <div className="w-full rounded md:w-2/5 md:m-3 my-3">
                 <img
                   src={
                     url_photo
@@ -76,7 +76,7 @@ const DetailProduct = () => {
                       : `https://source.unsplash.com/600x400?computer`
                   }
                   alt={name}
-                  className=" text-gray-200 md:rounded-md"
+                  className=" text-gray-200 md:rounded-md max-h-80 object-cover m-auto rounded-md"
                 />
               </div>
               <div className="w-full mr-3 md:w-3/5 my-3">
@@ -117,13 +117,14 @@ const DetailProduct = () => {
               </div>
             </div>
           </div>
-          <Link
-            to="/products"
-            className=" text-white bg-gray-500 hover:bg-gray-600 rounded-md font-medium text-sm px-5 py-2.5 mr-2 my-3"
-          >
-            Back
-          </Link>
         </div>
+        <Link
+          // to="/products"
+          onClick={() => navigate(-1)}
+          className=" text-white bg-gray-500 hover:bg-gray-600 rounded-md font-medium text-sm px-5 py-2.5 ml-8"
+        >
+          Back
+        </Link>
       </div>
     </section>
   );

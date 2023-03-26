@@ -70,7 +70,9 @@ const getCategoryById = async (req, res) => {
   }
 
   try {
-    const category = await Category.findByPk(req.params.id);
+    const category = await Category.findByPk(req.params.id, {
+      include: [{ model: Product, as: "product" }],
+    });
 
     // mengecek jika category ada
     if (category) {

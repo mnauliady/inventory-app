@@ -82,9 +82,9 @@ const Category = () => {
   return (
     // index page
 
-    <section className="w-full bg-gray-100 md:h-[calc(100vh-48px)]">
+    <section className="w-full bg-gray-100 md:h-[calc(100vh-48px)] ">
       <div id="main" className=" main-content flex-1 bg-gray-100 pb-24">
-        <div className="bg-gray-800 pt-3">
+        <div className="bg-gray-800">
           <div className=" bg-blue-800 p-4 shadow text-2xl text-white">
             <h1 className="font-bold pl-2">Category</h1>
           </div>
@@ -108,7 +108,7 @@ const Category = () => {
             <div className="mr-2">
               <input
                 type="text"
-                className="input py-2 rounded-md pl-2 w-80"
+                className=" py-1.5 rounded-md pl-2 w-80 border-2 border-gray-300 bg-gray-50 border-solid focus:border-blue-700"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder="Search ... "
@@ -164,6 +164,12 @@ const Category = () => {
                     </td> */}
                     <td className="px-6 py-4">
                       <Link
+                        to={`/category/${category.id}`}
+                        className="text-white bg-green-700 hover:bg-green-800 rounded-md text-sm px-2 py-1.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700"
+                      >
+                        Details
+                      </Link>
+                      <Link
                         to={`/category/edit/${category.id}`}
                         className=" text-white bg-yellow-500 hover:bg-yellow-600 rounded-md text-sm px-2 py-1.5 mr-2 mb-2 dark:bg-yellow-600 dark:hover:bg-yellow-700"
                       >
@@ -202,16 +208,16 @@ const Category = () => {
               onPageChange={changePage}
               containerClassName={"isolate inline-flex -space-x-px rounded-md shadow-sm"}
               pageLinkClassName={
-                "relative inline-flex items-center px-4 py-2 text-sm font-semibold text-blue-600 ring-1 ring-inset ring-blue-300 hover:text-blue-700 focus:z-20 focus:outline-offset-0"
+                "relative inline-flex items-center px-4 py-2 text-sm font-semibold text-blue-600 ring-1 ring-inset ring-blue-300 hover:bg-blue-200 focus:z-20 focus:outline-offset-0"
               }
               previousLinkClassName={
-                "relative inline-flex items-center rounded-l-md text-sm px-4 py-2 text-blue-600 font-semibold ring-1 ring-inset hover:text-blue-700 ring-blue-300 focus:z-20 focus:outline-offset-0"
+                "relative inline-flex items-center rounded-l-md text-sm px-4 py-2 text-blue-600 font-semibold ring-1 ring-inset hover:bg-blue-200 ring-blue-300 focus:z-20 focus:outline-offset-0"
               }
               nextLinkClassName={
-                "relative inline-flex items-center rounded-r-md text-sm px-4 py-2 text-blue-600 font-semibold ring-1 ring-inset hover:text-blue-700 ring-blue-300 focus:z-20 focus:outline-offset-0"
+                "relative inline-flex items-center rounded-r-md text-sm px-4 py-2 text-blue-600 font-semibold ring-1 ring-inset hover:bg-blue-200 ring-blue-300 focus:z-20 focus:outline-offset-0"
               }
               activeLinkClassName={
-                "relative inline-flex items-center bg-blue-700 px-4 py-2 text-sm font-semibold text-white focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+                "relative inline-flex items-center bg-blue-700 px-4 py-2 text-sm font-semibold text-white focus:z-20 focus-visible:outline hover:bg-blue-600 focus-visible:outline-2 focus-visible:outline-offset-2"
               }
               disabledLinkClassName={""}
             />
