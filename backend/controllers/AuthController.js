@@ -3,6 +3,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { v4: uuidv4 } = require("uuid");
 const { check, validationResult } = require("express-validator");
+const { logger } = require("./AppLog");
 
 // hapus ===============================
 const getUser = async (req, res) => {
@@ -64,6 +65,11 @@ const Register = async (req, res) => {
       role: req.body.role,
       password: hashPassword,
     });
+    logger.info(`user with email '${req.body.email}' registered successfully`, {
+      method: req.method,
+      url: req.originalUrl,
+      status: res.status(200).statusCode,
+    });
     res.json({ message: "Register successfully" });
   } catch (error) {
     // jika gagal
@@ -110,6 +116,13 @@ const Login = async (req, res) => {
         },
       }
     );
+
+    logger.info(`user with email '${req.body.email}' successfully logged in`, {
+      method: req.method,
+      url: req.originalUrl,
+      status: res.status(200).statusCode,
+    });
+
     res.cookie("refreshToken", refreshToken, {
       httpOnly: true,
       maxAge: 24 * 60 * 60 * 1000,
@@ -141,6 +154,11 @@ const Logout = async (req, res) => {
     }
   );
   res.clearCookie("refreshToken");
+  logger.info(`user with email '${user[0].email}' successfully logged out`, {
+    method: req.method,
+    url: req.originalUrl,
+    status: res.status(200).statusCode,
+  });
   return res.sendStatus(200);
 };
 
@@ -160,25 +178,17 @@ const Me = async (req, res) => {
 };
 
 const resetPass = async (req, res) => {
-  if (req.body.email) {
-    // mengecek email sudah ada di db
-    const email = await Users.findOne({
-      where: { email: req.body.email.toLowerCase() },
-    });
-
-    if (email) {
-      return res.status(409).json({
-        status: "error",
-        message: "email sudah terdaftar",
-      });
-    }
-  }
-
   // hashing password
   const password = "123456";
   const salt = await bcrypt.genSalt();
   const hashPassword = await bcrypt.hash(password, salt);
   try {
+    const user = await Users.findAll({
+      where: {
+        id: req.params.id,
+      },
+    });
+
     const cek = await Users.update(
       {
         password: hashPassword,
@@ -189,7 +199,13 @@ const resetPass = async (req, res) => {
         },
       }
     );
+
     if (cek == 1) {
+      logger.info(`Reset password for user with email '${user[0].email}' success`, {
+        method: req.method,
+        url: req.originalUrl,
+        status: res.status(200).statusCode,
+      });
       res.json({
         message: "Data berhasil diupdate",
       });

@@ -1,0 +1,8 @@
+{"level":"info","message":"Category Deleted","method":"DELETE","status":200,"timestamp":"27-03-2023 13:04:37","url":"/categories/0dca0934-dfd3-465c-aec6-f0e1522e9095"}
+{"level":"error","message":"Order with id '5c74b493-6cd7-45da-adbf-a58a7c1b5bf1123' not found","method":"GET","status":400,"timestamp":"27-03-2023 13:09:58","url":"/orders/5c74b493-6cd7-45da-adbf-a58a7c1b5bf1123"}
+{"level":"info","message":"user with email 'mnauliady@gmail.com' successfully logged out","method":"DELETE","status":200,"timestamp":"27-03-2023 13:45:16","url":"/logout"}
+{"level":"info","message":"user with email 'mnauliady@gmail.com' successfully logged in","method":"POST","status":200,"timestamp":"27-03-2023 13:45:21","url":"/login"}
+{"level":"info","message":"user with email 'aa@gmail.com' registered successfully","method":"POST","status":200,"timestamp":"27-03-2023 13:47:29","url":"/register"}
+{"level":"info","message":"user with email 'mnauliady@gmail.com' updated password","method":"PUT","status":200,"timestamp":"27-03-2023 13:51:31","url":"/users/change/b44be04c-184e-4dd7-a7e8-108f2d2d986b"}
+{"level":"info","message":"Reset password 'b44be04c-184e-4dd7-a7e8-108f2d2d986b' successfully","method":"PUT","status":200,"timestamp":"27-03-2023 13:51:52","url":"/reset/b44be04c-184e-4dd7-a7e8-108f2d2d986b"}
+{"level":"info","message":"Reset password for user with email 'mnauliady@gmail.com' success","method":"PUT","status":200,"timestamp":"27-03-2023 13:54:00","url":"/reset/b44be04c-184e-4dd7-a7e8-108f2d2d986b"}

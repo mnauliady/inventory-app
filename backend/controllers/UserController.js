@@ -9,6 +9,7 @@ const bcrypt = require("bcrypt");
 const uuid = require("uuid");
 const { check, validationResult } = require("express-validator");
 const { Op } = require("sequelize");
+const { logger } = require("./AppLog");
 
 // Get semua user
 const getUsers = async (req, res) => {
@@ -78,6 +79,11 @@ const getUsers = async (req, res) => {
 // Get user berdasarkan id
 const getUserById = async (req, res) => {
   if (!uuid.validate(req.params.id)) {
+    logger.error(`user with id ${req.params.id} not found`, {
+      method: req.method,
+      url: req.originalUrl,
+      status: res.status(400).statusCode,
+    });
     return res.status(400).json({ status: "error", message: "User not found" });
   }
 
@@ -140,6 +146,11 @@ const updateUser = async (req, res) => {
       }
     );
     if (cek == 1) {
+      logger.info(`user with email '${req.body.email}' updated profile`, {
+        method: req.method,
+        url: req.originalUrl,
+        status: res.status(200).statusCode,
+      });
       res.json({
         message: "Data berhasil diupdate",
       });
@@ -241,8 +252,13 @@ const changePassword = async (req, res) => {
         },
       }
     );
+    logger.info(`user with email '${user[0].email}' updated password`, {
+      method: req.method,
+      url: req.originalUrl,
+      status: res.status(200).statusCode,
+    });
     res.json({
-      message: "Data berhasil diupdate",
+      message: "Password updated",
     });
   } catch (err) {
     console.log(err);

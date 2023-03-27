@@ -164,11 +164,14 @@ const {
   getBarChart2,
   getPieChart,
 } = require("../controllers/DashboardController");
+const { getAll } = require("../controllers/AppLogController.js");
+
 router.get("/dashboard", getDashboard);
 router.get("/line", getLineChart);
 router.get("/pie", getPieChart);
 router.get("/bar", getBarChart);
 router.get("/bar2", getBarChart2);
 
+router.get("/log", getAll);
 // export router
 module.exports = router;

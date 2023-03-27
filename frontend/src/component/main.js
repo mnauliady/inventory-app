@@ -35,6 +35,7 @@ import Profile from "./page/profile";
 import EditProfile from "./page/profile/edit";
 import ChangePassword from "./page/profile/changePassword";
 import DetailTransaction from "./page/transaction/detail";
+import Log from "./page/log";
 
 const Main = () => {
   return (
@@ -84,6 +85,7 @@ const Main = () => {
           <Route path="/profile/change/password/:id" element={<ChangePassword />} />
           <Route path="/profile/:id" element={<Profile />} />
 
+          <Route path="/log" element={<Log />} />
           <Route path="/not-found" element={<Blank />} />
           <Route path="/forbidden" element={<Forbidden />} />
           <Route path="/*" element={<Blank />} />

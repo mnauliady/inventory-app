@@ -5,6 +5,7 @@ const { v4: uuidv4 } = require("uuid");
 const uuid = require("uuid");
 const { check, validationResult } = require("express-validator");
 const { Op } = require("sequelize");
+const { logger } = require("./AppLog");
 
 // Get semua customer
 const getCustomers = async (req, res) => {
@@ -67,6 +68,11 @@ const getCustomers = async (req, res) => {
 // Get customer berdasarkan id
 const getCustomerById = async (req, res) => {
   if (!uuid.validate(req.params.id)) {
+    logger.error(`Customer with id '${req.params.id}' not found`, {
+      method: req.method,
+      url: req.originalUrl,
+      status: res.status(400).statusCode,
+    });
     return res.status(400).json({ status: "error", message: "Customer not found" });
   }
 
@@ -77,6 +83,11 @@ const getCustomerById = async (req, res) => {
     if (customer) {
       res.send(customer);
     } else {
+      logger.error(`Customer with id '${req.params.id}' not found`, {
+        method: req.method,
+        url: req.originalUrl,
+        status: res.status(400).statusCode,
+      });
       return res.status(409).json({
         status: "error",
         message: "customer not found",
@@ -110,6 +121,11 @@ const createCustomer = async (req, res) => {
       email: req.body.email,
       address: req.body.address,
     });
+    logger.info(`Customer created`, {
+      method: req.method,
+      url: req.originalUrl,
+      status: res.status(200).statusCode,
+    });
     res.json({
       message: "Customer Created",
     });
@@ -140,6 +156,11 @@ const updateCustomer = async (req, res) => {
     });
     // jika id ada di db
     if (customer == 1) {
+      logger.info(`Customer with id ${req.params.id} updated`, {
+        method: req.method,
+        url: req.originalUrl,
+        status: res.status(200).statusCode,
+      });
       res.json({
         message: "Customer Updated",
       });
@@ -164,6 +185,11 @@ const deleteCustomer = async (req, res) => {
     });
     // jika id ada di db
     if (customer) {
+      logger.info(`Customer with id ${req.params.id} deleted`, {
+        method: req.method,
+        url: req.originalUrl,
+        status: res.status(200).statusCode,
+      });
       res.json({
         message: "Customer Deleted",
       });

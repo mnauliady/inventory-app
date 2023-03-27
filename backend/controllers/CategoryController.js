@@ -7,9 +7,11 @@ const uuid = require("uuid");
 const { check, validationResult } = require("express-validator");
 const db = require("../models/index");
 const { Op } = require("sequelize");
+const { logger } = require("./AppLog");
 
 // Get semua category
 const getCategories = async (req, res) => {
+  // const childLogger = log.child();
   try {
     const page = parseInt(req.query.page) || 0;
     const limit = parseInt(req.query.limit) || 10;
@@ -51,6 +53,7 @@ const getCategories = async (req, res) => {
       limit: limit,
       include: [{ model: Product, as: "product" }],
     });
+
     res.json({
       category,
       page,
@@ -66,6 +69,11 @@ const getCategories = async (req, res) => {
 // Get category berdasarkan id
 const getCategoryById = async (req, res) => {
   if (!uuid.validate(req.params.id)) {
+    logger.error(`Category with id '${req.params.id}' not found`, {
+      method: req.method,
+      url: req.originalUrl,
+      status: res.status(400).statusCode,
+    });
     return res.status(400).json({ status: "error", message: "Category not found" });
   }
 
@@ -79,6 +87,11 @@ const getCategoryById = async (req, res) => {
       // console.log("Category not found");
       res.send(category);
     } else {
+      logger.error(`Category with id '${req.params.id}' not found`, {
+        method: req.method,
+        url: req.originalUrl,
+        status: res.status(400).statusCode,
+      });
       return res.status(400).json({ status: "error", message: "Category not found" });
     }
   } catch (err) {
@@ -116,6 +129,11 @@ const createCategory = async (req, res) => {
       name: req.body.name,
       code: req.body.name.substring(0, 3).toLowerCase(),
       description: req.body.description,
+    });
+    logger.info(`Category ${req.body.name} created`, {
+      method: req.method,
+      url: req.originalUrl,
+      status: res.status(200).statusCode,
     });
     res.json({
       message: "Category Created",
@@ -162,6 +180,11 @@ const updateCategory = async (req, res) => {
 
     // jika berhasil update
     if (category == 1) {
+      logger.info(`Category with id ${req.params.id} updated`, {
+        method: req.method,
+        url: req.originalUrl,
+        status: res.status(200).statusCode,
+      });
       res.json({
         message: "Category Updated",
       });
@@ -188,6 +211,11 @@ const deleteCategory = async (req, res) => {
 
     // mengecek jika category ada
     if (category) {
+      logger.info(`Category with id ${req.params.id} deleted`, {
+        method: req.method,
+        url: req.originalUrl,
+        status: res.status(200).statusCode,
+      });
       res.json({
         message: "Category Deleted",
       });

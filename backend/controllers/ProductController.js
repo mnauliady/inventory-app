@@ -8,8 +8,7 @@ const { v4: uuidv4 } = require("uuid");
 const uuid = require("uuid");
 const { check, validationResult } = require("express-validator");
 const db = require("../models/index");
-// include node fs module
-var fs = require("fs");
+const { logger } = require("./AppLog");
 
 // Get semua product
 const getProducts = async (req, res) => {
@@ -26,6 +25,11 @@ const getProducts = async (req, res) => {
 // Get product berdasarkan id
 const getProductById = async (req, res) => {
   if (!uuid.validate(req.params.id)) {
+    logger.error(`Product with id '${req.params.id}' not found`, {
+      method: req.method,
+      url: req.originalUrl,
+      status: res.status(400).statusCode,
+    });
     return res.status(400).json({ status: "error", message: "Product not found" });
   }
 
@@ -97,6 +101,11 @@ const createProduct = async (req, res) => {
       supplierId: req.body.supplierId,
     });
     // pesan sukses
+    logger.info(`Product created`, {
+      method: req.method,
+      url: req.originalUrl,
+      status: res.status(200).statusCode,
+    });
     res.json({
       message: "Product Created",
     });
@@ -165,6 +174,11 @@ const updateProduct = async (req, res) => {
         },
       }
     );
+    logger.info(`Product with id ${req.params.id} updated`, {
+      method: req.method,
+      url: req.originalUrl,
+      status: res.status(200).statusCode,
+    });
     res.json({
       message: "Product Updated",
     });
@@ -190,6 +204,11 @@ const deleteProduct = async (req, res) => {
 
       // memanggil fungsi delete file untuk hapus data di storage
       deleteFile(query.url_photo);
+      logger.info(`Product with id ${req.params.id} deleted`, {
+        method: req.method,
+        url: req.originalUrl,
+        status: res.status(200).statusCode,
+      });
       //mengirimkan pesan sukses
       res.json({
         message: "Product Deleted",
@@ -206,7 +225,11 @@ const deleteProduct = async (req, res) => {
         },
       }
     );
-
+    logger.info(`Product with id ${req.params.id} set to not active`, {
+      method: req.method,
+      url: req.originalUrl,
+      status: res.status(200).statusCode,
+    });
     // mengecek jika product ada
     if (product == 1) {
       res.json({

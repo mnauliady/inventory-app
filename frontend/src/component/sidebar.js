@@ -114,7 +114,7 @@ const Sidebar = () => {
               </NavLink>
             </li>
 
-            {/* report */}
+            {/* App Log */}
             <li className="mr-3 flex-1">
               <NavLink
                 className={(navData) =>
@@ -122,11 +122,11 @@ const Sidebar = () => {
                     ? "active block py-1 md:py-3 pl-1 align-middle text-blue-600 border-b-2 border-blue-600"
                     : "block py-1 md:py-3 pl-1 align-middle text-gray-300 no-underline border-b-2 border-gray-800 hover:border-blue-800"
                 }
-                to="/report"
+                to="/log"
               >
                 <i className="fa-solid fa-file-arrow-down pr-0 md:pr-3"></i>
                 <span className="pb-1 md:pb-0 text-xs md:text-base text-gray-400 md:text-gray-200 block md:inline-block">
-                  Report
+                  App Log
                 </span>
               </NavLink>
             </li>

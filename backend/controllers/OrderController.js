@@ -1,11 +1,13 @@
 // Import model Order
 // import Order from "../models/Order.js";
 const { v4: uuidv4 } = require("uuid");
+const uuid = require("uuid");
 const Order = require("../models").order;
 const Customer = require("../models").customer;
 const OrderDetail = require("../models").orderdetail;
 const { check, validationResult } = require("express-validator");
 const { Op } = require("sequelize");
+const { logger } = require("./AppLog");
 
 // Get semua order
 const getOrders = async (req, res) => {
@@ -68,6 +70,15 @@ const getOrders = async (req, res) => {
 
 // Get order berdasarkan id
 const getOrderById = async (req, res) => {
+  if (!uuid.validate(req.params.id)) {
+    logger.error(`Order with id '${req.params.id}' not found`, {
+      method: req.method,
+      url: req.originalUrl,
+      status: res.status(400).statusCode,
+    });
+    return res.status(400).json({ status: "error", message: "Order not found" });
+  }
+
   try {
     // cek order by id
     const order = await Order.findByPk(req.params.id, {
@@ -92,7 +103,6 @@ const getOrderById = async (req, res) => {
 
 // Create order baru
 const createOrder = async (req, res) => {
-  console.log(req.body);
   await check("userId").notEmpty().withMessage("User id is required").run(req);
   await check("customerId").notEmpty().withMessage("Customer id is required").run(req);
   await check("date").isDate().withMessage("Wrong date format").run(req);
@@ -115,6 +125,11 @@ const createOrder = async (req, res) => {
       status,
       userId: req.body.userId,
       customerId: req.body.customerId,
+    });
+    logger.info(`Order created`, {
+      method: req.method,
+      url: req.originalUrl,
+      status: res.status(200).statusCode,
     });
     res.json({
       message: "Order Created",
@@ -163,6 +178,11 @@ const deleteOrder = async (req, res) => {
       },
     });
     if (order) {
+      logger.error(`Order with id ${req.params.id} deleted`, {
+        method: req.method,
+        url: req.originalUrl,
+        status: res.status(200).statusCode,
+      });
       res.json({
         message: "Order Deleted",
       });

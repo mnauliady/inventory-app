@@ -5,6 +5,7 @@ const { v4: uuidv4 } = require("uuid");
 const uuid = require("uuid");
 const { check, validationResult } = require("express-validator");
 const { Op } = require("sequelize");
+const { logger } = require("./AppLog");
 
 // Get semua supplier
 const getSuppliers = async (req, res) => {
@@ -65,6 +66,11 @@ const getSuppliers = async (req, res) => {
 // Get supplier berdasarkan id
 const getSupplierById = async (req, res) => {
   if (!uuid.validate(req.params.id)) {
+    logger.error(`Supplier with id ${req.params.id} not found`, {
+      method: req.method,
+      url: req.originalUrl,
+      status: res.status(400).statusCode,
+    });
     return res.status(400).json({ status: "error", message: "Supplier not found" });
   }
 
@@ -126,6 +132,12 @@ const createSupplier = async (req, res) => {
       address: supplier[0].address,
     });
 
+    logger.info(`Supplier created`, {
+      method: req.method,
+      url: req.originalUrl,
+      status: res.status(200).statusCode,
+    });
+
     res.json({
       message: "Supplier Created",
     });
@@ -163,6 +175,12 @@ const updateSupplier = async (req, res) => {
         },
       });
 
+      logger.info(`Supplier with id ${req.params.id} updated`, {
+        method: req.method,
+        url: req.originalUrl,
+        status: res.status(200).statusCode,
+      });
+
       res.json({
         message: "Supplier Updated",
       });
@@ -191,6 +209,12 @@ const deleteSupplier = async (req, res) => {
       where: {
         id: req.params.id,
       },
+    });
+
+    logger.info(`Supplier with id ${req.params.id} deleted`, {
+      method: req.method,
+      url: req.originalUrl,
+      status: res.status(200).statusCode,
     });
 
     res.json({
