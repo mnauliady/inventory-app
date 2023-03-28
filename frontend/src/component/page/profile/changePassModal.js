@@ -9,57 +9,55 @@ import axios from "axios";
 //import hook history dari react router dom
 import { useNavigate, Link } from "react-router-dom";
 
-const EditModal = ({ id, setStatusEdit, setShowModalEdit }) => {
+const ChangePasswordModal = ({ id, setStatusChangePass, setShowModalChangePass }) => {
   //state
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
-  const [oldName, setOldName] = useState("");
+  const [password, setPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confPassword, setConfPassword] = useState("");
 
   //state validation
   const [validation, setValidation] = useState({});
 
   const navigate = useNavigate();
 
-  //get ID from parameter URL
-  // const { id } = useParams();
-  //useEffect hook
-  useEffect(() => {
-    //panggil function "getPOstById"
-    getCategoryById();
-  }, []);
+  //   //useEffect hook
+  //   //   useEffect(() => {
+  //   //     //panggil function "getPOstById"
+  //   //     getProfileById();
+  //   //   }, []);
 
-  //function "getCategoryById"
-  const getCategoryById = async () => {
-    try {
-      //get data from server
-      const response = await axios.get(`http://localhost:5000/categories/${id}`);
-      //get response data
-      const data = await response.data;
-      //assign data to state
-      setName(data.name);
-      setDescription(data.description);
-      setOldName(data.name);
-    } catch (error) {
-      // jika id (tidak ditemukan maka akan redirect ke blank page)
-      navigate("/not-found");
-    }
-  };
+  //   //function "getProfileById"
+  //   const getProfileById = async () => {
+  //     try {
+  //       //get data from server
+  //       const response = await axios.get(`http://localhost:5000/users/${id}`);
+  //       //get response data
+  //       const data = await response.data;
+  //       //assign data to state
+  //       setName(data.name);
+  //       setConfirm Password(data.mobile);
+  //       setPassword(data.password);
+  //     } catch (error) {
+  //       // jika id (tidak ditemukan maka akan redirect ke blank page)
+  //       navigate("/not-found");
+  //     }
+  //   };
 
-  const editCategory = async (e) => {
+  const changePassword = async (e) => {
     e.preventDefault();
 
     //send data to server
     await axios
-      .put(`http://localhost:5000/categories/${id}`, {
-        name,
-        oldName,
-        description,
+      .put(`http://localhost:5000/users/change/${id}`, {
+        password,
+        newPassword,
+        confPassword,
       })
       .then(() => {
         //redirect ke halaman category
-        setShowModalEdit(false);
+        setShowModalChangePass(false);
 
-        setStatusEdit(true);
+        setStatusChangePass(true);
       })
       .catch((error) => {
         //assign validation on state
@@ -73,8 +71,8 @@ const EditModal = ({ id, setStatusEdit, setShowModalEdit }) => {
         <div className="relative w-2/5 my-6 mx-auto max-w-3xl">
           <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-slate-300 drop-shadow-2xl bg-opacity-50 backdrop-blur outline-none focus:outline-none">
             <div className="flex items-start justify-between p-5 border-b border-solid border-gray-700 rounded-t ">
-              <h3 className="text-xl font-base">Edit Category</h3>
-              <button className="bg-transparent -mt-5 -mr-2" onClick={() => setShowModalEdit(false)}>
+              <h3 className="text-xl font-base">ChangePassword User</h3>
+              <button className="bg-transparent -mt-5 -mr-2" onClick={() => setShowModalChangePass(false)}>
                 <span className="absolute mt-3 right-2 p-0.5 bg-red-500 rounded-full text-white hover:bg-red-600">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -91,7 +89,7 @@ const EditModal = ({ id, setStatusEdit, setShowModalEdit }) => {
             </div>
 
             <div className="flex flex-wrap mx-8 mt-4">
-              <form className="space-y-4 w-full" onSubmit={editCategory}>
+              <form className="space-y-4 w-full" onSubmit={changePassword}>
                 {/* error handling */}
                 {validation.errors && (
                   <div className="bg-red-500 rounded-md w-full">
@@ -105,42 +103,62 @@ const EditModal = ({ id, setStatusEdit, setShowModalEdit }) => {
                   </div>
                 )}
 
-                {/* Category Name */}
+                {/* Password */}
                 <div>
-                  <label htmlFor="name" className="block mb-1 text-sm font-medium text-gray-900 dark:text-white">
-                    Category Name
+                  <label htmlFor="password" className="block mb-1 text-sm font-medium text-gray-900 dark:text-white">
+                    Password
                   </label>
                   <input
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    type="text"
-                    name="name"
-                    id="name"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    type="password"
+                    name="password"
+                    id="password"
                     className="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                     required
                   />
                 </div>
 
-                {/* Description */}
+                {/* New Password */}
                 <div>
-                  <label htmlFor="description" className="block mb-1 text-sm font-medium text-gray-900 dark:text-white">
-                    Description
+                  <label htmlFor="newPassword" className="block mb-1 text-sm font-medium text-gray-900 dark:text-white">
+                    New Password
                   </label>
-                  <textarea
-                    id="description"
-                    rows="2"
-                    name="description"
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
-                    className="block p-2 w-full text-sm text-gray-900 bg-gray-100 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  ></textarea>
+                  <input
+                    value={newPassword}
+                    onChange={(e) => setNewPassword(e.target.value)}
+                    type="password"
+                    name="newPassword"
+                    id="newPassword"
+                    className="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                    required
+                  />
+                </div>
+
+                {/* Confirm Password */}
+                <div>
+                  <label
+                    htmlFor="confPassword"
+                    className="block mb-1 text-sm font-medium text-gray-900 dark:text-white"
+                  >
+                    Confirm Password
+                  </label>
+                  <input
+                    value={confPassword}
+                    onChange={(e) => setConfPassword(e.target.value)}
+                    type="password"
+                    name="confPassword"
+                    id="confPassword"
+                    className="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                    required
+                  />
                 </div>
 
                 <div className="flex items-center justify-end pb-6 rounded-b">
                   <button
                     className="text-white bg-red-500 hover:bg-red-600 active:bg-red-700 text-base px-4 py-1 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1"
                     type="button"
-                    onClick={() => setShowModalEdit(false)}
+                    onClick={() => setShowModalChangePass(false)}
                   >
                     Close
                   </button>
@@ -153,22 +171,6 @@ const EditModal = ({ id, setStatusEdit, setShowModalEdit }) => {
                 </div>
               </form>
             </div>
-            {/* <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
-              <button
-                className="text-white bg-blue-500 hover:bg-blue-600 active:bg-blue-700 text-base px-4 py-1 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1"
-                type="button"
-                onClick={() => setShowModalEdit(false)}
-              >
-                Close
-              </button>
-              <button
-                className="text-white bg-red-500 hover:bg-red-600 active:bg-red-700 text-base px-4 py-1 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1"
-                type="button"
-                onClick={() => editCategory()}
-              >
-                Edit
-              </button>
-            </div> */}
           </div>
         </div>
       </div>
@@ -176,4 +178,4 @@ const EditModal = ({ id, setStatusEdit, setShowModalEdit }) => {
   );
 };
 
-export default EditModal;
+export default ChangePasswordModal;

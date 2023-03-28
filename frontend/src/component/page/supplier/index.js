@@ -8,6 +8,10 @@ import { Link } from "react-router-dom";
 
 import DeleteModal from "./deleteModal";
 
+import AddModal from "./addModal";
+
+import EditModal from "./editModal";
+
 import ReactPaginate from "react-paginate";
 
 const Supplier = () => {
@@ -23,17 +27,25 @@ const Supplier = () => {
   const [query, setQuery] = useState("");
   const [msg, setMsg] = useState("");
 
+  // state untuk modal add
+  const [showModalAdd, setShowModalAdd] = useState(false);
+  const [statusAdd, setStatusAdd] = useState("");
+
+  // state untuk modal edit
+  const [showModalEdit, setShowModalEdit] = useState(false);
+  const [statusEdit, setStatusEdit] = useState("");
+
   // state untuk modal delete
   const [showModal, setShowModal] = useState(false);
   const [statusDelete, setStatusDelete] = useState("");
-  const [idDelete, setIdDelete] = useState();
+  const [idSupplier, setIdSupplier] = useState();
   const [nameDelete, setNameDelete] = useState();
 
   //useEffect hook
   useEffect(() => {
     //panggil method "fetchData"
     fectData();
-  }, [statusDelete, page, keyword]);
+  }, [statusDelete, statusAdd, statusEdit, page, keyword]);
 
   //function "fetchData"
   const fectData = async () => {
@@ -68,12 +80,23 @@ const Supplier = () => {
     setKeyword(query);
   };
 
+  const addSupplier = () => {
+    setShowModalAdd(true);
+    setStatusAdd(false);
+  };
+
+  const editSupplier = (id) => {
+    setIdSupplier(id);
+    setShowModalEdit(true);
+    setStatusEdit(false);
+  };
+
   const deleteSupplier = (id, nama) => {
     //sending
     // set modal ke true
     setShowModal(true);
     // set id dari produk yang akan dihapus
-    setIdDelete(id);
+    setIdSupplier(id);
     // set nama produk yang akan dihapus
     setNameDelete(nama);
     // set status delete (jika status delete berubah maka akan menjalankan useEffect)
@@ -90,14 +113,27 @@ const Supplier = () => {
           </div>
         </div>
 
+        {/* Modal add */}
+        {showModalAdd && <AddModal setStatusAdd={setStatusAdd} setShowModalAdd={setShowModalAdd} />}
+
+        {/* Modal Edit */}
+        {showModalEdit && (
+          <EditModal id={idSupplier} setStatusEdit={setStatusEdit} setShowModalEdit={setShowModalEdit} />
+        )}
+
         {showModal && (
-          <DeleteModal id={idDelete} name={nameDelete} setStatusDelete={setStatusDelete} setShowModal={setShowModal} />
+          <DeleteModal
+            id={idSupplier}
+            name={nameDelete}
+            setStatusDelete={setStatusDelete}
+            setShowModal={setShowModal}
+          />
         )}
 
         {/* button Add */}
         <div className="flex flex-wrap mt-8 mx-8">
           <Link
-            to="/supplier/add"
+            onClick={() => addSupplier()}
             className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
           >
             Add Supplier
@@ -156,7 +192,9 @@ const Supplier = () => {
                         Detail
                       </Link>
                       <Link
-                        to={`/supplier/edit/${supplier.id}`}
+                        onClick={() => {
+                          editSupplier(supplier.id);
+                        }}
                         className=" text-white bg-yellow-500 hover:bg-yellow-600 rounded-md text-sm px-2 py-1.5 mr-2 mb-2 dark:bg-yellow-600 dark:hover:bg-yellow-700"
                       >
                         Edit
@@ -180,6 +218,8 @@ const Supplier = () => {
             </table>
           </div>
         </div>
+
+        {/* Pagination */}
         <div className="flex pt-2">
           <p className="text-red-500">{msg}</p>
           <p className="flex ml-8 pt-1 font-medium">

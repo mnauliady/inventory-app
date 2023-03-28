@@ -10,6 +10,10 @@ import jwtDecode from "jwt-decode";
 
 import DeleteModal from "./deleteModal";
 
+import AddModal from "./addModal";
+
+import EditModal from "./editModal";
+
 import ReactPaginate from "react-paginate";
 
 const Customer = () => {
@@ -32,10 +36,18 @@ const Customer = () => {
   const [query, setQuery] = useState("");
   const [msg, setMsg] = useState("");
 
+  // state untuk modal add
+  const [showModalAdd, setShowModalAdd] = useState(false);
+  const [statusAdd, setStatusAdd] = useState("");
+
+  // state untuk modal edit
+  const [showModalEdit, setShowModalEdit] = useState(false);
+  const [statusEdit, setStatusEdit] = useState("");
+
   // state untuk modal delete
   const [showModal, setShowModal] = useState(false);
   const [statusDelete, setStatusDelete] = useState("");
-  const [idDelete, setIdDelete] = useState();
+  const [idCustomer, setIdCustomer] = useState();
   const [nameDelete, setNameDelete] = useState();
 
   //useEffect hook
@@ -44,7 +56,7 @@ const Customer = () => {
     refreshToken();
     //panggil method "fetchData"
     fectData();
-  }, [statusDelete, page, keyword]);
+  }, [statusDelete, statusAdd, statusEdit, page, keyword]);
 
   // get fresh access token
   const axiosJWT = axios.create();
@@ -167,12 +179,23 @@ const Customer = () => {
     setKeyword(query);
   };
 
+  const addCustomer = () => {
+    setShowModalAdd(true);
+    setStatusAdd(false);
+  };
+
+  const editCustomer = (id) => {
+    setIdCustomer(id);
+    setShowModalEdit(true);
+    setStatusEdit(false);
+  };
+
   const deleteCustomer = (id, nama) => {
     //sending
     // set modal ke true
     setShowModal(true);
     // set id dari produk yang akan dihapus
-    setIdDelete(id);
+    setIdCustomer(id);
     // set nama produk yang akan dihapus
     setNameDelete(nama);
     // set status delete (jika status delete berubah maka akan menjalankan useEffect)
@@ -189,18 +212,31 @@ const Customer = () => {
           </div>
         </div>
 
+        {/* Modal add */}
+        {showModalAdd && <AddModal setStatusAdd={setStatusAdd} setShowModalAdd={setShowModalAdd} />}
+
+        {/* Modal Edit */}
+        {showModalEdit && (
+          <EditModal id={idCustomer} setStatusEdit={setStatusEdit} setShowModalEdit={setShowModalEdit} />
+        )}
+
         {showModal && (
-          <DeleteModal id={idDelete} name={nameDelete} setStatusDelete={setStatusDelete} setShowModal={setShowModal} />
+          <DeleteModal
+            id={idCustomer}
+            name={nameDelete}
+            setStatusDelete={setStatusDelete}
+            setShowModal={setShowModal}
+          />
         )}
 
         {/* button Add */}
         <div className="flex flex-wrap mt-8 mx-8">
-          <Link
-            to="/customer/add"
+          <button
             className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+            onClick={() => addCustomer()}
           >
             Add Customer
-          </Link>
+          </button>
         </div>
 
         <form onKeyUp={searchData}>
@@ -256,7 +292,9 @@ const Customer = () => {
                         Detail
                       </Link>
                       <Link
-                        to={`/customer/edit/${customer.id}`}
+                        onClick={() => {
+                          editCustomer(customer.id);
+                        }}
                         className=" text-white bg-yellow-500 hover:bg-yellow-600 rounded-md text-sm px-2 py-1.5 mr-2 mb-2 dark:bg-yellow-600 dark:hover:bg-yellow-700"
                       >
                         Edit

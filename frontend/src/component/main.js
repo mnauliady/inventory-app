@@ -55,9 +55,9 @@ const Main = () => {
 
           {/* category page */}
           <Route path="/category" element={<Category />} />
-          <Route path="/category/add" element={<AddCategory />} />
+          {/* <Route path="/category/add" element={<AddCategory />} /> */}
           <Route path="/category/:id" element={<DetailCategory />} />
-          <Route path="/category/edit/:id" element={<EditCategory />} />
+          {/* <Route path="/category/edit/:id" element={<EditCategory />} /> */}
 
           <Route path="/transaction" element={<Transaction />} />
           <Route path="/transaction/add" element={<AddTransaction />} />
@@ -68,21 +68,21 @@ const Main = () => {
 
           {/* customer page */}
           <Route path="/customer" element={<Customer />} />
-          <Route path="/customer/add" element={<AddCustomer />} />
-          <Route path="/customer/edit/:id" element={<EditCustomer />} />
+          {/* <Route path="/customer/add" element={<AddCustomer />} /> */}
+          {/* <Route path="/customer/edit/:id" element={<EditCustomer />} /> */}
           <Route path="/customer/:id" element={<DetailCustomer />} />
 
           {/* Supplier page */}
           <Route path="/supplier" element={<Supplier />} />
-          <Route path="/supplier/add" element={<AddSupplier />} />
-          <Route path="/supplier/edit/:id" element={<EditSupplier />} />
+          {/* <Route path="/supplier/add" element={<AddSupplier />} /> */}
+          {/* <Route path="/supplier/edit/:id" element={<EditSupplier />} /> */}
           <Route path="/supplier/:id" element={<DetailSupplier />} />
 
           <Route path="/user" element={<User />} />
-          <Route path="/user/add" element={<AddUser />} />
+          {/* <Route path="/user/add" element={<AddUser />} /> */}
 
-          <Route path="/profile/edit/:id" element={<EditProfile />} />
-          <Route path="/profile/change/password/:id" element={<ChangePassword />} />
+          {/* <Route path="/profile/edit/:id" element={<EditProfile />} /> */}
+          {/* <Route path="/profile/change/password/:id" element={<ChangePassword />} /> */}
           <Route path="/profile/:id" element={<Profile />} />
 
           <Route path="/log" element={<Log />} />

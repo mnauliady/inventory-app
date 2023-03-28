@@ -170,17 +170,33 @@ const updateCategory = async (req, res) => {
 
   try {
     // update category
-    const category = await Category.update(
-      { name: req.body.name, code: req.body.name.substring(0, 3).toLowerCase(), description: req.body.description },
-      {
-        where: {
-          id: req.params.id,
-        },
-      }
-    );
+    const cek = await Category.findByPk(req.params.id, {
+      include: [{ model: Product, as: "product" }],
+    });
+
+    let category;
+    if (cek.product.length) {
+      category = await Category.update(
+        { name: req.body.name, description: req.body.description },
+        {
+          where: {
+            id: req.params.id,
+          },
+        }
+      );
+    } else {
+      category = await Category.update(
+        { name: req.body.name, code: req.body.name.substring(0, 3).toLowerCase(), description: req.body.description },
+        {
+          where: {
+            id: req.params.id,
+          },
+        }
+      );
+    }
 
     // jika berhasil update
-    if (category == 1) {
+    if (cek) {
       logger.info(`Category with id ${req.params.id} updated`, {
         method: req.method,
         url: req.originalUrl,

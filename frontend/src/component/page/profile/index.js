@@ -11,11 +11,25 @@ import { useNavigate, Link, useParams } from "react-router-dom";
 
 import { useSelector } from "react-redux";
 
+import EditModal from "./editModal";
+
+import ChangePassword from "./changePassword";
+import ChangePasswordModal from "./changePassModal";
+
 const Profile = () => {
   //state
   const [name, setName] = useState("");
   const [mobile, setMobile] = useState("");
   const [email, setEmail] = useState("");
+
+  // state untuk modal change password
+  const [showModalChangePass, setShowModalChangePass] = useState(false);
+  const [statusChangePass, setStatusChangePass] = useState("");
+
+  // state untuk modal edit
+  const [showModalEdit, setShowModalEdit] = useState(false);
+  const [statusEdit, setStatusEdit] = useState("");
+  const [idUser, setIdUser] = useState();
 
   const navigate = useNavigate();
 
@@ -23,25 +37,27 @@ const Profile = () => {
   useEffect(() => {
     //panggil function "getPOstById"
     getProfileById();
-  }, []);
+  }, [statusEdit, statusChangePass]);
 
   //get ID from parameter URL
   const { id } = useParams();
   const { user } = useSelector((state) => state.auth);
 
+  // validasi akses ke halaman, jika user tidak ditemukan
+  useEffect(() => {
+    if (user && user.id !== id) {
+      navigate("/not-found");
+    }
+  }, [user, navigate]);
+
   //function "getProfileById"
   const getProfileById = async () => {
     try {
-      if (id !== user.id) {
-        navigate("/not-found");
-      }
-
       //get data from server
       const response = await axios.get(`http://localhost:5000/users/${id}`);
       //get response data
       const data = await response.data;
 
-      console.log(data);
       //assign data to state
       setName(data.name);
       setEmail(data.email);
@@ -52,6 +68,18 @@ const Profile = () => {
     }
   };
 
+  const editProfile = (id) => {
+    setIdUser(id);
+    setShowModalEdit(true);
+    setStatusEdit(false);
+  };
+
+  const changePassword = (id) => {
+    setIdUser(id);
+    setShowModalChangePass(true);
+    setStatusChangePass(false);
+  };
+
   return (
     <section className="w-full bg-gray-100 md:h-[calc(100vh-48px)]">
       <div id="main" className="main-content flex-1 bg-gray-100 pb-24 md:pb-5 ">
@@ -60,6 +88,17 @@ const Profile = () => {
             <h1 className="font-bold pl-2">Profile</h1>
           </div>
         </div>
+
+        {/* Modal Edit */}
+        {showModalEdit && <EditModal id={idUser} setStatusEdit={setStatusEdit} setShowModalEdit={setShowModalEdit} />}
+        {/* Modal Change Pass */}
+        {showModalChangePass && (
+          <ChangePasswordModal
+            id={idUser}
+            setStatusChangePass={setStatusChangePass}
+            setShowModalChangePass={setShowModalChangePass}
+          />
+        )}
 
         <div className="flex flex-wrap mt-8 mx-8 mb-4">
           <div className="overflow-hidden bg-white shadow sm:rounded-lg w-1/2">
@@ -85,13 +124,17 @@ const Profile = () => {
           </div>
         </div>
         <Link
-          to={`/profile/edit/${id}`}
+          onClick={() => {
+            editProfile(id);
+          }}
           className=" text-white bg-green-500 hover:bg-green-600 rounded-md font-medium text-sm px-5 py-2.5 ml-8"
         >
           Edit Profile
         </Link>
         <Link
-          to={`/profile/change/password/${id}`}
+          onClick={() => {
+            changePassword(id);
+          }}
           className=" text-white bg-amber-500 hover:bg-amber-600 rounded-md font-medium text-sm px-5 py-2.5 ml-2"
         >
           Change Password

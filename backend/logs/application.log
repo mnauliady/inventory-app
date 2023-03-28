@@ -21,3 +21,44 @@
 {"level":"info","message":"Category with id 834c0564-cd85-4b71-bd94-01a0a1e5a13a deleted","method":"DELETE","status":200,"timestamp":"2023-03-28T02:48:31.791Z","url":"/categories/834c0564-cd85-4b71-bd94-01a0a1e5a13a"}
 {"level":"info","message":"Category 123123 created","method":"POST","status":200,"timestamp":"2023-03-28T02:55:11.658Z","url":"/categories"}
 {"level":"info","message":"Category with id 41a2c9eb-7144-4acf-a632-42f9a606f78f deleted","method":"DELETE","status":200,"timestamp":"2023-03-28T02:55:17.922Z","url":"/categories/41a2c9eb-7144-4acf-a632-42f9a606f78f"}
+{"level":"info","message":"Category 213123 created","method":"POST","status":200,"timestamp":"2023-03-28T03:11:53.501Z","url":"/categories"}
+{"level":"info","message":"Category with id 5600f853-65c3-449c-a4fb-2e03aebffeb2 deleted","method":"DELETE","status":200,"timestamp":"2023-03-28T03:11:55.717Z","url":"/categories/5600f853-65c3-449c-a4fb-2e03aebffeb2"}
+{"level":"info","message":"Category with id 788fa0a4-6032-4ee0-825d-9e0ae9c200ff updated","method":"PUT","status":200,"timestamp":"2023-03-28T03:20:08.514Z","url":"/categories/788fa0a4-6032-4ee0-825d-9e0ae9c200ff"}
+{"level":"info","message":"Category with id 788fa0a4-6032-4ee0-825d-9e0ae9c200ff updated","method":"PUT","status":200,"timestamp":"2023-03-28T03:20:24.176Z","url":"/categories/788fa0a4-6032-4ee0-825d-9e0ae9c200ff"}
+{"level":"info","message":"Category with id edd010e4-f4af-4741-9536-0b9d429f93f3 updated","method":"PUT","status":200,"timestamp":"2023-03-28T03:33:07.980Z","url":"/categories/edd010e4-f4af-4741-9536-0b9d429f93f3"}
+{"level":"info","message":"Category with id edd010e4-f4af-4741-9536-0b9d429f93f3 updated","method":"PUT","status":200,"timestamp":"2023-03-28T03:33:12.740Z","url":"/categories/edd010e4-f4af-4741-9536-0b9d429f93f3"}
+{"level":"info","message":"Category with id edd010e4-f4af-4741-9536-0b9d429f93f3 updated","method":"PUT","status":200,"timestamp":"2023-03-28T03:34:03.795Z","url":"/categories/edd010e4-f4af-4741-9536-0b9d429f93f3"}
+{"level":"info","message":"Category with id edd010e4-f4af-4741-9536-0b9d429f93f3 updated","method":"PUT","status":200,"timestamp":"2023-03-28T03:34:14.978Z","url":"/categories/edd010e4-f4af-4741-9536-0b9d429f93f3"}
+{"level":"info","message":"Category with id c242b1ea-4112-4fa2-a6b6-dcaf34fc9aae updated","method":"PUT","status":200,"timestamp":"2023-03-28T03:34:25.712Z","url":"/categories/c242b1ea-4112-4fa2-a6b6-dcaf34fc9aae"}
+{"level":"info","message":"Category with id c242b1ea-4112-4fa2-a6b6-dcaf34fc9aae updated","method":"PUT","status":200,"timestamp":"2023-03-28T03:34:39.255Z","url":"/categories/c242b1ea-4112-4fa2-a6b6-dcaf34fc9aae"}
+{"level":"info","message":"Category with id c242b1ea-4112-4fa2-a6b6-dcaf34fc9aae updated","method":"PUT","status":200,"timestamp":"2023-03-28T03:40:31.670Z","url":"/categories/c242b1ea-4112-4fa2-a6b6-dcaf34fc9aae"}
+{"level":"info","message":"Category with id c242b1ea-4112-4fa2-a6b6-dcaf34fc9aae updated","method":"PUT","status":200,"timestamp":"2023-03-28T03:40:37.528Z","url":"/categories/c242b1ea-4112-4fa2-a6b6-dcaf34fc9aae"}
+{"level":"info","message":"Category with id c242b1ea-4112-4fa2-a6b6-dcaf34fc9aae updated","method":"PUT","status":200,"timestamp":"2023-03-28T03:40:50.174Z","url":"/categories/c242b1ea-4112-4fa2-a6b6-dcaf34fc9aae"}
+{"level":"info","message":"Category with id edd010e4-f4af-4741-9536-0b9d429f93f3 updated","method":"PUT","status":200,"timestamp":"2023-03-28T03:41:00.383Z","url":"/categories/edd010e4-f4af-4741-9536-0b9d429f93f3"}
+{"level":"info","message":"Category with id edd010e4-f4af-4741-9536-0b9d429f93f3 updated","method":"PUT","status":200,"timestamp":"2023-03-28T03:41:36.106Z","url":"/categories/edd010e4-f4af-4741-9536-0b9d429f93f3"}
+{"level":"info","message":"Category with id c242b1ea-4112-4fa2-a6b6-dcaf34fc9aae updated","method":"PUT","status":200,"timestamp":"2023-03-28T03:41:42.618Z","url":"/categories/c242b1ea-4112-4fa2-a6b6-dcaf34fc9aae"}
+{"level":"info","message":"Category with id c242b1ea-4112-4fa2-a6b6-dcaf34fc9aae updated","method":"PUT","status":200,"timestamp":"2023-03-28T03:41:48.328Z","url":"/categories/c242b1ea-4112-4fa2-a6b6-dcaf34fc9aae"}
+{"level":"info","message":"Category with id edd010e4-f4af-4741-9536-0b9d429f93f3 updated","method":"PUT","status":200,"timestamp":"2023-03-28T03:41:53.333Z","url":"/categories/edd010e4-f4af-4741-9536-0b9d429f93f3"}
+{"level":"info","message":"Customer created","method":"POST","status":200,"timestamp":"2023-03-28T04:02:01.324Z","url":"/customers"}
+{"level":"info","message":"Customer with id 7b14bbe6-68c1-4a24-816b-561ed9b00cf5 updated","method":"PUT","status":200,"timestamp":"2023-03-28T04:16:50.515Z","url":"/customers/7b14bbe6-68c1-4a24-816b-561ed9b00cf5"}
+{"level":"info","message":"Customer with id 7b14bbe6-68c1-4a24-816b-561ed9b00cf5 deleted","method":"DELETE","status":200,"timestamp":"2023-03-28T04:17:14.291Z","url":"/customers/7b14bbe6-68c1-4a24-816b-561ed9b00cf5"}
+{"level":"info","message":"Supplier created","method":"POST","status":200,"timestamp":"2023-03-28T04:29:40.339Z","url":"/suppliers"}
+{"level":"info","message":"Supplier with id 52de19f2-8793-45b4-ad4e-29960bc054c8 updated","method":"PUT","status":200,"timestamp":"2023-03-28T04:30:53.936Z","url":"/suppliers/52de19f2-8793-45b4-ad4e-29960bc054c8"}
+{"level":"info","message":"Supplier with id 52de19f2-8793-45b4-ad4e-29960bc054c8 deleted","method":"DELETE","status":200,"timestamp":"2023-03-28T04:30:59.587Z","url":"/suppliers/52de19f2-8793-45b4-ad4e-29960bc054c8"}
+{"level":"error","message":"Customer with id '145b55b2-9627-4cf5-94e6-0367cc019d04' not found","method":"GET","status":400,"timestamp":"2023-03-28T04:47:06.478Z","url":"/customers/145b55b2-9627-4cf5-94e6-0367cc019d04"}
+{"level":"error","message":"Customer with id '145b55b2-9627-4cf5-94e6-0367cc019d04' not found","method":"GET","status":400,"timestamp":"2023-03-28T04:48:21.437Z","url":"/customers/145b55b2-9627-4cf5-94e6-0367cc019d04"}
+{"level":"error","message":"Customer with id '145b55b2-9627-4cf5-94e6-0367cc019d04' not found","method":"GET","status":400,"timestamp":"2023-03-28T04:50:22.143Z","url":"/customers/145b55b2-9627-4cf5-94e6-0367cc019d04"}
+{"level":"info","message":"user with email 'super@email.com' updated profile","method":"PUT","status":200,"timestamp":"2023-03-28T05:45:51.980Z","url":"/users/145b55b2-9627-4cf5-94e6-0367cc019d04"}
+{"level":"info","message":"user with email 'super@email.com' updated profile","method":"PUT","status":200,"timestamp":"2023-03-28T05:46:31.850Z","url":"/users/145b55b2-9627-4cf5-94e6-0367cc019d04"}
+{"level":"info","message":"user with email 'super@email.com' updated profile","method":"PUT","status":200,"timestamp":"2023-03-28T05:47:17.575Z","url":"/users/145b55b2-9627-4cf5-94e6-0367cc019d04"}
+{"level":"info","message":"user with email 'super@email.com' updated profile","method":"PUT","status":200,"timestamp":"2023-03-28T05:47:44.220Z","url":"/users/145b55b2-9627-4cf5-94e6-0367cc019d04"}
+{"level":"info","message":"user with email 'super@email.com' updated profile","method":"PUT","status":200,"timestamp":"2023-03-28T05:48:03.585Z","url":"/users/145b55b2-9627-4cf5-94e6-0367cc019d04"}
+{"level":"info","message":"user with email 'super@email.com' updated profile","method":"PUT","status":200,"timestamp":"2023-03-28T05:49:08.683Z","url":"/users/145b55b2-9627-4cf5-94e6-0367cc019d04"}
+{"level":"info","message":"user with email 'super@email.com' updated profile","method":"PUT","status":200,"timestamp":"2023-03-28T05:49:14.327Z","url":"/users/145b55b2-9627-4cf5-94e6-0367cc019d04"}
+{"level":"info","message":"user with email 'super@email.com' updated profile","method":"PUT","status":200,"timestamp":"2023-03-28T05:49:31.880Z","url":"/users/145b55b2-9627-4cf5-94e6-0367cc019d04"}
+{"level":"info","message":"user with email 'super@email.com' updated password","method":"PUT","status":200,"timestamp":"2023-03-28T06:05:17.981Z","url":"/users/change/145b55b2-9627-4cf5-94e6-0367cc019d04"}
+{"level":"info","message":"Reset password for user with email 'super@email.com' success","method":"PUT","status":200,"timestamp":"2023-03-28T06:08:58.813Z","url":"/reset/145b55b2-9627-4cf5-94e6-0367cc019d04"}
+{"level":"info","message":"user with email 'super@email.com' updated password","method":"PUT","status":200,"timestamp":"2023-03-28T06:09:29.461Z","url":"/users/change/145b55b2-9627-4cf5-94e6-0367cc019d04"}
+{"level":"info","message":"user with email 'super@email.com' successfully logged out","method":"DELETE","status":200,"timestamp":"2023-03-28T06:09:32.182Z","url":"/logout"}
+{"level":"info","message":"user with email 'super@email.com' successfully logged in","method":"POST","status":200,"timestamp":"2023-03-28T06:09:40.170Z","url":"/login"}
+{"level":"info","message":"Reset password for user with email 'super@email.com' success","method":"PUT","status":200,"timestamp":"2023-03-28T06:09:45.219Z","url":"/reset/145b55b2-9627-4cf5-94e6-0367cc019d04"}

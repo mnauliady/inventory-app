@@ -10,6 +10,8 @@ import { useDispatch, useSelector } from "react-redux";
 
 import DeleteModal from "./deleteModal";
 
+import AddModal from "./addModal";
+
 import ResetPasswordModal from "./resetPassModal";
 
 import ReactPaginate from "react-paginate";
@@ -17,6 +19,10 @@ import ReactPaginate from "react-paginate";
 const User = () => {
   //define state
   const [users, setUsers] = useState([]);
+
+  // state untuk modal add
+  const [showModalAdd, setShowModalAdd] = useState(false);
+  const [statusAdd, setStatusAdd] = useState("");
 
   // state untuk modal delete
   const [showModal, setShowModal] = useState(false);
@@ -54,7 +60,7 @@ const User = () => {
     }
 
     fectData();
-  }, [isError, user, navigate, statusDelete, statusReset, page, keyword]);
+  }, [isError, user, navigate, statusDelete, statusReset, statusAdd, page, keyword]);
 
   //function "fetchData"
   const fectData = async () => {
@@ -109,6 +115,11 @@ const User = () => {
     setStatusReset(false);
   };
 
+  const addUser = () => {
+    setShowModalAdd(true);
+    setStatusAdd(false);
+  };
+
   return (
     // index page
     <section className="w-full bg-gray-100 md:h-[calc(100vh-48px)]">
@@ -118,6 +129,9 @@ const User = () => {
             <h1 className="font-bold pl-2">User</h1>
           </div>
         </div>
+
+        {/* Modal add */}
+        {showModalAdd && <AddModal setStatusAdd={setStatusAdd} setShowModalAdd={setShowModalAdd} />}
 
         {showModal && (
           <DeleteModal id={idDelete} name={nameDelete} setStatusDelete={setStatusDelete} setShowModal={setShowModal} />
@@ -135,7 +149,7 @@ const User = () => {
         {/* button Add */}
         <div className="flex flex-wrap mt-8 mx-8">
           <Link
-            to="/user/add"
+            onClick={() => addUser()}
             className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
           >
             Add User
