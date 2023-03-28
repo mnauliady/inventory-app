@@ -1,11 +1,12 @@
 const fs = require("fs");
 
 const getAll = async (req, res) => {
-  await fs.readFile("./logs/backup/app-2023-03-27.log", "utf8", (err, data) => {
+  await fs.readFile("./logs/backup/app-2023-03-28.log", "utf8", (err, data) => {
     if (err) {
       console.error(err);
       return;
     }
+
     jsonString = `${data}`;
     const lines = jsonString.trim().split("\n");
     const jsonArray = lines
@@ -19,6 +20,10 @@ const getAll = async (req, res) => {
       .filter((obj) => obj !== null);
 
     console.log(jsonArray);
+    jsonArray.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+    jsonArray.reverse();
+    console.log(jsonArray);
+
     res.send(jsonArray);
   });
 };

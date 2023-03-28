@@ -1,0 +1,12 @@
+{"level":"info","message":"user with email 'mnauliady@gmail.com' successfully logged out","method":"DELETE","status":200,"timestamp":"2023-03-28T01:35:48.034Z","url":"/logout"}
+{"level":"info","message":"user with email 'super@email.com' successfully logged in","method":"POST","status":200,"timestamp":"2023-03-28T01:35:55.943Z","url":"/login"}
+{"level":"info","message":"Category Muhammad Nur Auliady created","method":"POST","status":200,"timestamp":"2023-03-28T02:19:24.984Z","url":"/categories"}
+{"level":"info","message":"Category with id e4ab3bb4-90a7-44c7-beae-bbe3805f9da0 deleted","method":"DELETE","status":200,"timestamp":"2023-03-28T02:19:29.712Z","url":"/categories/e4ab3bb4-90a7-44c7-beae-bbe3805f9da0"}
+{"level":"info","message":"Category Muhammad Nur Auliady created","method":"POST","status":200,"timestamp":"2023-03-28T02:48:13.681Z","url":"/categories"}
+{"level":"info","message":"Category with id 834c0564-cd85-4b71-bd94-01a0a1e5a13a deleted","method":"DELETE","status":200,"timestamp":"2023-03-28T02:48:31.791Z","url":"/categories/834c0564-cd85-4b71-bd94-01a0a1e5a13a"}
+{"level":"info","message":"Category 123123 created","method":"POST","status":200,"timestamp":"2023-03-28T02:55:11.658Z","url":"/categories"}
+{"level":"info","message":"Category with id 41a2c9eb-7144-4acf-a632-42f9a606f78f deleted","method":"DELETE","status":200,"timestamp":"2023-03-28T02:55:17.922Z","url":"/categories/41a2c9eb-7144-4acf-a632-42f9a606f78f"}
+{"level":"info","message":"Category 213123 created","method":"POST","status":200,"timestamp":"2023-03-28T03:11:53.501Z","url":"/categories"}
+{"level":"info","message":"Category with id 5600f853-65c3-449c-a4fb-2e03aebffeb2 deleted","method":"DELETE","status":200,"timestamp":"2023-03-28T03:11:55.717Z","url":"/categories/5600f853-65c3-449c-a4fb-2e03aebffeb2"}
+{"level":"info","message":"Category with id 788fa0a4-6032-4ee0-825d-9e0ae9c200ff updated","method":"PUT","status":200,"timestamp":"2023-03-28T03:20:08.514Z","url":"/categories/788fa0a4-6032-4ee0-825d-9e0ae9c200ff"}
+{"level":"info","message":"Category with id 788fa0a4-6032-4ee0-825d-9e0ae9c200ff updated","method":"PUT","status":200,"timestamp":"2023-03-28T03:20:24.176Z","url":"/categories/788fa0a4-6032-4ee0-825d-9e0ae9c200ff"}

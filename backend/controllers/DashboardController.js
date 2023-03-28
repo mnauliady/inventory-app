@@ -19,8 +19,6 @@ const getDashboard = async (req, res) => {
       }
     );
 
-    const transaction = await Order.findAll();
-
     const lowStock = await db.sequelize.query(
       `SELECT products."id", products."name", min_stock,  sum(COALESCE(orderdetails.quantity,0)) AS "total" FROM orderdetails RIGHT JOIN products ON orderdetails."productId" = products."id" GROUP BY products."id"  
       HAVING sum(COALESCE(orderdetails.quantity,0)) < products.min_stock`,
@@ -29,11 +27,29 @@ const getDashboard = async (req, res) => {
       }
     );
 
+    const transaction = await Order.findAll();
+
     const totalProduct = await db.sequelize.query(`SELECT sum(orderdetails.quantity) AS "total" FROM orderdetails`, {
       type: db.sequelize.QueryTypes.SELECT,
     });
 
-    return res.json({ transaction, lowStock, totalProduct });
+    const topOut = await db.sequelize.query(
+      `SELECT products."name", products.sku, sum(orderdetails.quantity) as "total" FROM products INNER JOIN
+      orderdetails ON products."id" = orderdetails."productId" INNER JOIN orders ON orderdetails."orderId" = orders."id" WHERE orders."type"= 'OUT' GROUP BY products."id" ORDER BY sum(orderdetails.quantity) LIMIT 5`,
+      {
+        type: db.sequelize.QueryTypes.SELECT,
+      }
+    );
+
+    const topIn = await db.sequelize.query(
+      `SELECT products."name", products.sku, sum(orderdetails.quantity) as "total" FROM products INNER JOIN
+      orderdetails ON products."id" = orderdetails."productId" INNER JOIN orders ON orderdetails."orderId" = orders."id" WHERE orders."type"= 'IN' GROUP BY products."id" ORDER BY sum(orderdetails.quantity) DESC LIMIT 5`,
+      {
+        type: db.sequelize.QueryTypes.SELECT,
+      }
+    );
+
+    return res.json({ transaction, lowStock, totalProduct, topOut, topIn });
   } catch (err) {
     console.log(err);
   }

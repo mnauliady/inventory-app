@@ -3,8 +3,8 @@ import React from "react";
 import { useState, useEffect } from "react";
 //import axios
 import axios from "axios";
-// import Link
-import { Link } from "react-router-dom";
+
+import moment from "moment/moment";
 
 const Log = () => {
   //define state
@@ -114,7 +114,7 @@ const Log = () => {
                     <td className="px-6 py-2">{l.level}</td>
                     <td className="px-6 py-2">{l.method}</td>
                     <td className="px-6 py-2">{l.message}</td>
-                    <td className="px-6 py-2">{l.timestamp}</td>
+                    <td className="px-6 py-2">{moment(l.timestamp).format("DD-MM-YYYY, hh:mm:ss a")}</td>
                   </tr>
                 ))}
               </tbody>

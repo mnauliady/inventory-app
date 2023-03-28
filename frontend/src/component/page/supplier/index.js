@@ -103,7 +103,7 @@ const Supplier = () => {
             Add Supplier
           </Link>
         </div>
-        <form onSubmit={searchData}>
+        <form onKeyUp={searchData}>
           <div className="mx-8 flex mb-2">
             <div className="mr-2">
               <input
@@ -113,14 +113,6 @@ const Supplier = () => {
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder="Search ... "
               />
-            </div>
-            <div className="">
-              <button
-                type="submit"
-                className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-md text-sm py-2.5 px-4 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
-              >
-                Search
-              </button>
             </div>
           </div>
         </form>

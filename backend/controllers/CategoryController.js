@@ -52,6 +52,7 @@ const getCategories = async (req, res) => {
       offset: offset,
       limit: limit,
       include: [{ model: Product, as: "product" }],
+      order: [["updatedAt", "DESC"]],
     });
 
     res.json({

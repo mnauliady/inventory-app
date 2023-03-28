@@ -164,7 +164,6 @@ const AddUser = () => {
                   <option value="">Select user role</option>
                   <option value="super admin">Super Admin</option>
                   <option value="admin">Admin</option>
-                  <option value="manager">Manager</option>
                 </select>
               </div>
               <Link

@@ -1,7 +1,7 @@
 import React from "react";
 
 //import hook useState from react
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 //import axios
 import axios from "axios";

@@ -277,14 +277,16 @@ const getAllStock = async (req, res) => {
     const page = parseInt(req.query.page) || 0;
     const limit = parseInt(req.query.limit) || 10;
     const search = req.query.search_query || "";
+    const status = req.query.status || "";
     const offset = limit * page;
+    console.log(req.query);
     const query = await db.sequelize.query(
-      `SELECT products.*, sum(orderdetails.quantity) AS stock FROM orderdetails RIGHT JOIN products ON orderdetails."productId" = products."id" WHERE(products.sku ILIKE '%${search}%' OR products."name" ILIKE '%${search}%') GROUP BY products."id" ORDER BY products."updatedAt" ASC`
+      `SELECT products.*, sum(orderdetails.quantity) AS stock FROM orderdetails RIGHT JOIN products ON orderdetails."productId" = products."id" WHERE(products.sku ILIKE '%${search}%' OR products."name" ILIKE '%${search}%' OR products."status" = '${status}') GROUP BY products."id" ORDER BY products."updatedAt" DESC`
     );
     totalRows = query[0].length;
     const totalPage = Math.ceil(totalRows / limit);
     const product = await db.sequelize.query(
-      `SELECT products.*, sum(orderdetails.quantity) AS "stock" FROM orderdetails RIGHT JOIN products ON orderdetails."productId" = products."id" WHERE(products.sku ILIKE '%${search}%' OR products."name" ILIKE '%${search}%') GROUP BY products."id" ORDER BY "updatedAt" ASC`,
+      `SELECT products.*, sum(orderdetails.quantity) AS "stock" FROM orderdetails RIGHT JOIN products ON orderdetails."productId" = products."id" WHERE(products.sku ILIKE '%${search}%' OR products."name" ILIKE '%${search}%' OR products."status" = '${status}') GROUP BY products."id" ORDER BY "updatedAt" DESC`,
       // `SELECT products.*, sum(orderdetails.quantity) AS "stock" FROM orderdetails RIGHT JOIN products ON orderdetails."productId" = products."id" GROUP BY products."id" ORDER BY "updatedAt"`,
       {
         type: db.sequelize.QueryTypes.SELECT,

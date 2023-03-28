@@ -23,16 +23,6 @@ const AddTransaction = () => {
 
   const navigate = useNavigate();
 
-  // fungsi untuk menampilkan seluruh data supplier untuk dropdown pada form
-  const dataCustomer = async () => {
-    //get data from server
-    const response = await axios.get(`http://localhost:5000/customers`);
-    //get response data
-    const data = await response.data;
-    //assign response data to state "customer"
-    setCustomer(data);
-  };
-
   //useEffect hook
   useEffect(() => {
     //panggil method "dataCustomer"

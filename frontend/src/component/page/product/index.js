@@ -26,7 +26,9 @@ const Product = () => {
   const [pages, setPages] = useState(0);
   const [rows, setRows] = useState(0);
   const [keyword, setKeyword] = useState("");
+  const [keyword2, setKeyword2] = useState("");
   const [query, setQuery] = useState("");
+  const [status, setStatus] = useState("");
   const [msg, setMsg] = useState("");
 
   //useEffect hook
@@ -39,7 +41,7 @@ const Product = () => {
   const fectData = async () => {
     //fetching
     const response = await axios.get(
-      `http://localhost:5000/products/all?search_query=${keyword}&page=${page}&limit=${limit}`
+      `http://localhost:5000/products/all?search_query=${keyword}&status=${keyword2}&page=${page}&limit=${limit}`
     );
     //get response data
     const data = await response.data.product;
@@ -65,6 +67,7 @@ const Product = () => {
     setPage(0);
     setMsg("");
     setKeyword(query);
+    setKeyword2(status);
   };
 
   const deleteProduct = (id, nama) => {
@@ -102,8 +105,8 @@ const Product = () => {
             Add Product
           </Link>
         </div>
-        <form onSubmit={searchData}>
-          <div className="mx-8 flex mb-2">
+        <form onKeyUp={searchData} className="flex">
+          <div className="ml-8 flex mb-2">
             <div className="mr-2">
               <input
                 type="text"
@@ -113,13 +116,18 @@ const Product = () => {
                 placeholder="Search ... "
               />
             </div>
-            <div className="">
-              <button
-                type="submit"
-                className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-md text-sm py-2.5 px-4 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+          </div>
+          <div className="flex mb-2">
+            <div className="mr-2">
+              <select
+                onChange={(e) => setStatus(e.target.value)}
+                value={status}
+                className="py-1.5 rounded-md pl-2 w-44 border-2 border-gray-300 bg-gray-50 border-solid focus:border-blue-700"
               >
-                Search
-              </button>
+                <option value="">All Product</option>
+                <option value="active">Active Product</option>
+                <option value="not active">Not Active Product</option>
+              </select>
             </div>
           </div>
         </form>

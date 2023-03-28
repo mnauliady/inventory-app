@@ -63,6 +63,7 @@ const getUsers = async (req, res) => {
       offset: offset,
       limit: limit,
       include: [{ model: Order, as: "order" }],
+      order: [["updatedAt", "DESC"]],
     });
     res.json({
       user,

@@ -8,16 +8,28 @@ import { Link } from "react-router-dom";
 
 import DeleteModal from "./deleteModal";
 
+import AddModal from "./addModal";
+
+import EditModal from "./editModal";
+
 import ReactPaginate from "react-paginate";
 
 const Category = () => {
   //define state
   const [categories, setCategories] = useState([]);
 
+  // state untuk modal add
+  const [showModalAdd, setShowModalAdd] = useState(false);
+  const [statusAdd, setStatusAdd] = useState("");
+
+  // state untuk modal edit
+  const [showModalEdit, setShowModalEdit] = useState(false);
+  const [statusEdit, setStatusEdit] = useState("");
+
   // state untuk modal delete
   const [showModal, setShowModal] = useState(false);
   const [statusDelete, setStatusDelete] = useState("");
-  const [idDelete, setIdDelete] = useState();
+  const [idCategory, setIdCategory] = useState();
   const [nameDelete, setNameDelete] = useState();
 
   // state pagination dan search
@@ -33,7 +45,7 @@ const Category = () => {
   useEffect(() => {
     //panggil method "fetchData"
     fectData();
-  }, [statusDelete, page, keyword]);
+  }, [statusDelete, statusAdd, statusEdit, page, keyword]);
 
   //function "fetchData"
   const fectData = async () => {
@@ -72,11 +84,25 @@ const Category = () => {
     // set modal ke true
     setShowModal(true);
     // set id dari produk yang akan dihapus
-    setIdDelete(id);
+    setIdCategory(id);
     // set nama produk yang akan dihapus
     setNameDelete(nama);
     // set status delete (jika status delete berubah maka akan menjalankan useEffect)
     setStatusDelete(false);
+  };
+
+  // tampilkan modal add
+  const addCategory = () => {
+    // tampilkan modal add
+    setShowModalAdd(true);
+    setStatusAdd(false);
+  };
+
+  const editCategory = (id) => {
+    // set id dari produk yang akan dihapus
+    setIdCategory(id);
+    setShowModalEdit(true);
+    setStatusEdit(false);
   };
 
   return (
@@ -89,21 +115,35 @@ const Category = () => {
             <h1 className="font-bold pl-2">Category</h1>
           </div>
         </div>
+        {/* Modal add */}
+        {showModalAdd && <AddModal setStatusAdd={setStatusAdd} setShowModalAdd={setShowModalAdd} />}
+
+        {/* Modal Edit */}
+        {showModalEdit && (
+          <EditModal id={idCategory} setStatusEdit={setStatusEdit} setShowModalEdit={setShowModalEdit} />
+        )}
+
+        {/* Modal delete */}
         {showModal && (
-          <DeleteModal id={idDelete} name={nameDelete} setStatusDelete={setStatusDelete} setShowModal={setShowModal} />
+          <DeleteModal
+            id={idCategory}
+            name={nameDelete}
+            setStatusDelete={setStatusDelete}
+            setShowModal={setShowModal}
+          />
         )}
 
         {/* button Add */}
         <div className="flex flex-wrap mt-8 mx-8">
-          <Link
-            to="/category/add"
+          <button
             className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+            onClick={() => addCategory()}
           >
             Add Category
-          </Link>
+          </button>
         </div>
 
-        <form onSubmit={searchData}>
+        <form onKeyUp={searchData}>
           <div className="mx-8 flex mb-2">
             <div className="mr-2">
               <input
@@ -114,14 +154,14 @@ const Category = () => {
                 placeholder="Search ... "
               />
             </div>
-            <div className="">
+            {/* <div className="">
               <button
                 type="submit"
                 className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-md text-sm py-2.5 px-4 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
               >
                 Search
               </button>
-            </div>
+            </div> */}
           </div>
         </form>
 
@@ -140,9 +180,9 @@ const Category = () => {
                   <th scope="col" className="px-6 py-3">
                     Category Name
                   </th>
-                  {/* <th scope="col" className="px-6 py-3">
+                  <th scope="col" className="px-6 py-3">
                     Description
-                  </th> */}
+                  </th>
                   <th scope="col" className="px-6 py-3">
                     Action
                   </th>
@@ -159,9 +199,11 @@ const Category = () => {
                     </td>
                     <td className="px-6 py-4">{category.code}</td>
                     <td className="px-6 py-4">{category.name}</td>
-                    {/* <td className="px-6 py-4  ">
-                      <span className="truncate overflow-hidden ...">{category.description}</span>
-                    </td> */}
+                    <td className="px-6 py-4  ">
+                      {category.description && category.description.split(" ").length > 3
+                        ? `${category.description && category.description.split(/\s+/).slice(0, 3).join(" ")} ...`
+                        : `${category.description}`}
+                    </td>
                     <td className="px-6 py-4">
                       <Link
                         to={`/category/${category.id}`}
@@ -170,7 +212,10 @@ const Category = () => {
                         Details
                       </Link>
                       <Link
-                        to={`/category/edit/${category.id}`}
+                        // to={`/category/edit/${category.id}`}
+                        onClick={() => {
+                          editCategory(category.id);
+                        }}
                         className=" text-white bg-yellow-500 hover:bg-yellow-600 rounded-md text-sm px-2 py-1.5 mr-2 mb-2 dark:bg-yellow-600 dark:hover:bg-yellow-700"
                       >
                         Edit
@@ -195,6 +240,7 @@ const Category = () => {
           </div>
         </div>
 
+        {/* pagination */}
         <div className="flex pt-2">
           <p className="text-red-500">{msg}</p>
           <p className="flex ml-8 pt-1 font-medium">

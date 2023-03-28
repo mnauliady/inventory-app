@@ -27,9 +27,11 @@ const Home = () => {
     const response = await axios.get("http://localhost:5000/dashboard");
     //get response data
     const data = await response.data;
+    // console.log(data.to);
     //assign response data to state "products"
     setDataDashboard(data);
   };
+
   return (
     <section className="bg-gray-100 md:h-[calc(100vh-48px)] w-full">
       <div id="main" className="main-content flex-1 bg-gray-100 pb-24 md:pb-5">
@@ -158,60 +160,91 @@ const Home = () => {
             {/* <!--/Graph Card--> */}
           </div>
 
-          <div className="w-full p-6">
-            {/* <!--Graph Card--> */}
+          <div className="w-full md:w-1/2 p-6">
             <div className="bg-white border-transparent rounded-lg shadow-xl">
               <div className="bg-gray-300 uppercase text-gray-800 border-b-2 border-gray-300 rounded-tl-lg rounded-tr-lg p-2">
-                <h2 className="font-bold uppercase text-gray-600">Table</h2>
+                <h2 className="font-bold uppercase text-gray-600">Top 5 Product Out</h2>
               </div>
-              <div className="p-5">
+              <div className="p-5 overflow-x-auto">
                 <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                   <thead className="text-xs text-gray-700 uppercase bg-gray-200 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
                       <th scope="col" className="px-6 py-3">
-                        Product name
+                        #
                       </th>
                       <th scope="col" className="px-6 py-3">
-                        Color
+                        SKU
                       </th>
                       <th scope="col" className="px-6 py-3">
-                        Category
+                        Product Name
                       </th>
                       <th scope="col" className="px-6 py-3">
-                        Price
+                        Total
                       </th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr className=" border-b dark:bg-gray-800 dark:border-gray-700">
-                      <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        Apple MacBook Pro 17"
-                      </th>
-                      <td className="px-6 py-4">Silver</td>
-                      <td className="px-6 py-4">Laptop</td>
-                      <td className="px-6 py-4">$2999</td>
-                    </tr>
-                    <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                      <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        Microsoft Surface Pro
-                      </th>
-                      <td className="px-6 py-4">White</td>
-                      <td className="px-6 py-4">Laptop PC</td>
-                      <td className="px-6 py-4">$1999</td>
-                    </tr>
-                    <tr className="bg-white dark:bg-gray-800">
-                      <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        Magic Mouse 2
-                      </th>
-                      <td className="px-6 py-4">Black</td>
-                      <td className="px-6 py-4">Accessories</td>
-                      <td className="px-6 py-4">$99</td>
-                    </tr>
+                    {dataDashboard.topOut &&
+                      dataDashboard.topOut.map((data, index) => (
+                        <tr
+                          className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+                          key={index}
+                        >
+                          <td scope="row" className="px-6 py-4  whitespace-nowrap">
+                            {index + 1}
+                          </td>
+                          <td className="px-6 py-4">{data.sku}</td>
+                          <td className="px-6 py-4">{data.name}</td>
+                          <td className="px-6 py-4">{Math.abs(data.total)}</td>
+                        </tr>
+                      ))}
                   </tbody>
                 </table>
               </div>
             </div>
-            {/* <!--/Graph Card--> */}
+          </div>
+          <div className="w-full md:w-1/2 p-6">
+            <div className="bg-white border-transparent rounded-lg shadow-xl">
+              <div className="bg-gray-300 uppercase text-gray-800 border-b-2 border-gray-300 rounded-tl-lg rounded-tr-lg p-2">
+                <h2 className="font-bold uppercase text-gray-600">Top 5 Product In</h2>
+              </div>
+              <div className="p-5 overflow-x-auto">
+                <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                  <thead className="text-xs text-gray-700 uppercase bg-gray-200 dark:bg-gray-700 dark:text-gray-400">
+                    <tr>
+                      <th scope="col" className="px-6 py-3">
+                        #
+                      </th>
+                      <th scope="col" className="px-6 py-3">
+                        SKU
+                      </th>
+                      <th scope="col" className="px-6 py-3">
+                        Product Name
+                      </th>
+                      <th scope="col" className="px-6 py-3">
+                        Total
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {dataDashboard.topIn &&
+                      dataDashboard.topIn.map((data, index) => (
+                        <tr
+                          className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+                          key={index}
+                        >
+                          <td scope="row" className="px-6 py-4  whitespace-nowrap">
+                            {index + 1}
+                          </td>
+                          <td className="px-6 py-4">{data.sku}</td>
+                          <td className="px-6 py-4">{data.name}</td>
+                          <td className="px-6 py-4">{Math.abs(data.total)}</td>
+                        </tr>
+                      ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
           </div>
         </div>
       </div>

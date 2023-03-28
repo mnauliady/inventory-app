@@ -4,7 +4,7 @@ const DailyRotateFile = require("winston-daily-rotate-file");
 const logger = winston.createLogger({
   //   level: "info",
 
-  format: winston.format.combine(winston.format.timestamp({ format: "DD-MM-YYYY HH:mm:ss" }), winston.format.json()),
+  format: winston.format.combine(winston.format.timestamp(), winston.format.json()),
   transports: [
     // new winston.transport.Console({}),
     new winston.transports.File({

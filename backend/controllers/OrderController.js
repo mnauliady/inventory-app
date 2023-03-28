@@ -178,7 +178,7 @@ const deleteOrder = async (req, res) => {
       },
     });
     if (order) {
-      logger.error(`Order with id ${req.params.id} deleted`, {
+      logger.info(`Order with id ${req.params.id} deleted`, {
         method: req.method,
         url: req.originalUrl,
         status: res.status(200).statusCode,

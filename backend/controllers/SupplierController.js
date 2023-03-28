@@ -50,6 +50,7 @@ const getSuppliers = async (req, res) => {
       offset: offset,
       limit: limit,
       include: [{ model: Product, as: "product" }],
+      order: [["updatedAt", "DESC"]],
     });
     res.json({
       supplier,
@@ -127,7 +128,7 @@ const createSupplier = async (req, res) => {
       id: supplier[0].id,
       name: supplier[0].name,
       type: "supplier",
-      phone: supplier[0].name,
+      phone: supplier[0].phone,
       email: supplier[0].email,
       address: supplier[0].address,
     });

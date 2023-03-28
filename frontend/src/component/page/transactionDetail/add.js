@@ -70,16 +70,19 @@ const AddTransactionDetail = () => {
       document.getElementById("quantity").disabled = false;
     } else {
       document.getElementById("quantity").disabled = true;
+      document.getElementById("max").classList.add("hidden");
     }
 
-    // set nilai max quantity menjadi 10000
-    setMaxQuantity(10000);
+    // set nilai max quantity menjadi 1000
+    setMaxQuantity(1000);
 
     // jika type transaksi keluar maka maxQuantitry adalah <= jumlah stok
     if (type == "OUT") {
       const response = await axios.get(`http://localhost:5000/stock/${e.target.value}`);
-      setMaxQuantity(response.data[0].sum);
-      document.getElementById("max").classList.remove("hidden");
+      if (e.target.value) {
+        setMaxQuantity(response.data[0].sum);
+        document.getElementById("max").classList.remove("hidden");
+      }
     }
 
     setSelectedProduct(e.target.value);

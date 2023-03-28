@@ -1,8 +1,15 @@
-{"level":"info","message":"Category Deleted","method":"DELETE","status":200,"timestamp":"27-03-2023 13:04:37","url":"/categories/0dca0934-dfd3-465c-aec6-f0e1522e9095"}
-{"level":"error","message":"Order with id '5c74b493-6cd7-45da-adbf-a58a7c1b5bf1123' not found","method":"GET","status":400,"timestamp":"27-03-2023 13:09:58","url":"/orders/5c74b493-6cd7-45da-adbf-a58a7c1b5bf1123"}
-{"level":"info","message":"user with email 'mnauliady@gmail.com' successfully logged out","method":"DELETE","status":200,"timestamp":"27-03-2023 13:45:16","url":"/logout"}
-{"level":"info","message":"user with email 'mnauliady@gmail.com' successfully logged in","method":"POST","status":200,"timestamp":"27-03-2023 13:45:21","url":"/login"}
-{"level":"info","message":"user with email 'aa@gmail.com' registered successfully","method":"POST","status":200,"timestamp":"27-03-2023 13:47:29","url":"/register"}
-{"level":"info","message":"user with email 'mnauliady@gmail.com' updated password","method":"PUT","status":200,"timestamp":"27-03-2023 13:51:31","url":"/users/change/b44be04c-184e-4dd7-a7e8-108f2d2d986b"}
-{"level":"info","message":"Reset password 'b44be04c-184e-4dd7-a7e8-108f2d2d986b' successfully","method":"PUT","status":200,"timestamp":"27-03-2023 13:51:52","url":"/reset/b44be04c-184e-4dd7-a7e8-108f2d2d986b"}
-{"level":"info","message":"Reset password for user with email 'mnauliady@gmail.com' success","method":"PUT","status":200,"timestamp":"27-03-2023 13:54:00","url":"/reset/b44be04c-184e-4dd7-a7e8-108f2d2d986b"}
+{"level":"info","message":"Reset password for user with email 'mnauliady@gmail.com' success","method":"PUT","status":200,"timestamp":"2023-03-27T07:19:18.200Z","url":"/reset/b44be04c-184e-4dd7-a7e8-108f2d2d986b"}
+{"level":"info","message":"Supplier created","method":"POST","status":200,"timestamp":"2023-03-27T07:19:35.910Z","url":"/suppliers"}
+{"level":"info","message":"Supplier with id 513324e5-3f2e-47cf-9e3f-35db84d34148 deleted","method":"DELETE","status":200,"timestamp":"2023-03-27T07:19:38.894Z","url":"/suppliers/513324e5-3f2e-47cf-9e3f-35db84d34148"}
+{"level":"info","message":"Reset password for user with email 'super@email.com' success","method":"PUT","status":200,"timestamp":"2023-03-27T07:22:04.227Z","url":"/reset/145b55b2-9627-4cf5-94e6-0367cc019d04"}
+{"level":"info","message":"Reset password for user with email 'admin@email.com' success","method":"PUT","status":200,"timestamp":"2023-03-27T07:22:48.608Z","url":"/reset/58f88c32-e81a-4273-bc59-b6c2de657e1d"}
+{"level":"info","message":"Product with id 3b34e028-b875-4893-89bd-11e21f6626ec set to not active","method":"DELETE","status":200,"timestamp":"2023-03-27T07:30:43.109Z","url":"/products/3b34e028-b875-4893-89bd-11e21f6626ec"}
+{"level":"info","message":"Product with id 3b34e028-b875-4893-89bd-11e21f6626ec updated","method":"PUT","status":200,"timestamp":"2023-03-27T07:30:47.739Z","url":"/products/3b34e028-b875-4893-89bd-11e21f6626ec"}
+{"level":"info","message":"Product with id 952b2436-9a0a-4aca-b31b-f95c0e7630ed set to not active","method":"DELETE","status":200,"timestamp":"2023-03-27T07:38:23.039Z","url":"/products/952b2436-9a0a-4aca-b31b-f95c0e7630ed"}
+{"level":"info","message":"Product with id 952b2436-9a0a-4aca-b31b-f95c0e7630ed set to not active","method":"DELETE","status":200,"timestamp":"2023-03-27T07:58:38.642Z","url":"/products/952b2436-9a0a-4aca-b31b-f95c0e7630ed"}
+{"level":"info","message":"Order created","method":"POST","status":200,"timestamp":"2023-03-27T08:35:03.071Z","url":"/orders"}
+{"level":"error","message":"Order with id bebe1793-6e5f-466f-a43a-746ce0bd21d0 deleted","method":"DELETE","status":200,"timestamp":"2023-03-27T09:01:50.382Z","url":"/orders/bebe1793-6e5f-466f-a43a-746ce0bd21d0"}
+{"level":"info","message":"Order created","method":"POST","status":200,"timestamp":"2023-03-27T09:04:16.427Z","url":"/orders"}
+{"level":"info","message":"Category with id d8a4376b-b97c-42b6-9033-4612956ff41a updated","method":"PUT","status":200,"timestamp":"2023-03-27T09:43:01.154Z","url":"/categories/d8a4376b-b97c-42b6-9033-4612956ff41a"}
+{"level":"info","message":"Category with id d8a4376b-b97c-42b6-9033-4612956ff41a updated","method":"PUT","status":200,"timestamp":"2023-03-27T09:43:46.269Z","url":"/categories/d8a4376b-b97c-42b6-9033-4612956ff41a"}
+{"level":"info","message":"Order created","method":"POST","status":200,"timestamp":"2023-03-27T09:46:19.426Z","url":"/orders"}

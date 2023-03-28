@@ -65,8 +65,8 @@ const DoubleBarChart = () => {
     arr = dataStock.map(Number);
   }
 
-  console.log(arr);
-  console.log(dataLow);
+  // console.log(arr);
+  // console.log(dataLow);
   const data = {
     labels: labels,
     datasets: [

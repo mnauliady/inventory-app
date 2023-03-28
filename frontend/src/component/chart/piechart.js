@@ -23,7 +23,6 @@ const PieChart = () => {
     //get response data
     const data = await response.data;
     //assign response data to state "products"
-    console.log(data);
     setDataPie(data);
   };
 
