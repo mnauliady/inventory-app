@@ -12,6 +12,11 @@ import AddModal from "./addModal";
 
 import EditModal from "./editModal";
 
+// import alert/flash message
+import AddAlert from "../../Alert/addAlert";
+import EditAlert from "../../Alert/editAlert";
+import DeleteAlert from "../../Alert/deleteAlert";
+
 import ReactPaginate from "react-paginate";
 
 const Supplier = () => {
@@ -129,6 +134,10 @@ const Supplier = () => {
             setShowModal={setShowModal}
           />
         )}
+
+        {statusAdd && <AddAlert setStatusAdd={setStatusAdd}></AddAlert>}
+        {statusEdit && <EditAlert setStatusEdit={setStatusEdit} message={`Data Successfully Updated`}></EditAlert>}
+        {statusDelete && <DeleteAlert setStatusDelete={setStatusDelete}></DeleteAlert>}
 
         {/* button Add */}
         <div className="flex flex-wrap mt-8 mx-8">

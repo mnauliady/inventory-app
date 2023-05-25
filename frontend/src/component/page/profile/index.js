@@ -13,7 +13,10 @@ import { useSelector } from "react-redux";
 
 import EditModal from "./editModal";
 
-import ChangePassword from "./changePassword";
+import AddAlert from "../../Alert/addAlert";
+import EditAlert from "../../Alert/editAlert";
+import DeleteAlert from "../../Alert/deleteAlert";
+
 import ChangePasswordModal from "./changePassModal";
 
 const Profile = () => {
@@ -82,13 +85,10 @@ const Profile = () => {
 
   return (
     <section className="w-full bg-gray-100 md:h-[calc(100vh-48px)]">
-      <div id="main" className="main-content flex-1 bg-gray-100 pb-24 md:pb-5 ">
-        <div className="bg-gray-800">
-          <div className="bg-blue-800 p-4 shadow text-2xl text-white ">
-            <h1 className="font-bold pl-2">Profile</h1>
-          </div>
+      <div id="main" className="main-content flex-1 bg-gray-100 pb-24 md:pb-5">
+        <div className="bg-blue-800 p-4 shadow text-2xl text-white ">
+          <h1 className="font-bold pl-2">Profile</h1>
         </div>
-
         {/* Modal Edit */}
         {showModalEdit && <EditModal id={idUser} setStatusEdit={setStatusEdit} setShowModalEdit={setShowModalEdit} />}
         {/* Modal Change Pass */}
@@ -98,6 +98,10 @@ const Profile = () => {
             setStatusChangePass={setStatusChangePass}
             setShowModalChangePass={setShowModalChangePass}
           />
+        )}
+
+        {statusChangePass && (
+          <EditAlert setStatusEdit={setStatusChangePass} message={`Change Password Successfully`}></EditAlert>
         )}
 
         <div className="flex flex-wrap mt-8 mx-8 mb-4">

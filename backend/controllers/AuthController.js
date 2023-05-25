@@ -90,7 +90,14 @@ const Login = async (req, res) => {
     // mengecek password
     const match = await bcrypt.compare(req.body.password, user[0].password);
     // jika tidak sesuai
-    if (!match) return res.status(400).json({ msg: "Failed to login" });
+    if (!match) {
+      logger.error(`user with email '${req.body.email}' failed to logged in`, {
+        method: req.method,
+        url: req.originalUrl,
+        status: res.status(400).statusCode,
+      });
+      return res.status(400).json({ msg: "Wrong username or password" });
+    }
     // set user, name, email untuk jwt
     const payload = {
       userId: user[0].id,
@@ -129,8 +136,12 @@ const Login = async (req, res) => {
     });
     res.json({ accessToken });
   } catch (error) {
-    console.log(error);
-    res.status(404).json({ msg: "Failed to login" });
+    logger.error(`user with email '${req.body.email}' failed to logged in`, {
+      method: req.method,
+      url: req.originalUrl,
+      status: res.status(400).statusCode,
+    });
+    res.status(404).json({ msg: "Wrong username or password" });
   }
 };
 

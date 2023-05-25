@@ -10,6 +10,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [passwordShown, setPasswordShown] = useState(false);
   const { user, isError, isSuccess, isLoading, message } = useSelector((state) => state.auth);
 
   useEffect(() => {
@@ -17,11 +18,25 @@ const Login = () => {
       navigate("/");
     }
     dispatch(reset());
-  }, [user, isSuccess, dispatch, navigate]);
+
+    if (passwordShown) {
+      setTimeout(() => {
+        setPasswordShown(!passwordShown);
+      }, 1000);
+    }
+  }, [user, isSuccess, dispatch, navigate, passwordShown]);
 
   const Auth = (e) => {
     e.preventDefault();
     dispatch(LoginUser({ email, password }));
+  };
+
+  // Password toggle handler
+  const togglePassword = (e) => {
+    e.preventDefault();
+    // When the handler is invoked
+    // inverse the boolean state of passwordShown
+    setPasswordShown(!passwordShown);
   };
 
   return (
@@ -31,9 +46,10 @@ const Login = () => {
           <img src={loginImage} alt="login" />
         </div>
         <div className="flex md:w-1/2 justify-center py-10 items-center bg-gray-700 rounded-lg md:rounded-r-lg md:rounded-l-none ">
-          <form onSubmit={Auth}>
+          <form onSubmit={Auth} className="w-3/4">
             <h1 className="font-bold text-2xl mb-1 text-gray-50">Welcome Back</h1>
             <p className="text-sm font-normal text-gray-200 mb-4">Login to your account</p>
+            {isError && <p className="text-white bg-red-500 rounded-md px-2 mb-2 bg-opacity-80">{message}</p>}
             <div className="flex mb-4">
               <input
                 className="text-gray-50 pl-2 mt-1 px-3 py-2 bg-gray-600 shadow-sm placeholder-gray-400 focus:outline-none focus:border-blue-600 focus:ring-gray-100 block w-full rounded-md sm:text-sm focus:ring-1"
@@ -43,6 +59,7 @@ const Login = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Email Address"
+                autoComplete="off"
                 required
               />
             </div>
@@ -50,7 +67,7 @@ const Login = () => {
             <div className="flex">
               <input
                 className="text-gray-50 pl-2 mt-1 px-3 py-2 bg-gray-600 shadow-sm placeholder-gray-400 focus:outline-none focus:border-blue-600 focus:ring-gray-200 block w-full rounded-md sm:text-sm focus:ring-1"
-                type="password"
+                type={passwordShown ? "text" : "password"}
                 name="password"
                 id="password"
                 value={password}
@@ -58,9 +75,16 @@ const Login = () => {
                 placeholder="Password"
                 required
               />
+              <button className=" -ml-7" onClick={togglePassword} tabIndex={-1}>
+                {passwordShown ? (
+                  <i className="fa-solid fa-eye" style={{ color: "#9ca3af" }}></i>
+                ) : (
+                  <i className="fa-solid fa-eye-slash" style={{ color: "#9ca3af" }}></i>
+                )}
+              </button>
             </div>
             {/* <p className="text-white bg-red-500 rounded-md pl-2 mt-2 bg-opacity-90">{msg}</p> */}
-            {isError && <p className="text-white bg-red-500 rounded-md pl-2 mt-2 bg-opacity-90">{message}</p>}
+
             <button
               type="submit"
               className="block w-full bg-blue-600 mt-4 py-2 rounded-md text-white font-semibold mb-2"

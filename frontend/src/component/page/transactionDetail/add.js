@@ -8,8 +8,10 @@ import axios from "axios";
 
 //import hook history dari react router dom
 import { useNavigate, Link, useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
-import Select from "react-select";
+
+import moment from "moment/moment";
+
+import DeleteModal from "./deleteModal";
 
 const AddTransactionDetail = () => {
   // Proses Add data ===================================
@@ -21,6 +23,8 @@ const AddTransactionDetail = () => {
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
 
+  const [code, setCode] = useState("");
+  const [date, setDate] = useState("");
   const [type, setType] = useState("");
 
   const [product, setProduct] = useState([]);
@@ -28,8 +32,12 @@ const AddTransactionDetail = () => {
 
   // state validation
   const [validation, setValidation] = useState({});
-
   const [orderdetail, setOrderdetail] = useState([]);
+
+  // state untuk modal delete
+  const [showModal, setShowModal] = useState(false);
+  const [statusDelete, setStatusDelete] = useState("");
+  const [idDetail, setIdDetail] = useState();
 
   const navigate = useNavigate();
 
@@ -41,6 +49,8 @@ const AddTransactionDetail = () => {
     const data = await response.data;
     // set tipe transaksi
     setType(data.type);
+    setCode(data.code);
+    setDate(data.date);
 
     //assign response data to state "orderdetail"
     setOrderdetail(data.orderdetail);
@@ -62,7 +72,7 @@ const AddTransactionDetail = () => {
   useEffect(() => {
     //panggil method "getOrder"
     getOrder();
-  }, []);
+  }, [statusDelete]);
 
   // fungsi untuk handle form select product
   const handleSelectProduct = async (e) => {
@@ -91,7 +101,6 @@ const AddTransactionDetail = () => {
     setPrice(e.target.selectedOptions[0].getAttribute("data-price"));
   };
 
-  const { user } = useSelector((state) => state.auth);
   const { id } = useParams();
 
   // add data
@@ -124,7 +133,11 @@ const AddTransactionDetail = () => {
 
   const deleteTransactionDetail = async (id) => {
     //sending
-    await axios.delete(`http://localhost:5000/orderdetails/${id}`);
+    // await axios.delete(`http://localhost:5000/orderdetails/${id}`);
+
+    setIdDetail(id);
+    setShowModal(true);
+    setStatusDelete(false);
 
     //panggil function "getOrder"
     getOrder();
@@ -137,6 +150,13 @@ const AddTransactionDetail = () => {
     navigate("/transaction/add");
   };
 
+  // // tampilkan modal edit
+  // const editDetail = (id) => {
+  //   // set id dari produk yang akan dihapus
+  //   setIdDetail(id);
+  //   setShowModalEdit(true);
+  //   setStatusEdit(false);
+  // };
   return (
     <section className="w-full bg-gray-100 md:h-[calc(100vh-48px)]">
       <div id="main" className="main-content flex-1 bg-gray-100 pb-24 md:pb-5">
@@ -145,12 +165,26 @@ const AddTransactionDetail = () => {
             <h1 className="font-bold pl-2">Detail Transaction</h1>
           </div>
         </div>
+        {/* Modal delete */}
+        {showModal && <DeleteModal id={idDetail} setStatusDelete={setStatusDelete} setShowModal={setShowModal} />}
 
         <div className="flex flex-wrap mx-8 mt-8">
           <div className="w-full relative shadow-md sm:rounded-lg bg-white border border-gray-200 p-4">
             <h5 className="text-xl font-medium text-gray-900 dark:text-white">Add Detail Transaction</h5>
-            <hr className="mb-2" />
 
+            <div className="border-t border-gray-200">
+              <dl>
+                <div className="border-b-2 border-gray-100 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 hover:bg-gray-100">
+                  <dt className="text-sm font-medium text-gray-500">Transaction Code</dt>
+                  <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">{code}</dd>
+                </div>
+                <div className="px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 hover:bg-gray-100">
+                  <dt className="text-sm font-medium text-gray-500">Date</dt>
+                  <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">{moment(date).format("LL")}</dd>
+                </div>
+              </dl>
+            </div>
+            <hr className="mb-2" />
             {/* form */}
             <form className="space-y-6 mb-4" onSubmit={storeData} id="add-form">
               {/* error handling */}
@@ -199,9 +233,7 @@ const AddTransactionDetail = () => {
                         <td className="px-6 py-4">
                           <Link
                             onClick={() => {
-                              if (window.confirm("Delete the item?")) {
-                                deleteTransactionDetail(detail.id);
-                              }
+                              deleteTransactionDetail(detail.id);
                             }}
                             className=" text-white bg-red-500 hover:bg-red-600 rounded-md text-sm px-2 py-1.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-res-700"
                           >

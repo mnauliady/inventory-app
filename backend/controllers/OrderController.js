@@ -1,5 +1,3 @@
-// Import model Order
-// import Order from "../models/Order.js";
 const { v4: uuidv4 } = require("uuid");
 const uuid = require("uuid");
 const Order = require("../models").order;
@@ -8,6 +6,7 @@ const OrderDetail = require("../models").orderdetail;
 const { check, validationResult } = require("express-validator");
 const { Op } = require("sequelize");
 const { logger } = require("./AppLog");
+const moment = require("moment-timezone");
 
 // Get semua order
 const getOrders = async (req, res) => {
@@ -15,46 +14,53 @@ const getOrders = async (req, res) => {
     const page = parseInt(req.query.page) || 0;
     const limit = parseInt(req.query.limit) || 10;
     const search = req.query.search_query || "";
+    let startDate = req.query.startDate || "2010-01-01";
+    // let endDate = moment(req.query.endDate).add(1, "days") || "2099-12-31";
+    let endDate = req.query.endDate || "2099-12-31";
+
     const offset = limit * page;
     const totalRows = await Order.count({
       where: {
-        [Op.or]: [
+        [Op.and]: [
           {
             code: {
               [Op.iLike]: "%" + search + "%",
             },
           },
-          // {
-          //   date: {
-          //     [Op.like]: "%" + search + "%",
-          //   },
-          // },
+          {
+            date: {
+              // [Op.between]: [`2023-02-01`, `2023-02-28`],
+              [Op.between]: [startDate, moment(endDate).add(1, "days")],
+            },
+          },
         ],
       },
       order: [["date", "DESC"]],
     });
-
     const totalPage = Math.ceil(totalRows / limit);
     const order = await Order.findAll({
-      order: [["createdAt", "DESC"]],
       include: [{ model: OrderDetail, as: "orderdetail" }],
       where: {
-        [Op.or]: [
+        [Op.and]: [
           {
             code: {
               [Op.iLike]: "%" + search + "%",
             },
           },
-          // {
-          //   date: {
-          //     [Op.like]: "%" + search + "%",
-          //   },
-          // },
+          {
+            date: {
+              // [Op.between]: [`2023-02-01`, `2023-02-28`],
+              [Op.between]: [startDate, moment(endDate).add(1, "days")],
+            },
+          },
         ],
       },
       offset: offset,
       limit: limit,
-      order: [["date", "DESC"]],
+      order: [
+        ["date", "DESC"],
+        ["createdAt", "DESC"],
+      ],
     });
     res.json({
       order,
@@ -105,7 +111,7 @@ const getOrderById = async (req, res) => {
 const createOrder = async (req, res) => {
   await check("userId").notEmpty().withMessage("User id is required").run(req);
   await check("customerId").notEmpty().withMessage("Customer id is required").run(req);
-  await check("date").isDate().withMessage("Wrong date format").run(req);
+  // await check("date").isDate().withMessage("Wrong date format").run(req);
 
   // jika ada error
   const result = validationResult(req);
@@ -114,14 +120,18 @@ const createOrder = async (req, res) => {
   }
 
   const code = `${req.body.type}-${Date.now()}`;
-
+  const now = moment().tz("Asia/Jakarta"); // buat objek moment baru dengan waktu saat ini dan zona waktu UTC+7 (Asia/Jakarta)
+  const dateOnly = now.startOf("day").hour(7); // atur jam menjadi 07:00:00 dan atur bagian waktu yang lebih kecil dari jam menjadi 0
+  const timestamp = dateOnly.format("YYYY-MM-DD HH:mm:ssZ");
   const status = "Delivered";
+
   try {
     await Order.create({
       id: uuidv4(),
       code,
       type: req.body.type,
-      date: req.body.date,
+      date: timestamp,
+      // date: req.body.date,
       status,
       userId: req.body.userId,
       customerId: req.body.customerId,

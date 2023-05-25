@@ -10,7 +10,14 @@ import moment from "moment/moment";
 
 import ReactPaginate from "react-paginate";
 
+import Datepicker from "react-tailwindcss-datepicker";
+
 const Transaction = () => {
+  const [value, setValue] = useState({
+    startDate: "",
+    endDate: "",
+  });
+
   //define state
   const [transactions, setTransactions] = useState([]);
   const [page, setPage] = useState(0);
@@ -25,13 +32,13 @@ const Transaction = () => {
   useEffect(() => {
     //panggil method "fetchData"
     fectData();
-  }, [page, keyword]);
+  }, [page, keyword, value]);
 
   //function "fetchData"
   const fectData = async () => {
     //fetching
     const response = await axios.get(
-      `http://localhost:5000/orders?search_query=${keyword}&page=${page}&limit=${limit}`
+      `http://localhost:5000/orders?search_query=${keyword}&startDate=${value.startDate}&endDate=${value.endDate}&page=${page}&limit=${limit}`
     );
     //get response data
     const data = await response.data.order;
@@ -66,6 +73,15 @@ const Transaction = () => {
     setKeyword(query);
   };
 
+  const handleValueChange = (newValue) => {
+    // console.log("newValue:", newValue);
+    console.log(newValue);
+    if (newValue.startDate === null && newValue.endDate === null) {
+      return setValue({ startDate: "", endDate: "" });
+    }
+    setValue(newValue);
+  };
+
   const deleteTransaction = async (id) => {
     //sending
     await axios.delete(`http://localhost:5000/orders/${id}`);
@@ -98,11 +114,14 @@ const Transaction = () => {
             <div className="mr-2">
               <input
                 type="text"
-                className="py-1.5 rounded-md pl-2 w-80 border-2 border-gray-300 bg-gray-50 border-solid focus:border-blue-700"
+                className="py-2 rounded-md pl-2 w-80 border-2 border-gray-300 bg-gray-50 border-solid focus:border-blue-700"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder="Find Transaction Code ..."
               />
+            </div>
+            <div className="rounded-md w-60 border-2 border-gray-300 bg-gray-50 border-solid focus:border-blue-700">
+              <Datepicker value={value} onChange={handleValueChange} showShortcuts={true} />
             </div>
           </div>
         </form>
@@ -136,7 +155,7 @@ const Transaction = () => {
                     key={transaction.id}
                   >
                     <td scope="row" className="px-6 py-4 whitespace-nowrap">
-                      {index + 1}
+                      {page == 0 ? `${index + 1}` : `${page * 10 + index + 1}`}
                     </td>
                     <td className="px-6 py-4">{transaction.type}</td>
                     <td className="px-6 py-4">{transaction.code}</td>

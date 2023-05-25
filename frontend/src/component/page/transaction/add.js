@@ -33,7 +33,7 @@ const AddTransaction = () => {
     setSelectedCustomer(e.target.value);
   };
 
-  // fungsi untuk handle form select supplier
+  // fungsi untuk handle form select supplier=
   const handleTypeTransaction = async (e) => {
     setType(e.target.value);
 
@@ -63,7 +63,7 @@ const AddTransaction = () => {
     await axios
       .post("http://localhost:5000/orders", {
         type,
-        date,
+        // date,
         userId: user.id,
         customerId: selectedCustomer,
       })
@@ -109,62 +109,63 @@ const AddTransaction = () => {
                 </div>
               )}
 
-              {/* Transaction Type */}
-              <div>
-                <label htmlFor="type" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                  Select transaction
-                </label>
-                <select
-                  id="type"
-                  name="type"
-                  onChange={handleTypeTransaction}
-                  required
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-1/2 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                >
-                  <option value="">Select the transaction type</option>
-                  <option value="IN">IN</option>
-                  <option value="OUT">OUT</option>
-                </select>
-              </div>
+              <div className="w-full md:flex">
+                {/* Transaction Type */}
+                <div className="w-full md:w-1/3 mr-2">
+                  <label htmlFor="type" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                    Select transaction
+                  </label>
+                  <select
+                    id="type"
+                    name="type"
+                    onChange={handleTypeTransaction}
+                    required
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  >
+                    <option value="">Select the transaction type</option>
+                    <option value="IN">IN</option>
+                    <option value="OUT">OUT</option>
+                  </select>
+                </div>
 
-              {/* date */}
-              <div>
-                <label htmlFor="type" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                  Date
-                </label>
-                <input
-                  value={date}
-                  onChange={(e) => setDate(e.target.value)}
-                  type="date"
-                  name="date"
-                  id="date"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-1/2 p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                  required
-                />
-              </div>
+                {/* date */}
+                {/* <div className="w-full md:w-1/3 mr-2">
+                  <label htmlFor="type" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                    Date
+                  </label>
+                  <input
+                    value={date}
+                    onChange={(e) => setDate(e.target.value)}
+                    type="date"
+                    name="date"
+                    id="date"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                    required
+                  />
+                </div> */}
 
-              {/* Customer */}
-              <div>
-                <label htmlFor="customer" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                  Select the customer
-                </label>
-                <select
-                  id="customer"
-                  name="customerId"
-                  onChange={handleSelectCustomer}
-                  disabled
-                  required
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-1/2 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                >
-                  <option value="">Select the customer</option>
-                  {customer.map((customer) => (
-                    <option key={customer.id} value={customer.id}>
-                      {customer.name}
-                    </option>
-                  ))}
-                </select>
+                {/* Customer */}
+                <div className="w-full md:w-1/3">
+                  <label htmlFor="customer" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                    Select the customer/supplier
+                  </label>
+                  <select
+                    id="customer"
+                    name="customerId"
+                    onChange={handleSelectCustomer}
+                    disabled
+                    required
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  >
+                    <option value="">Select the customer/supplier</option>
+                    {customer.map((customer) => (
+                      <option key={customer.id} value={customer.id}>
+                        {customer.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
               </div>
-
               <Link
                 to="/transaction"
                 className=" text-white bg-gray-500 hover:bg-gray-600 rounded-md font-medium text-sm px-5 py-2.5 mr-2 mb-2"

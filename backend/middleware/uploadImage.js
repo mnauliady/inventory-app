@@ -1,5 +1,6 @@
 const multer = require("multer");
 const path = require("path");
+const { check, validationResult } = require("express-validator");
 
 const imageStorage = multer.diskStorage({
   // Destination to store image
@@ -19,6 +20,10 @@ const imageUpload = multer({
   fileFilter(req, file, cb) {
     if (!file.originalname.match(/\.(png|jpg|jpeg)$/)) {
       // upload only png and jpg format
+      // const result = { msg: "Please upload a image file (png/jpg/jpeg)" };
+      // return res.status(400).json({
+      //   errors: [result],
+      // });
       return cb(new Error("Please upload a image file (png/jpg/jpeg)"));
     }
     cb(undefined, true);

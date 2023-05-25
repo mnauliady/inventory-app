@@ -58,14 +58,16 @@ const getDashboard = async (req, res) => {
 const getLineChart = async (req, res) => {
   try {
     const dataOut = await db.sequelize.query(
-      `SELECT to_char(orders."date", 'MM-YYYY') as "month", count(*) AS total FROM orders WHERE orders."type" = 'OUT' GROUP BY 1 ORDER BY 1`,
+      // `SELECT to_char(orders."date", 'MM-YYYY') as "month", count(*) AS total FROM orders WHERE orders."type" = 'OUT' GROUP BY 1 ORDER BY 1`,
+      `SELECT to_char(orders."date", 'MM-YYYY') as "month", count(*)  AS total, orders."type" FROM orders WHERE orders."type" = 'OUT' GROUP BY 1, orders."type" ORDER BY 1`,
       {
         type: db.sequelize.QueryTypes.SELECT,
       }
     );
 
     const dataIn = await db.sequelize.query(
-      `SELECT to_char(orders."date", 'MM-YYYY') as "month", count(*) AS total FROM orders WHERE orders."type" = 'IN' GROUP BY 1 ORDER BY 1`,
+      // `SELECT to_char(orders."date", 'MM-YYYY') as "month", count(*) AS total FROM orders WHERE orders."type" = 'IN' GROUP BY 1 ORDER BY 1`,
+      `SELECT to_char(orders."date", 'MM-YYYY') as "month", count(*)  AS total, orders."type" FROM orders WHERE orders."type" = 'IN' GROUP BY 1, orders."type" ORDER BY 1`,
       {
         type: db.sequelize.QueryTypes.SELECT,
       }

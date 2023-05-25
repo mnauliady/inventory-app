@@ -16,11 +16,13 @@
     "react": "^18.2.0",
     "react-chartjs-2": "^5.2.0",
     "react-dom": "^18.2.0",
+    "react-number-format": "^5.1.4",
     "react-paginate": "^8.1.4",
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.8.2",
     "react-scripts": "5.0.1",
     "react-select": "^5.7.0",
+    "react-tailwindcss-datepicker": "^1.5.1",
     "redux": "^4.2.1",
     "web-vitals": "^2.1.4"
   },

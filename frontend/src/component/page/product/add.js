@@ -55,6 +55,13 @@ const AddProduct = () => {
   const loadImage = (e) => {
     const image = e.target.files[0];
 
+    if (image.type == "image/jpeg" || image.type == "image/png" || image.type == "image/jpg") {
+      console.log(" gambar");
+    } else {
+      window.alert("Please upload a image file (png/jpg/jpeg)");
+      return false;
+    }
+
     // cek size image
     if (image.size > 3000000) {
       window.alert("Please upload a file smaller than 3 MB");
@@ -71,6 +78,7 @@ const AddProduct = () => {
   const [min_stock, setMin_Stock] = useState("");
   const [price, setPrice] = useState("");
   const [sku, setSku] = useState("");
+  const [showModal, setShowModal] = useState(false);
 
   // state validation
   const [validation, setValidation] = useState({});
@@ -89,10 +97,14 @@ const AddProduct = () => {
     setSelectedSupplier(e.target.value);
   };
 
+  const addCommas = (num) => num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  const removeNonNumeric = (num) => num.toString().replace(/[^0-9]/g, "");
+
+  const handleChange = (event) => setPrice(addCommas(removeNonNumeric(event.target.value)));
+
   //method "storePost"
   const storePost = async (e) => {
     e.preventDefault();
-
     //send data to server
     await axios
       .post(
@@ -114,10 +126,13 @@ const AddProduct = () => {
       )
       .then(() => {
         //redirect ke halaman product
-        navigate("/products");
+        setShowModal(true);
+        // setStatusAdd(true);
+        // navigate("/products");
       })
       .catch((error) => {
         //assign validation on state
+        console.log(error.response);
         setValidation(error.response.data);
       });
   };
@@ -130,6 +145,52 @@ const AddProduct = () => {
             <h1 className="font-bold pl-2">Product</h1>
           </div>
         </div>
+
+        {/* Modal Success */}
+        {showModal && (
+          <div className="flex justify-center items-center overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none backdrop-blur-sm bg-white/30">
+            <div className="relative w-2/5 my-6 mx-auto max-w-3xl">
+              <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-gray-300 drop-shadow-2xl  outline-none focus:outline-none">
+                <div className="mx-auto text-green-700 p-5 ">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="w-32"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                    />
+                  </svg>
+                  {/* <img src={verified} alt="" /> */}
+                </div>
+                <h3 className="text-xl font-base mx-auto">Data Successfully Added</h3>
+                <div className="text-center p-6  rounded-b">
+                  <button
+                    className="text-white bg-blue-500 hover:bg-blue-600 active:bg-blue-700 text-base px-4 py-1 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-44"
+                    type="button"
+                    onClick={() => {
+                      setShowModal(false);
+                      navigate("/products");
+                    }}
+                  >
+                    Back to list product
+                  </button>
+                  <a
+                    href="/products/add"
+                    className="text-white bg-green-500 hover:bg-green-600 active:bg-green-700 text-base px-4 py-1 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-36"
+                  >
+                    Add New Data
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* form */}
         <div className="flex flex-wrap mx-8 mt-8">
@@ -163,6 +224,7 @@ const AddProduct = () => {
                     type="text"
                     name="name"
                     id="name"
+                    autoComplete="off"
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                     required
                   />
@@ -192,11 +254,12 @@ const AddProduct = () => {
                   </label>
                   <input
                     value={price}
-                    onChange={(e) => setPrice(e.target.value)}
-                    type="number"
+                    // onChange={(e) => setPrice(e.target.value)}
+                    onChange={handleChange}
+                    type="text"
                     name="price"
                     id="price"
-                    min="0"
+                    autoComplete="off"
                     className="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                     required
                   />
@@ -279,7 +342,7 @@ const AddProduct = () => {
                     <input
                       id="dropzone-file"
                       type="file"
-                      className="hidden"
+                      className="-z-30"
                       onChange={loadImage}
                       accept=".png,.jpg,.jpeg"
                       required

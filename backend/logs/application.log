@@ -1,64 +1,235 @@
-{"level":"info","message":"Reset password for user with email 'mnauliady@gmail.com' success","method":"PUT","status":200,"timestamp":"2023-03-27T07:19:18.200Z","url":"/reset/b44be04c-184e-4dd7-a7e8-108f2d2d986b"}
-{"level":"info","message":"Supplier created","method":"POST","status":200,"timestamp":"2023-03-27T07:19:35.910Z","url":"/suppliers"}
-{"level":"info","message":"Supplier with id 513324e5-3f2e-47cf-9e3f-35db84d34148 deleted","method":"DELETE","status":200,"timestamp":"2023-03-27T07:19:38.894Z","url":"/suppliers/513324e5-3f2e-47cf-9e3f-35db84d34148"}
-{"level":"info","message":"Reset password for user with email 'super@email.com' success","method":"PUT","status":200,"timestamp":"2023-03-27T07:22:04.227Z","url":"/reset/145b55b2-9627-4cf5-94e6-0367cc019d04"}
-{"level":"info","message":"Reset password for user with email 'admin@email.com' success","method":"PUT","status":200,"timestamp":"2023-03-27T07:22:48.608Z","url":"/reset/58f88c32-e81a-4273-bc59-b6c2de657e1d"}
-{"level":"info","message":"Product with id 3b34e028-b875-4893-89bd-11e21f6626ec set to not active","method":"DELETE","status":200,"timestamp":"2023-03-27T07:30:43.109Z","url":"/products/3b34e028-b875-4893-89bd-11e21f6626ec"}
-{"level":"info","message":"Product with id 3b34e028-b875-4893-89bd-11e21f6626ec updated","method":"PUT","status":200,"timestamp":"2023-03-27T07:30:47.739Z","url":"/products/3b34e028-b875-4893-89bd-11e21f6626ec"}
-{"level":"info","message":"Product with id 952b2436-9a0a-4aca-b31b-f95c0e7630ed set to not active","method":"DELETE","status":200,"timestamp":"2023-03-27T07:38:23.039Z","url":"/products/952b2436-9a0a-4aca-b31b-f95c0e7630ed"}
-{"level":"info","message":"Product with id 952b2436-9a0a-4aca-b31b-f95c0e7630ed set to not active","method":"DELETE","status":200,"timestamp":"2023-03-27T07:58:38.642Z","url":"/products/952b2436-9a0a-4aca-b31b-f95c0e7630ed"}
-{"level":"info","message":"Order created","method":"POST","status":200,"timestamp":"2023-03-27T08:35:03.071Z","url":"/orders"}
-{"level":"error","message":"Order with id bebe1793-6e5f-466f-a43a-746ce0bd21d0 deleted","method":"DELETE","status":200,"timestamp":"2023-03-27T09:01:50.382Z","url":"/orders/bebe1793-6e5f-466f-a43a-746ce0bd21d0"}
-{"level":"info","message":"Order created","method":"POST","status":200,"timestamp":"2023-03-27T09:04:16.427Z","url":"/orders"}
-{"level":"info","message":"Category with id d8a4376b-b97c-42b6-9033-4612956ff41a updated","method":"PUT","status":200,"timestamp":"2023-03-27T09:43:01.154Z","url":"/categories/d8a4376b-b97c-42b6-9033-4612956ff41a"}
-{"level":"info","message":"Category with id d8a4376b-b97c-42b6-9033-4612956ff41a updated","method":"PUT","status":200,"timestamp":"2023-03-27T09:43:46.269Z","url":"/categories/d8a4376b-b97c-42b6-9033-4612956ff41a"}
-{"level":"info","message":"Order created","method":"POST","status":200,"timestamp":"2023-03-27T09:46:19.426Z","url":"/orders"}
-{"level":"info","message":"user with email 'mnauliady@gmail.com' successfully logged out","method":"DELETE","status":200,"timestamp":"2023-03-28T01:35:48.034Z","url":"/logout"}
-{"level":"info","message":"user with email 'super@email.com' successfully logged in","method":"POST","status":200,"timestamp":"2023-03-28T01:35:55.943Z","url":"/login"}
-{"level":"info","message":"Category Muhammad Nur Auliady created","method":"POST","status":200,"timestamp":"2023-03-28T02:19:24.984Z","url":"/categories"}
-{"level":"info","message":"Category with id e4ab3bb4-90a7-44c7-beae-bbe3805f9da0 deleted","method":"DELETE","status":200,"timestamp":"2023-03-28T02:19:29.712Z","url":"/categories/e4ab3bb4-90a7-44c7-beae-bbe3805f9da0"}
-{"level":"info","message":"Category Muhammad Nur Auliady created","method":"POST","status":200,"timestamp":"2023-03-28T02:48:13.681Z","url":"/categories"}
-{"level":"info","message":"Category with id 834c0564-cd85-4b71-bd94-01a0a1e5a13a deleted","method":"DELETE","status":200,"timestamp":"2023-03-28T02:48:31.791Z","url":"/categories/834c0564-cd85-4b71-bd94-01a0a1e5a13a"}
-{"level":"info","message":"Category 123123 created","method":"POST","status":200,"timestamp":"2023-03-28T02:55:11.658Z","url":"/categories"}
-{"level":"info","message":"Category with id 41a2c9eb-7144-4acf-a632-42f9a606f78f deleted","method":"DELETE","status":200,"timestamp":"2023-03-28T02:55:17.922Z","url":"/categories/41a2c9eb-7144-4acf-a632-42f9a606f78f"}
-{"level":"info","message":"Category 213123 created","method":"POST","status":200,"timestamp":"2023-03-28T03:11:53.501Z","url":"/categories"}
-{"level":"info","message":"Category with id 5600f853-65c3-449c-a4fb-2e03aebffeb2 deleted","method":"DELETE","status":200,"timestamp":"2023-03-28T03:11:55.717Z","url":"/categories/5600f853-65c3-449c-a4fb-2e03aebffeb2"}
-{"level":"info","message":"Category with id 788fa0a4-6032-4ee0-825d-9e0ae9c200ff updated","method":"PUT","status":200,"timestamp":"2023-03-28T03:20:08.514Z","url":"/categories/788fa0a4-6032-4ee0-825d-9e0ae9c200ff"}
-{"level":"info","message":"Category with id 788fa0a4-6032-4ee0-825d-9e0ae9c200ff updated","method":"PUT","status":200,"timestamp":"2023-03-28T03:20:24.176Z","url":"/categories/788fa0a4-6032-4ee0-825d-9e0ae9c200ff"}
-{"level":"info","message":"Category with id edd010e4-f4af-4741-9536-0b9d429f93f3 updated","method":"PUT","status":200,"timestamp":"2023-03-28T03:33:07.980Z","url":"/categories/edd010e4-f4af-4741-9536-0b9d429f93f3"}
-{"level":"info","message":"Category with id edd010e4-f4af-4741-9536-0b9d429f93f3 updated","method":"PUT","status":200,"timestamp":"2023-03-28T03:33:12.740Z","url":"/categories/edd010e4-f4af-4741-9536-0b9d429f93f3"}
-{"level":"info","message":"Category with id edd010e4-f4af-4741-9536-0b9d429f93f3 updated","method":"PUT","status":200,"timestamp":"2023-03-28T03:34:03.795Z","url":"/categories/edd010e4-f4af-4741-9536-0b9d429f93f3"}
-{"level":"info","message":"Category with id edd010e4-f4af-4741-9536-0b9d429f93f3 updated","method":"PUT","status":200,"timestamp":"2023-03-28T03:34:14.978Z","url":"/categories/edd010e4-f4af-4741-9536-0b9d429f93f3"}
-{"level":"info","message":"Category with id c242b1ea-4112-4fa2-a6b6-dcaf34fc9aae updated","method":"PUT","status":200,"timestamp":"2023-03-28T03:34:25.712Z","url":"/categories/c242b1ea-4112-4fa2-a6b6-dcaf34fc9aae"}
-{"level":"info","message":"Category with id c242b1ea-4112-4fa2-a6b6-dcaf34fc9aae updated","method":"PUT","status":200,"timestamp":"2023-03-28T03:34:39.255Z","url":"/categories/c242b1ea-4112-4fa2-a6b6-dcaf34fc9aae"}
-{"level":"info","message":"Category with id c242b1ea-4112-4fa2-a6b6-dcaf34fc9aae updated","method":"PUT","status":200,"timestamp":"2023-03-28T03:40:31.670Z","url":"/categories/c242b1ea-4112-4fa2-a6b6-dcaf34fc9aae"}
-{"level":"info","message":"Category with id c242b1ea-4112-4fa2-a6b6-dcaf34fc9aae updated","method":"PUT","status":200,"timestamp":"2023-03-28T03:40:37.528Z","url":"/categories/c242b1ea-4112-4fa2-a6b6-dcaf34fc9aae"}
-{"level":"info","message":"Category with id c242b1ea-4112-4fa2-a6b6-dcaf34fc9aae updated","method":"PUT","status":200,"timestamp":"2023-03-28T03:40:50.174Z","url":"/categories/c242b1ea-4112-4fa2-a6b6-dcaf34fc9aae"}
-{"level":"info","message":"Category with id edd010e4-f4af-4741-9536-0b9d429f93f3 updated","method":"PUT","status":200,"timestamp":"2023-03-28T03:41:00.383Z","url":"/categories/edd010e4-f4af-4741-9536-0b9d429f93f3"}
-{"level":"info","message":"Category with id edd010e4-f4af-4741-9536-0b9d429f93f3 updated","method":"PUT","status":200,"timestamp":"2023-03-28T03:41:36.106Z","url":"/categories/edd010e4-f4af-4741-9536-0b9d429f93f3"}
-{"level":"info","message":"Category with id c242b1ea-4112-4fa2-a6b6-dcaf34fc9aae updated","method":"PUT","status":200,"timestamp":"2023-03-28T03:41:42.618Z","url":"/categories/c242b1ea-4112-4fa2-a6b6-dcaf34fc9aae"}
-{"level":"info","message":"Category with id c242b1ea-4112-4fa2-a6b6-dcaf34fc9aae updated","method":"PUT","status":200,"timestamp":"2023-03-28T03:41:48.328Z","url":"/categories/c242b1ea-4112-4fa2-a6b6-dcaf34fc9aae"}
-{"level":"info","message":"Category with id edd010e4-f4af-4741-9536-0b9d429f93f3 updated","method":"PUT","status":200,"timestamp":"2023-03-28T03:41:53.333Z","url":"/categories/edd010e4-f4af-4741-9536-0b9d429f93f3"}
-{"level":"info","message":"Customer created","method":"POST","status":200,"timestamp":"2023-03-28T04:02:01.324Z","url":"/customers"}
-{"level":"info","message":"Customer with id 7b14bbe6-68c1-4a24-816b-561ed9b00cf5 updated","method":"PUT","status":200,"timestamp":"2023-03-28T04:16:50.515Z","url":"/customers/7b14bbe6-68c1-4a24-816b-561ed9b00cf5"}
-{"level":"info","message":"Customer with id 7b14bbe6-68c1-4a24-816b-561ed9b00cf5 deleted","method":"DELETE","status":200,"timestamp":"2023-03-28T04:17:14.291Z","url":"/customers/7b14bbe6-68c1-4a24-816b-561ed9b00cf5"}
-{"level":"info","message":"Supplier created","method":"POST","status":200,"timestamp":"2023-03-28T04:29:40.339Z","url":"/suppliers"}
-{"level":"info","message":"Supplier with id 52de19f2-8793-45b4-ad4e-29960bc054c8 updated","method":"PUT","status":200,"timestamp":"2023-03-28T04:30:53.936Z","url":"/suppliers/52de19f2-8793-45b4-ad4e-29960bc054c8"}
-{"level":"info","message":"Supplier with id 52de19f2-8793-45b4-ad4e-29960bc054c8 deleted","method":"DELETE","status":200,"timestamp":"2023-03-28T04:30:59.587Z","url":"/suppliers/52de19f2-8793-45b4-ad4e-29960bc054c8"}
-{"level":"error","message":"Customer with id '145b55b2-9627-4cf5-94e6-0367cc019d04' not found","method":"GET","status":400,"timestamp":"2023-03-28T04:47:06.478Z","url":"/customers/145b55b2-9627-4cf5-94e6-0367cc019d04"}
-{"level":"error","message":"Customer with id '145b55b2-9627-4cf5-94e6-0367cc019d04' not found","method":"GET","status":400,"timestamp":"2023-03-28T04:48:21.437Z","url":"/customers/145b55b2-9627-4cf5-94e6-0367cc019d04"}
-{"level":"error","message":"Customer with id '145b55b2-9627-4cf5-94e6-0367cc019d04' not found","method":"GET","status":400,"timestamp":"2023-03-28T04:50:22.143Z","url":"/customers/145b55b2-9627-4cf5-94e6-0367cc019d04"}
-{"level":"info","message":"user with email 'super@email.com' updated profile","method":"PUT","status":200,"timestamp":"2023-03-28T05:45:51.980Z","url":"/users/145b55b2-9627-4cf5-94e6-0367cc019d04"}
-{"level":"info","message":"user with email 'super@email.com' updated profile","method":"PUT","status":200,"timestamp":"2023-03-28T05:46:31.850Z","url":"/users/145b55b2-9627-4cf5-94e6-0367cc019d04"}
-{"level":"info","message":"user with email 'super@email.com' updated profile","method":"PUT","status":200,"timestamp":"2023-03-28T05:47:17.575Z","url":"/users/145b55b2-9627-4cf5-94e6-0367cc019d04"}
-{"level":"info","message":"user with email 'super@email.com' updated profile","method":"PUT","status":200,"timestamp":"2023-03-28T05:47:44.220Z","url":"/users/145b55b2-9627-4cf5-94e6-0367cc019d04"}
-{"level":"info","message":"user with email 'super@email.com' updated profile","method":"PUT","status":200,"timestamp":"2023-03-28T05:48:03.585Z","url":"/users/145b55b2-9627-4cf5-94e6-0367cc019d04"}
-{"level":"info","message":"user with email 'super@email.com' updated profile","method":"PUT","status":200,"timestamp":"2023-03-28T05:49:08.683Z","url":"/users/145b55b2-9627-4cf5-94e6-0367cc019d04"}
-{"level":"info","message":"user with email 'super@email.com' updated profile","method":"PUT","status":200,"timestamp":"2023-03-28T05:49:14.327Z","url":"/users/145b55b2-9627-4cf5-94e6-0367cc019d04"}
-{"level":"info","message":"user with email 'super@email.com' updated profile","method":"PUT","status":200,"timestamp":"2023-03-28T05:49:31.880Z","url":"/users/145b55b2-9627-4cf5-94e6-0367cc019d04"}
-{"level":"info","message":"user with email 'super@email.com' updated password","method":"PUT","status":200,"timestamp":"2023-03-28T06:05:17.981Z","url":"/users/change/145b55b2-9627-4cf5-94e6-0367cc019d04"}
-{"level":"info","message":"Reset password for user with email 'super@email.com' success","method":"PUT","status":200,"timestamp":"2023-03-28T06:08:58.813Z","url":"/reset/145b55b2-9627-4cf5-94e6-0367cc019d04"}
-{"level":"info","message":"user with email 'super@email.com' updated password","method":"PUT","status":200,"timestamp":"2023-03-28T06:09:29.461Z","url":"/users/change/145b55b2-9627-4cf5-94e6-0367cc019d04"}
-{"level":"info","message":"user with email 'super@email.com' successfully logged out","method":"DELETE","status":200,"timestamp":"2023-03-28T06:09:32.182Z","url":"/logout"}
-{"level":"info","message":"user with email 'super@email.com' successfully logged in","method":"POST","status":200,"timestamp":"2023-03-28T06:09:40.170Z","url":"/login"}
-{"level":"info","message":"Reset password for user with email 'super@email.com' success","method":"PUT","status":200,"timestamp":"2023-03-28T06:09:45.219Z","url":"/reset/145b55b2-9627-4cf5-94e6-0367cc019d04"}
+{"level":"info","message":"Product with id d6108386-4f36-4ff9-b622-5c1705400efc deleted","method":"DELETE","status":200,"timestamp":"2023-03-29T09:28:55.898Z","url":"/products/d6108386-4f36-4ff9-b622-5c1705400efc"}
+{"level":"info","message":"Product with id d6108386-4f36-4ff9-b622-5c1705400efc set to not active","method":"DELETE","status":200,"timestamp":"2023-03-29T09:28:55.903Z","url":"/products/d6108386-4f36-4ff9-b622-5c1705400efc"}
+{"level":"info","message":"Product with id 6ea88f2e-24ac-4827-8df9-600dd1c4ee43 deleted","method":"DELETE","status":200,"timestamp":"2023-03-29T09:28:57.616Z","url":"/products/6ea88f2e-24ac-4827-8df9-600dd1c4ee43"}
+{"level":"info","message":"Product with id 6ea88f2e-24ac-4827-8df9-600dd1c4ee43 set to not active","method":"DELETE","status":200,"timestamp":"2023-03-29T09:28:57.621Z","url":"/products/6ea88f2e-24ac-4827-8df9-600dd1c4ee43"}
+{"level":"info","message":"Product created","method":"POST","status":200,"timestamp":"2023-03-29T09:30:13.335Z","url":"/products"}
+{"level":"info","message":"Product with id d9b9f8a2-c763-4c7c-8f37-e7e2b26f25d6 deleted","method":"DELETE","status":200,"timestamp":"2023-03-29T09:30:16.967Z","url":"/products/d9b9f8a2-c763-4c7c-8f37-e7e2b26f25d6"}
+{"level":"info","message":"Product with id d9b9f8a2-c763-4c7c-8f37-e7e2b26f25d6 set to not active","method":"DELETE","status":200,"timestamp":"2023-03-29T09:30:16.973Z","url":"/products/d9b9f8a2-c763-4c7c-8f37-e7e2b26f25d6"}
+{"level":"info","message":"Product created","method":"POST","status":200,"timestamp":"2023-03-29T09:31:04.958Z","url":"/products"}
+{"level":"info","message":"Product with id f07d5cba-2b7b-499f-b75a-7a55acbff77f deleted","method":"DELETE","status":200,"timestamp":"2023-03-29T09:31:16.824Z","url":"/products/f07d5cba-2b7b-499f-b75a-7a55acbff77f"}
+{"level":"info","message":"Product with id f07d5cba-2b7b-499f-b75a-7a55acbff77f set to not active","method":"DELETE","status":200,"timestamp":"2023-03-29T09:31:16.828Z","url":"/products/f07d5cba-2b7b-499f-b75a-7a55acbff77f"}
+{"level":"info","message":"Product created","method":"POST","status":200,"timestamp":"2023-03-29T09:34:46.553Z","url":"/products"}
+{"level":"info","message":"Product created","method":"POST","status":200,"timestamp":"2023-03-29T09:38:41.425Z","url":"/products"}
+{"level":"info","message":"Product with id dd7edc0b-576e-4649-ba5a-b6f3abedf117 deleted","method":"DELETE","status":200,"timestamp":"2023-03-29T09:38:46.018Z","url":"/products/dd7edc0b-576e-4649-ba5a-b6f3abedf117"}
+{"level":"info","message":"Product with id dd7edc0b-576e-4649-ba5a-b6f3abedf117 set to not active","method":"DELETE","status":200,"timestamp":"2023-03-29T09:38:46.022Z","url":"/products/dd7edc0b-576e-4649-ba5a-b6f3abedf117"}
+{"level":"info","message":"Product with id 50a8ffc7-b098-4f41-b00f-cd9d25a27501 deleted","method":"DELETE","status":200,"timestamp":"2023-03-29T09:38:47.928Z","url":"/products/50a8ffc7-b098-4f41-b00f-cd9d25a27501"}
+{"level":"info","message":"Product with id 50a8ffc7-b098-4f41-b00f-cd9d25a27501 set to not active","method":"DELETE","status":200,"timestamp":"2023-03-29T09:38:47.932Z","url":"/products/50a8ffc7-b098-4f41-b00f-cd9d25a27501"}
+{"level":"info","message":"Product created","method":"POST","status":200,"timestamp":"2023-03-29T09:46:10.435Z","url":"/products"}
+{"level":"info","message":"Product created","method":"POST","status":200,"timestamp":"2023-03-29T09:46:51.834Z","url":"/products"}
+{"level":"info","message":"Product with id ba416d62-6d81-45c2-bf84-28b1b15533c4 deleted","method":"DELETE","status":200,"timestamp":"2023-03-29T09:47:00.540Z","url":"/products/ba416d62-6d81-45c2-bf84-28b1b15533c4"}
+{"level":"info","message":"Product with id ba416d62-6d81-45c2-bf84-28b1b15533c4 set to not active","method":"DELETE","status":200,"timestamp":"2023-03-29T09:47:00.544Z","url":"/products/ba416d62-6d81-45c2-bf84-28b1b15533c4"}
+{"level":"info","message":"Product with id 1745d2fd-972c-4bf8-b3c3-b5b2558519b1 deleted","method":"DELETE","status":200,"timestamp":"2023-03-29T09:47:02.372Z","url":"/products/1745d2fd-972c-4bf8-b3c3-b5b2558519b1"}
+{"level":"info","message":"Product with id 1745d2fd-972c-4bf8-b3c3-b5b2558519b1 set to not active","method":"DELETE","status":200,"timestamp":"2023-03-29T09:47:02.376Z","url":"/products/1745d2fd-972c-4bf8-b3c3-b5b2558519b1"}
+{"level":"info","message":"Supplier with id 5b8b631f-7edc-40e3-baa6-81d721c83299 updated","method":"PUT","status":200,"timestamp":"2023-03-30T06:29:34.557Z","url":"/suppliers/5b8b631f-7edc-40e3-baa6-81d721c83299"}
+{"level":"info","message":"Supplier with id 5b8b631f-7edc-40e3-baa6-81d721c83299 updated","method":"PUT","status":200,"timestamp":"2023-03-30T06:29:34.576Z","url":"/suppliers/5b8b631f-7edc-40e3-baa6-81d721c83299"}
+{"level":"info","message":"Supplier with id 5b8b631f-7edc-40e3-baa6-81d721c83299 updated","method":"PUT","status":200,"timestamp":"2023-03-30T06:29:50.576Z","url":"/suppliers/5b8b631f-7edc-40e3-baa6-81d721c83299"}
+{"level":"info","message":"Order created","method":"POST","status":200,"timestamp":"2023-03-30T06:38:32.149Z","url":"/orders"}
+{"level":"info","message":"Order with id 20253dfd-3fed-46d5-948c-c172fd18e330 deleted","method":"DELETE","status":200,"timestamp":"2023-03-30T06:38:33.144Z","url":"/orders/20253dfd-3fed-46d5-948c-c172fd18e330"}
+{"level":"info","message":"Customer created","method":"POST","status":200,"timestamp":"2023-03-30T06:39:11.640Z","url":"/customers"}
+{"level":"info","message":"Customer created","method":"POST","status":200,"timestamp":"2023-03-30T06:40:33.900Z","url":"/customers"}
+{"level":"info","message":"Order created","method":"POST","status":200,"timestamp":"2023-03-30T06:40:50.750Z","url":"/orders"}
+{"level":"info","message":"Order created","method":"POST","status":200,"timestamp":"2023-03-30T06:41:58.354Z","url":"/orders"}
+{"level":"info","message":"Order created","method":"POST","status":200,"timestamp":"2023-03-30T06:44:54.914Z","url":"/orders"}
+{"level":"info","message":"Order created","method":"POST","status":200,"timestamp":"2023-03-30T06:46:30.918Z","url":"/orders"}
+{"level":"info","message":"Order with id 7c0f8e1f-2d59-4509-9e17-69e7dff67915 deleted","method":"DELETE","status":200,"timestamp":"2023-03-30T06:46:33.011Z","url":"/orders/7c0f8e1f-2d59-4509-9e17-69e7dff67915"}
+{"level":"info","message":"Order created","method":"POST","status":200,"timestamp":"2023-03-30T06:46:42.454Z","url":"/orders"}
+{"level":"info","message":"Order with id 237fe229-45a9-4707-baab-9af995edb306 deleted","method":"DELETE","status":200,"timestamp":"2023-03-30T06:46:44.888Z","url":"/orders/237fe229-45a9-4707-baab-9af995edb306"}
+{"level":"info","message":"Order created","method":"POST","status":200,"timestamp":"2023-03-30T06:46:53.445Z","url":"/orders"}
+{"level":"info","message":"Category Power Supply created","method":"POST","status":200,"timestamp":"2023-03-30T06:49:42.112Z","url":"/categories"}
+{"level":"info","message":"Product created","method":"POST","status":200,"timestamp":"2023-03-30T06:50:49.988Z","url":"/products"}
+{"level":"info","message":"Product with id 8950cf0c-d81a-468f-8b06-f854a02ca9fe updated","method":"PUT","status":200,"timestamp":"2023-03-30T06:51:17.337Z","url":"/products/8950cf0c-d81a-468f-8b06-f854a02ca9fe"}
+{"level":"info","message":"Order created","method":"POST","status":200,"timestamp":"2023-03-30T06:58:57.305Z","url":"/orders"}
+{"level":"info","message":"Order created","method":"POST","status":200,"timestamp":"2023-03-30T07:06:13.394Z","url":"/orders"}
+{"level":"info","message":"Category harddisk created","method":"POST","status":200,"timestamp":"2023-03-30T07:41:28.972Z","url":"/categories"}
+{"level":"info","message":"Order created","method":"POST","status":200,"timestamp":"2023-03-30T07:42:39.644Z","url":"/orders"}
+{"level":"info","message":"Order created","method":"POST","status":200,"timestamp":"2023-03-30T07:45:42.527Z","url":"/orders"}
+{"level":"info","message":"Reset password for user with email 'admin@email.com' success","method":"PUT","status":200,"timestamp":"2023-03-30T07:48:19.646Z","url":"/reset/58f88c32-e81a-4273-bc59-b6c2de657e1d"}
+{"level":"info","message":"user with email 'mnauliady@gmail.com' successfully logged out","method":"DELETE","status":200,"timestamp":"2023-03-30T07:51:16.866Z","url":"/logout"}
+{"level":"info","message":"user with email 'admin@email.com' successfully logged in","method":"POST","status":200,"timestamp":"2023-03-30T07:51:29.157Z","url":"/login"}
+{"level":"info","message":"Product created","method":"POST","status":200,"timestamp":"2023-03-30T07:54:37.432Z","url":"/products"}
+{"level":"info","message":"Product with id 475c61c0-96fb-48cf-ad9f-2bc7b70c632d updated","method":"PUT","status":200,"timestamp":"2023-03-30T07:55:14.544Z","url":"/products/475c61c0-96fb-48cf-ad9f-2bc7b70c632d"}
+{"level":"info","message":"Product with id 475c61c0-96fb-48cf-ad9f-2bc7b70c632d updated","method":"PUT","status":200,"timestamp":"2023-03-30T07:55:23.556Z","url":"/products/475c61c0-96fb-48cf-ad9f-2bc7b70c632d"}
+{"level":"info","message":"Product with id 475c61c0-96fb-48cf-ad9f-2bc7b70c632d updated","method":"PUT","status":200,"timestamp":"2023-03-30T07:55:51.284Z","url":"/products/475c61c0-96fb-48cf-ad9f-2bc7b70c632d"}
+{"level":"info","message":"Product with id 475c61c0-96fb-48cf-ad9f-2bc7b70c632d updated","method":"PUT","status":200,"timestamp":"2023-03-30T08:05:08.007Z","url":"/products/475c61c0-96fb-48cf-ad9f-2bc7b70c632d"}
+{"level":"info","message":"Product with id 475c61c0-96fb-48cf-ad9f-2bc7b70c632d updated","method":"PUT","status":200,"timestamp":"2023-03-30T08:05:42.627Z","url":"/products/475c61c0-96fb-48cf-ad9f-2bc7b70c632d"}
+{"level":"info","message":"Order created","method":"POST","status":200,"timestamp":"2023-03-30T08:06:51.019Z","url":"/orders"}
+{"level":"info","message":"Order with id bbe5ccec-e2d0-4e52-8ad3-c6d505182bb9 deleted","method":"DELETE","status":200,"timestamp":"2023-03-30T08:54:04.839Z","url":"/orders/bbe5ccec-e2d0-4e52-8ad3-c6d505182bb9"}
+{"level":"info","message":"Order created","method":"POST","status":200,"timestamp":"2023-03-30T09:04:00.276Z","url":"/orders"}
+{"level":"info","message":"Order created","method":"POST","status":200,"timestamp":"2023-03-30T09:25:30.603Z","url":"/orders"}
+{"level":"info","message":"Order created","method":"POST","status":200,"timestamp":"2023-03-30T12:45:53.960Z","url":"/orders"}
+{"level":"info","message":"Order created","method":"POST","status":200,"timestamp":"2023-03-30T12:51:56.214Z","url":"/orders"}
+{"level":"info","message":"Order with id 0efa7c37-e303-4ab1-8cbb-c8f237ffdaff deleted","method":"DELETE","status":200,"timestamp":"2023-03-30T12:52:01.335Z","url":"/orders/0efa7c37-e303-4ab1-8cbb-c8f237ffdaff"}
+{"level":"info","message":"Order created","method":"POST","status":200,"timestamp":"2023-03-30T12:52:04.796Z","url":"/orders"}
+{"level":"info","message":"Order created","method":"POST","status":200,"timestamp":"2023-03-30T12:55:43.807Z","url":"/orders"}
+{"level":"info","message":"Order with id 0f445e6e-0bee-4199-a99b-9a8452a2e68b deleted","method":"DELETE","status":200,"timestamp":"2023-03-30T12:56:37.946Z","url":"/orders/0f445e6e-0bee-4199-a99b-9a8452a2e68b"}
+{"level":"info","message":"Order created","method":"POST","status":200,"timestamp":"2023-03-30T12:59:13.494Z","url":"/orders"}
+{"level":"info","message":"Order created","method":"POST","status":200,"timestamp":"2023-03-30T13:01:36.401Z","url":"/orders"}
+{"level":"info","message":"Product with id 475c61c0-96fb-48cf-ad9f-2bc7b70c632d deleted","method":"DELETE","status":200,"timestamp":"2023-03-30T13:02:56.688Z","url":"/products/475c61c0-96fb-48cf-ad9f-2bc7b70c632d"}
+{"level":"info","message":"Product with id 475c61c0-96fb-48cf-ad9f-2bc7b70c632d set to not active","method":"DELETE","status":200,"timestamp":"2023-03-30T13:02:56.704Z","url":"/products/475c61c0-96fb-48cf-ad9f-2bc7b70c632d"}
+{"level":"info","message":"user with email 'admin@email.com' successfully logged out","method":"DELETE","status":200,"timestamp":"2023-03-30T13:14:23.202Z","url":"/logout"}
+{"level":"info","message":"user with email 'super@email.com' successfully logged in","method":"POST","status":200,"timestamp":"2023-03-30T13:15:18.541Z","url":"/login"}
+{"level":"info","message":"user with email 'super@email.com' successfully logged out","method":"DELETE","status":200,"timestamp":"2023-03-30T13:15:21.442Z","url":"/logout"}
+{"level":"info","message":"user with email 'super@email.com' successfully logged in","method":"POST","status":200,"timestamp":"2023-03-30T13:15:40.427Z","url":"/login"}
+{"level":"info","message":"Customer created","method":"POST","status":200,"timestamp":"2023-03-30T13:22:35.950Z","url":"/customers"}
+{"level":"info","message":"Customer with id 089fc6e5-b4c1-44c1-9558-929d9f61c101 updated","method":"PUT","status":200,"timestamp":"2023-03-30T13:22:57.648Z","url":"/customers/089fc6e5-b4c1-44c1-9558-929d9f61c101"}
+{"level":"info","message":"Customer with id 089fc6e5-b4c1-44c1-9558-929d9f61c101 deleted","method":"DELETE","status":200,"timestamp":"2023-03-30T13:23:34.223Z","url":"/customers/089fc6e5-b4c1-44c1-9558-929d9f61c101"}
+{"level":"info","message":"Supplier created","method":"POST","status":200,"timestamp":"2023-03-30T13:27:29.956Z","url":"/suppliers"}
+{"level":"info","message":"Supplier with id d627092e-1d84-4e22-a24e-bc6ad8f0d0fd deleted","method":"DELETE","status":200,"timestamp":"2023-03-30T13:27:36.151Z","url":"/suppliers/d627092e-1d84-4e22-a24e-bc6ad8f0d0fd"}
+{"level":"info","message":"Category with id 4fcf5e6e-c547-4d88-92a4-72be40a9f90b updated","method":"PUT","status":200,"timestamp":"2023-03-30T13:29:11.743Z","url":"/categories/4fcf5e6e-c547-4d88-92a4-72be40a9f90b"}
+{"level":"info","message":"Category with id 240c8b6c-cf04-45a9-9055-97607473f7d5 updated","method":"PUT","status":200,"timestamp":"2023-03-30T13:29:32.533Z","url":"/categories/240c8b6c-cf04-45a9-9055-97607473f7d5"}
+{"level":"info","message":"Category with id 240c8b6c-cf04-45a9-9055-97607473f7d5 updated","method":"PUT","status":200,"timestamp":"2023-03-30T13:29:43.083Z","url":"/categories/240c8b6c-cf04-45a9-9055-97607473f7d5"}
+{"level":"info","message":"Product created","method":"POST","status":200,"timestamp":"2023-03-30T13:32:06.460Z","url":"/products"}
+{"level":"info","message":"Product with id 435298e2-17ab-45a2-b34b-7ee4c9cbb521 updated","method":"PUT","status":200,"timestamp":"2023-03-30T13:33:15.128Z","url":"/products/435298e2-17ab-45a2-b34b-7ee4c9cbb521"}
+{"level":"error","message":"Customer with id 'type' not found","method":"GET","status":400,"timestamp":"2023-03-30T13:35:33.800Z","url":"/customers/type/"}
+{"level":"info","message":"Order created","method":"POST","status":200,"timestamp":"2023-03-30T13:36:37.283Z","url":"/orders"}
+{"level":"info","message":"user with email 'asep@email.com' registered successfully","method":"POST","status":200,"timestamp":"2023-03-30T13:40:22.782Z","url":"/register"}
+{"level":"info","message":"user with email 'super@email.com' updated profile","method":"PUT","status":200,"timestamp":"2023-03-30T13:41:46.915Z","url":"/users/145b55b2-9627-4cf5-94e6-0367cc019d04"}
+{"level":"info","message":"user with email 'super@email.com' updated password","method":"PUT","status":200,"timestamp":"2023-03-30T13:42:56.998Z","url":"/users/change/145b55b2-9627-4cf5-94e6-0367cc019d04"}
+{"level":"info","message":"user with email 'super@email.com' successfully logged out","method":"DELETE","status":200,"timestamp":"2023-03-30T13:43:02.438Z","url":"/logout"}
+{"level":"info","message":"user with email 'super@email.com' successfully logged in","method":"POST","status":200,"timestamp":"2023-03-30T13:43:15.976Z","url":"/login"}
+{"level":"info","message":"Reset password for user with email 'super@email.com' success","method":"PUT","status":200,"timestamp":"2023-03-30T13:43:23.124Z","url":"/reset/145b55b2-9627-4cf5-94e6-0367cc019d04"}
+{"level":"info","message":"user with email 'super@email.com' successfully logged out","method":"DELETE","status":200,"timestamp":"2023-03-30T13:43:28.914Z","url":"/logout"}
+{"level":"info","message":"user with email 'asep@email.com' successfully logged in","method":"POST","status":200,"timestamp":"2023-03-30T13:43:40.387Z","url":"/login"}
+{"level":"error","message":"Customer with id '79638a82-3d24-4253-b0c8-c66ff84d411c23123123' not found","method":"GET","status":400,"timestamp":"2023-03-30T13:44:25.348Z","url":"/customers/79638a82-3d24-4253-b0c8-c66ff84d411c23123123"}
+{"level":"info","message":"user with email 'asep@email.com' successfully logged out","method":"DELETE","status":200,"timestamp":"2023-03-30T13:45:03.682Z","url":"/logout"}
+{"level":"info","message":"user with email 'mnauliady@gmail.com' successfully logged in","method":"POST","status":200,"timestamp":"2023-03-30T13:55:43.992Z","url":"/login"}
+{"level":"info","message":"user with email 'mnauliady@gmail.com' successfully logged out","method":"DELETE","status":200,"timestamp":"2023-03-31T00:58:31.351Z","url":"/logout"}
+{"level":"info","message":"user with email 'mnauliady@gmail.com' successfully logged in","method":"POST","status":200,"timestamp":"2023-03-31T00:59:00.961Z","url":"/login"}
+{"level":"info","message":"Category with id 4fcf5e6e-c547-4d88-92a4-72be40a9f90b deleted","method":"DELETE","status":200,"timestamp":"2023-03-31T01:06:08.424Z","url":"/categories/4fcf5e6e-c547-4d88-92a4-72be40a9f90b"}
+{"level":"info","message":"Product with id 435298e2-17ab-45a2-b34b-7ee4c9cbb521 deleted","method":"DELETE","status":200,"timestamp":"2023-03-31T01:11:52.014Z","url":"/products/435298e2-17ab-45a2-b34b-7ee4c9cbb521"}
+{"level":"info","message":"Product with id 435298e2-17ab-45a2-b34b-7ee4c9cbb521 set to not active","method":"DELETE","status":200,"timestamp":"2023-03-31T01:11:52.019Z","url":"/products/435298e2-17ab-45a2-b34b-7ee4c9cbb521"}
+{"level":"info","message":"user with email 'mnauliady@gmail.com' successfully logged out","method":"DELETE","status":200,"timestamp":"2023-03-31T02:13:12.365Z","url":"/logout"}
+{"level":"info","message":"user with email 'super@email.com' successfully logged in","method":"POST","status":200,"timestamp":"2023-03-31T02:16:43.529Z","url":"/login"}
+{"level":"info","message":"Order created","method":"POST","status":200,"timestamp":"2023-03-31T02:21:16.938Z","url":"/orders"}
+{"level":"info","message":"Order created","method":"POST","status":200,"timestamp":"2023-03-31T02:22:08.303Z","url":"/orders"}
+{"level":"info","message":"Order created","method":"POST","status":200,"timestamp":"2023-03-31T02:22:56.438Z","url":"/orders"}
+{"level":"info","message":"Order created","method":"POST","status":200,"timestamp":"2023-03-31T02:23:29.471Z","url":"/orders"}
+{"level":"info","message":"Order created","method":"POST","status":200,"timestamp":"2023-03-31T02:25:54.554Z","url":"/orders"}
+{"level":"info","message":"Order created","method":"POST","status":200,"timestamp":"2023-03-31T02:35:46.931Z","url":"/orders"}
+{"level":"info","message":"Order created","method":"POST","status":200,"timestamp":"2023-03-31T02:36:49.667Z","url":"/orders"}
+{"level":"info","message":"Order with id e53d6dd0-5a50-46e3-9722-d1c5f8789e59 deleted","method":"DELETE","status":200,"timestamp":"2023-03-31T02:36:52.099Z","url":"/orders/e53d6dd0-5a50-46e3-9722-d1c5f8789e59"}
+{"level":"info","message":"Order created","method":"POST","status":200,"timestamp":"2023-03-31T02:36:55.476Z","url":"/orders"}
+{"level":"info","message":"Order created","method":"POST","status":200,"timestamp":"2023-03-31T02:38:55.224Z","url":"/orders"}
+{"level":"info","message":"Order created","method":"POST","status":200,"timestamp":"2023-03-31T02:39:42.028Z","url":"/orders"}
+{"level":"info","message":"Order with id 575fa546-3d7c-4a47-8c4d-4016d34e8135 deleted","method":"DELETE","status":200,"timestamp":"2023-03-31T02:39:49.744Z","url":"/orders/575fa546-3d7c-4a47-8c4d-4016d34e8135"}
+{"level":"info","message":"Order created","method":"POST","status":200,"timestamp":"2023-03-31T02:39:58.726Z","url":"/orders"}
+{"level":"info","message":"Order created","method":"POST","status":200,"timestamp":"2023-03-31T02:40:51.761Z","url":"/orders"}
+{"level":"info","message":"Supplier with id af366663-1805-4437-9162-0400e4aaa0d4 updated","method":"PUT","status":200,"timestamp":"2023-03-31T02:44:43.609Z","url":"/suppliers/af366663-1805-4437-9162-0400e4aaa0d4"}
+{"level":"info","message":"Supplier with id af366663-1805-4437-9162-0400e4aaa0d4 updated","method":"PUT","status":200,"timestamp":"2023-03-31T02:44:52.325Z","url":"/suppliers/af366663-1805-4437-9162-0400e4aaa0d4"}
+{"level":"info","message":"Order created","method":"POST","status":200,"timestamp":"2023-03-31T02:50:34.496Z","url":"/orders"}
+{"level":"info","message":"Product created","method":"POST","status":200,"timestamp":"2023-03-31T03:46:55.238Z","url":"/products"}
+{"level":"info","message":"Product with id c4b23ee7-fae1-4382-b2b1-a62be18677b5 deleted","method":"DELETE","status":200,"timestamp":"2023-03-31T03:47:39.580Z","url":"/products/c4b23ee7-fae1-4382-b2b1-a62be18677b5"}
+{"level":"info","message":"Product with id c4b23ee7-fae1-4382-b2b1-a62be18677b5 set to not active","method":"DELETE","status":200,"timestamp":"2023-03-31T03:47:39.586Z","url":"/products/c4b23ee7-fae1-4382-b2b1-a62be18677b5"}
+{"level":"info","message":"user with email 'super@email.com' successfully logged in","method":"POST","status":200,"timestamp":"2023-04-01T08:52:58.989Z","url":"/login"}
+{"level":"info","message":"user with email 'super@email.com' successfully logged out","method":"DELETE","status":200,"timestamp":"2023-04-01T08:53:05.262Z","url":"/logout"}
+{"level":"info","message":"user with email 'super@email.com' successfully logged in","method":"POST","status":200,"timestamp":"2023-04-01T09:05:33.367Z","url":"/login"}
+{"level":"info","message":"user with email 'super@email.com' updated profile","method":"PUT","status":200,"timestamp":"2023-04-01T09:29:50.061Z","url":"/users/145b55b2-9627-4cf5-94e6-0367cc019d04"}
+{"level":"info","message":"user with email 'super@email.com' successfully logged out","method":"DELETE","status":200,"timestamp":"2023-04-01T13:45:57.747Z","url":"/logout"}
+{"level":"info","message":"user with email 'asep@email.com' successfully logged in","method":"POST","status":200,"timestamp":"2023-04-01T13:46:09.281Z","url":"/login"}
+{"level":"info","message":"user with email 'asep@email.com' successfully logged out","method":"DELETE","status":200,"timestamp":"2023-04-01T13:46:20.261Z","url":"/logout"}
+{"level":"info","message":"user with email 'asep@email.com' successfully logged in","method":"POST","status":200,"timestamp":"2023-04-01T13:53:27.086Z","url":"/login"}
+{"level":"info","message":"user with email 'asep@email.com' successfully logged out","method":"DELETE","status":200,"timestamp":"2023-04-01T13:55:26.024Z","url":"/logout"}
+{"level":"error","message":"user with email 'super@email.com' failed to logged in","method":"POST","status":400,"timestamp":"2023-04-01T13:55:48.647Z","url":"/login"}
+{"level":"info","message":"user with email 'super@email.com' successfully logged in","method":"POST","status":200,"timestamp":"2023-04-01T13:55:51.484Z","url":"/login"}
+{"level":"info","message":"user with email 'super@email.com' updated password","method":"PUT","status":200,"timestamp":"2023-04-01T13:56:31.078Z","url":"/users/change/145b55b2-9627-4cf5-94e6-0367cc019d04"}
+{"level":"info","message":"user with email 'super@email.com' successfully logged out","method":"DELETE","status":200,"timestamp":"2023-04-01T13:56:33.997Z","url":"/logout"}
+{"level":"error","message":"user with email 'super@email.com' failed to logged in","method":"POST","status":400,"timestamp":"2023-04-01T13:56:43.820Z","url":"/login"}
+{"level":"info","message":"user with email 'super@email.com' successfully logged in","method":"POST","status":200,"timestamp":"2023-04-01T13:56:50.957Z","url":"/login"}
+{"level":"info","message":"Order created","method":"POST","status":200,"timestamp":"2023-04-01T13:57:01.758Z","url":"/orders"}
+{"level":"info","message":"Order with id e4fc64c6-fd38-4994-8cff-1a4a22eee79d deleted","method":"DELETE","status":200,"timestamp":"2023-04-01T13:57:04.854Z","url":"/orders/e4fc64c6-fd38-4994-8cff-1a4a22eee79d"}
+{"level":"info","message":"Order created","method":"POST","status":200,"timestamp":"2023-04-01T13:57:08.270Z","url":"/orders"}
+{"level":"info","message":"Order created","method":"POST","status":200,"timestamp":"2023-04-01T13:57:27.506Z","url":"/orders"}
+{"level":"info","message":"Product created","method":"POST","status":200,"timestamp":"2023-04-02T03:04:24.919Z","url":"/products"}
+{"level":"info","message":"Product created","method":"POST","status":200,"timestamp":"2023-04-02T03:18:08.111Z","url":"/products"}
+{"level":"info","message":"Product created","method":"POST","status":200,"timestamp":"2023-04-02T03:19:25.326Z","url":"/products"}
+{"level":"info","message":"Product created","method":"POST","status":200,"timestamp":"2023-04-02T03:29:04.851Z","url":"/products"}
+{"level":"info","message":"Product with id fa4fc909-9b5e-45cc-a06b-5fded8d7504d updated","method":"PUT","status":200,"timestamp":"2023-04-02T03:32:32.259Z","url":"/products/fa4fc909-9b5e-45cc-a06b-5fded8d7504d"}
+{"level":"info","message":"Product with id fa4fc909-9b5e-45cc-a06b-5fded8d7504d deleted","method":"DELETE","status":200,"timestamp":"2023-04-02T03:32:59.791Z","url":"/products/fa4fc909-9b5e-45cc-a06b-5fded8d7504d"}
+{"level":"info","message":"Product with id fa4fc909-9b5e-45cc-a06b-5fded8d7504d set to not active","method":"DELETE","status":200,"timestamp":"2023-04-02T03:32:59.799Z","url":"/products/fa4fc909-9b5e-45cc-a06b-5fded8d7504d"}
+{"level":"info","message":"Reset password for user with email 'super@email.com' success","method":"PUT","status":200,"timestamp":"2023-04-02T03:33:44.939Z","url":"/reset/145b55b2-9627-4cf5-94e6-0367cc019d04"}
+{"level":"info","message":"Reset password for user with email 'super@email.com' success","method":"PUT","status":200,"timestamp":"2023-04-02T03:33:54.971Z","url":"/reset/145b55b2-9627-4cf5-94e6-0367cc019d04"}
+{"level":"info","message":"Product created","method":"POST","status":200,"timestamp":"2023-04-02T04:09:12.126Z","url":"/products"}
+{"level":"info","message":"Product with id 40411316-561a-45ed-8264-bb9c719948df updated","method":"PUT","status":200,"timestamp":"2023-04-02T04:10:50.486Z","url":"/products/40411316-561a-45ed-8264-bb9c719948df"}
+{"level":"info","message":"Product with id 40411316-561a-45ed-8264-bb9c719948df deleted","method":"DELETE","status":200,"timestamp":"2023-04-02T04:11:46.360Z","url":"/products/40411316-561a-45ed-8264-bb9c719948df"}
+{"level":"info","message":"Product with id 40411316-561a-45ed-8264-bb9c719948df set to not active","method":"DELETE","status":200,"timestamp":"2023-04-02T04:11:46.365Z","url":"/products/40411316-561a-45ed-8264-bb9c719948df"}
+{"level":"info","message":"user with email 'super@email.com' successfully logged out","method":"DELETE","status":200,"timestamp":"2023-04-02T04:11:57.709Z","url":"/logout"}
+{"level":"info","message":"user with email 'super@email.com' successfully logged in","method":"POST","status":200,"timestamp":"2023-04-02T07:27:59.244Z","url":"/login"}
+{"level":"info","message":"user with email 'super@email.com' successfully logged out","method":"DELETE","status":200,"timestamp":"2023-04-02T07:28:03.955Z","url":"/logout"}
+{"level":"info","message":"user with email 'super@email.com' successfully logged in","method":"POST","status":200,"timestamp":"2023-04-02T07:29:11.797Z","url":"/login"}
+{"level":"info","message":"user with email 'super@email.com' successfully logged out","method":"DELETE","status":200,"timestamp":"2023-04-02T07:29:27.517Z","url":"/logout"}
+{"level":"info","message":"user with email 'super@email.com' successfully logged in","method":"POST","status":200,"timestamp":"2023-04-02T08:54:39.030Z","url":"/login"}
+{"level":"info","message":"Category with id 240c8b6c-cf04-45a9-9055-97607473f7d5 updated","method":"PUT","status":200,"timestamp":"2023-04-02T08:54:46.407Z","url":"/categories/240c8b6c-cf04-45a9-9055-97607473f7d5"}
+{"level":"info","message":"Category with id 240c8b6c-cf04-45a9-9055-97607473f7d5 updated","method":"PUT","status":200,"timestamp":"2023-04-02T08:55:04.769Z","url":"/categories/240c8b6c-cf04-45a9-9055-97607473f7d5"}
+{"level":"info","message":"Reset password for user with email 'super@email.com' success","method":"PUT","status":200,"timestamp":"2023-04-02T08:57:13.905Z","url":"/reset/145b55b2-9627-4cf5-94e6-0367cc019d04"}
+{"level":"info","message":"user with email 'super@email.com' updated profile","method":"PUT","status":200,"timestamp":"2023-04-02T08:58:56.660Z","url":"/users/145b55b2-9627-4cf5-94e6-0367cc019d04"}
+{"level":"info","message":"user with email 'super@email.com' updated password","method":"PUT","status":200,"timestamp":"2023-04-02T08:59:16.897Z","url":"/users/change/145b55b2-9627-4cf5-94e6-0367cc019d04"}
+{"level":"info","message":"Product with id 8950cf0c-d81a-468f-8b06-f854a02ca9fe updated","method":"PUT","status":200,"timestamp":"2023-04-02T09:00:42.148Z","url":"/products/8950cf0c-d81a-468f-8b06-f854a02ca9fe"}
+{"level":"info","message":"Order created","method":"POST","status":200,"timestamp":"2023-04-02T09:01:17.236Z","url":"/orders"}
+{"level":"info","message":"user with email 'super@email.com' successfully logged out","method":"DELETE","status":200,"timestamp":"2023-04-02T09:03:57.838Z","url":"/logout"}
+{"level":"info","message":"user with email 'super@email.com' successfully logged in","method":"POST","status":200,"timestamp":"2023-04-02T13:11:06.268Z","url":"/login"}
+{"level":"info","message":"Customer created","method":"POST","status":200,"timestamp":"2023-04-02T13:11:21.623Z","url":"/customers"}
+{"level":"info","message":"Customer with id 9708cee2-4f79-4a26-a15d-239c06fc2490 updated","method":"PUT","status":200,"timestamp":"2023-04-02T13:11:34.728Z","url":"/customers/9708cee2-4f79-4a26-a15d-239c06fc2490"}
+{"level":"info","message":"Customer with id 9708cee2-4f79-4a26-a15d-239c06fc2490 deleted","method":"DELETE","status":200,"timestamp":"2023-04-02T13:11:39.248Z","url":"/customers/9708cee2-4f79-4a26-a15d-239c06fc2490"}
+{"level":"info","message":"Supplier created","method":"POST","status":200,"timestamp":"2023-04-02T13:11:46.305Z","url":"/suppliers"}
+{"level":"info","message":"Supplier with id 7eb79209-87e3-440a-8cc4-c892763d72c6 updated","method":"PUT","status":200,"timestamp":"2023-04-02T13:11:52.121Z","url":"/suppliers/7eb79209-87e3-440a-8cc4-c892763d72c6"}
+{"level":"info","message":"Supplier with id 7eb79209-87e3-440a-8cc4-c892763d72c6 deleted","method":"DELETE","status":200,"timestamp":"2023-04-02T13:11:54.402Z","url":"/suppliers/7eb79209-87e3-440a-8cc4-c892763d72c6"}
+{"level":"info","message":"Category hard disk created","method":"POST","status":200,"timestamp":"2023-04-02T13:12:05.116Z","url":"/categories"}
+{"level":"info","message":"Category with id 094bcc09-fbf6-4b42-8628-f188d71d36e2 updated","method":"PUT","status":200,"timestamp":"2023-04-02T13:12:10.924Z","url":"/categories/094bcc09-fbf6-4b42-8628-f188d71d36e2"}
+{"level":"info","message":"Category with id 094bcc09-fbf6-4b42-8628-f188d71d36e2 deleted","method":"DELETE","status":200,"timestamp":"2023-04-02T13:12:13.641Z","url":"/categories/094bcc09-fbf6-4b42-8628-f188d71d36e2"}
+{"level":"info","message":"Product created","method":"POST","status":200,"timestamp":"2023-04-02T13:15:02.158Z","url":"/products"}
+{"level":"info","message":"Product with id 72fd490d-298a-488c-8637-a9dd4d503629 updated","method":"PUT","status":200,"timestamp":"2023-04-02T13:15:12.703Z","url":"/products/72fd490d-298a-488c-8637-a9dd4d503629"}
+{"level":"info","message":"Product with id 72fd490d-298a-488c-8637-a9dd4d503629 deleted","method":"DELETE","status":200,"timestamp":"2023-04-02T13:15:38.802Z","url":"/products/72fd490d-298a-488c-8637-a9dd4d503629"}
+{"level":"info","message":"Product with id 72fd490d-298a-488c-8637-a9dd4d503629 set to not active","method":"DELETE","status":200,"timestamp":"2023-04-02T13:15:38.810Z","url":"/products/72fd490d-298a-488c-8637-a9dd4d503629"}
+{"level":"info","message":"Order created","method":"POST","status":200,"timestamp":"2023-04-02T13:15:46.733Z","url":"/orders"}
+{"level":"info","message":"user with email 'aa@gmail.com' registered successfully","method":"POST","status":200,"timestamp":"2023-04-02T13:17:08.181Z","url":"/register"}
+{"level":"info","message":"Reset password for user with email 'super@email.com' success","method":"PUT","status":200,"timestamp":"2023-04-02T13:17:23.798Z","url":"/reset/145b55b2-9627-4cf5-94e6-0367cc019d04"}
+{"level":"info","message":"user with email 'super@email.com' successfully logged out","method":"DELETE","status":200,"timestamp":"2023-04-02T13:17:31.845Z","url":"/logout"}
+{"level":"info","message":"user with email 'doni@email.com' successfully logged in","method":"POST","status":200,"timestamp":"2023-04-02T13:17:45.242Z","url":"/login"}
+{"level":"info","message":"user with email 'doni@email.com' updated password","method":"PUT","status":200,"timestamp":"2023-04-02T13:19:28.913Z","url":"/users/change/d31284cd-fe6e-4731-88b0-0206aa1da50b"}
+{"level":"info","message":"user with email 'doni@email.com' successfully logged out","method":"DELETE","status":200,"timestamp":"2023-04-02T13:19:33.137Z","url":"/logout"}
+{"level":"info","message":"user with email 'doni@email.com' successfully logged in","method":"POST","status":200,"timestamp":"2023-04-02T13:19:44.889Z","url":"/login"}
+{"level":"info","message":"user with email 'doni@email.com' successfully logged out","method":"DELETE","status":200,"timestamp":"2023-04-02T13:19:50.191Z","url":"/logout"}
+{"level":"info","message":"user with email 'super@email.com' successfully logged in","method":"POST","status":200,"timestamp":"2023-04-02T13:19:59.433Z","url":"/login"}
+{"level":"info","message":"Reset password for user with email 'doni@email.com' success","method":"PUT","status":200,"timestamp":"2023-04-02T13:20:04.815Z","url":"/reset/d31284cd-fe6e-4731-88b0-0206aa1da50b"}
+{"level":"info","message":"user with email 'super@email.com' successfully logged out","method":"DELETE","status":200,"timestamp":"2023-04-02T13:20:08.814Z","url":"/logout"}
+{"level":"info","message":"user with email 'admin@email.com' successfully logged in","method":"POST","status":200,"timestamp":"2023-04-02T23:47:13.867Z","url":"/login"}
+{"level":"info","message":"user with email 'admin@email.com' successfully logged out","method":"DELETE","status":200,"timestamp":"2023-04-02T23:47:19.102Z","url":"/logout"}
+{"level":"info","message":"user with email 'admin@email.com' successfully logged in","method":"POST","status":200,"timestamp":"2023-04-02T23:48:37.514Z","url":"/login"}
+{"level":"info","message":"user with email 'admin@email.com' successfully logged out","method":"DELETE","status":200,"timestamp":"2023-04-02T23:48:43.878Z","url":"/logout"}
+{"level":"info","message":"user with email 'super@email.com' successfully logged in","method":"POST","status":200,"timestamp":"2023-04-03T01:19:47.155Z","url":"/login"}
+{"level":"info","message":"user with email 'super@email.com' successfully logged out","method":"DELETE","status":200,"timestamp":"2023-04-03T01:23:50.472Z","url":"/logout"}
+{"level":"error","message":"user with email 'super@email.com' failed to logged in","method":"POST","status":400,"timestamp":"2023-04-03T01:31:25.281Z","url":"/login"}
+{"level":"error","message":"user with email 'super@email.coms' failed to logged in","method":"POST","status":400,"timestamp":"2023-04-03T01:31:29.671Z","url":"/login"}
+{"level":"info","message":"user with email 'super@email.com' successfully logged in","method":"POST","status":200,"timestamp":"2023-04-03T02:51:39.250Z","url":"/login"}
+{"level":"info","message":"Customer created","method":"POST","status":200,"timestamp":"2023-04-03T02:53:54.413Z","url":"/customers"}
+{"level":"info","message":"Customer with id 1b41e594-3a5b-4fa5-8555-529fc6fb7edd updated","method":"PUT","status":200,"timestamp":"2023-04-03T02:54:59.527Z","url":"/customers/1b41e594-3a5b-4fa5-8555-529fc6fb7edd"}
+{"level":"info","message":"Supplier created","method":"POST","status":200,"timestamp":"2023-04-03T02:55:49.218Z","url":"/suppliers"}
+{"level":"info","message":"Category Hard disk created","method":"POST","status":200,"timestamp":"2023-04-03T02:56:30.059Z","url":"/categories"}
+{"level":"info","message":"Product created","method":"POST","status":200,"timestamp":"2023-04-03T02:58:23.107Z","url":"/products"}
+{"level":"info","message":"Product with id 1d322c92-1334-4c91-bb9e-f434824bd412 updated","method":"PUT","status":200,"timestamp":"2023-04-03T02:59:14.764Z","url":"/products/1d322c92-1334-4c91-bb9e-f434824bd412"}
+{"level":"info","message":"Order created","method":"POST","status":200,"timestamp":"2023-04-03T03:00:04.194Z","url":"/orders"}
+{"level":"info","message":"Order created","method":"POST","status":200,"timestamp":"2023-04-03T03:00:57.727Z","url":"/orders"}
+{"level":"info","message":"user with email 'budi@email.com' registered successfully","method":"POST","status":200,"timestamp":"2023-04-03T03:02:47.319Z","url":"/register"}
+{"level":"info","message":"user with email 'super@email.com' successfully logged out","method":"DELETE","status":200,"timestamp":"2023-04-03T03:03:25.474Z","url":"/logout"}
+{"level":"info","message":"user with email 'budi@email.com' successfully logged in","method":"POST","status":200,"timestamp":"2023-04-03T03:03:40.157Z","url":"/login"}
+{"level":"info","message":"user with email 'budi@email.com' updated password","method":"PUT","status":200,"timestamp":"2023-04-03T03:04:27.261Z","url":"/users/change/26146207-d586-469d-a1c2-730b04cb4936"}
+{"level":"info","message":"user with email 'budi@email.com' successfully logged out","method":"DELETE","status":200,"timestamp":"2023-04-03T03:04:42.957Z","url":"/logout"}
+{"level":"info","message":"user with email 'budi@email.com' successfully logged in","method":"POST","status":200,"timestamp":"2023-04-03T03:04:55.615Z","url":"/login"}
+{"level":"info","message":"Product with id 8950cf0c-d81a-468f-8b06-f854a02ca9fe set to not active","method":"DELETE","status":200,"timestamp":"2023-04-03T03:21:44.679Z","url":"/products/8950cf0c-d81a-468f-8b06-f854a02ca9fe"}
+{"level":"info","message":"Product with id 1d322c92-1334-4c91-bb9e-f434824bd412 deleted","method":"DELETE","status":200,"timestamp":"2023-04-03T03:21:48.125Z","url":"/products/1d322c92-1334-4c91-bb9e-f434824bd412"}
+{"level":"info","message":"Product with id 1d322c92-1334-4c91-bb9e-f434824bd412 set to not active","method":"DELETE","status":200,"timestamp":"2023-04-03T03:21:48.132Z","url":"/products/1d322c92-1334-4c91-bb9e-f434824bd412"}
+{"level":"info","message":"Product with id 8950cf0c-d81a-468f-8b06-f854a02ca9fe updated","method":"PUT","status":200,"timestamp":"2023-04-03T03:22:01.368Z","url":"/products/8950cf0c-d81a-468f-8b06-f854a02ca9fe"}
+{"level":"info","message":"Order created","method":"POST","status":200,"timestamp":"2023-04-03T03:27:01.130Z","url":"/orders"}
+{"level":"info","message":"user with email 'budi@email.com' successfully logged out","method":"DELETE","status":200,"timestamp":"2023-04-03T03:27:35.674Z","url":"/logout"}
+{"level":"info","message":"user with email 'super@email.com' successfully logged in","method":"POST","status":200,"timestamp":"2023-04-04T06:36:18.511Z","url":"/login"}
+{"level":"info","message":"Reset password for user with email 'budi@email.com' success","method":"PUT","status":200,"timestamp":"2023-04-04T06:36:26.133Z","url":"/reset/26146207-d586-469d-a1c2-730b04cb4936"}
+{"level":"info","message":"user with email 'super@email.com' successfully logged out","method":"DELETE","status":200,"timestamp":"2023-04-04T06:36:29.953Z","url":"/logout"}
+{"level":"info","message":"user with email 'super@email.com' successfully logged in","method":"POST","status":200,"timestamp":"2023-04-04T08:38:06.331Z","url":"/login"}
+{"level":"info","message":"Order with id 044d6f4d-f5de-4e81-9d2d-f4f151da20dc deleted","method":"DELETE","status":200,"timestamp":"2023-04-04T08:38:27.329Z","url":"/orders/044d6f4d-f5de-4e81-9d2d-f4f151da20dc"}
+{"level":"info","message":"Order created","method":"POST","status":200,"timestamp":"2023-04-04T08:38:48.812Z","url":"/orders"}
+{"level":"info","message":"Order with id 6cc90d47-f216-4daa-8614-8baf4c6e507d deleted","method":"DELETE","status":200,"timestamp":"2023-04-04T08:38:52.272Z","url":"/orders/6cc90d47-f216-4daa-8614-8baf4c6e507d"}
+{"level":"info","message":"user with email 'super@email.com' successfully logged out","method":"DELETE","status":200,"timestamp":"2023-04-05T06:02:28.789Z","url":"/logout"}
+{"level":"info","message":"user with email 'super@email.com' successfully logged in","method":"POST","status":200,"timestamp":"2023-04-05T06:03:25.713Z","url":"/login"}
+{"level":"info","message":"user with email 'super@email.com' successfully logged out","method":"DELETE","status":200,"timestamp":"2023-04-05T06:09:46.518Z","url":"/logout"}
+{"level":"info","message":"user with email 'admin@email.com' successfully logged in","method":"POST","status":200,"timestamp":"2023-05-25T02:56:55.175Z","url":"/login"}
+{"level":"info","message":"user with email 'admin@email.com' successfully logged out","method":"DELETE","status":200,"timestamp":"2023-05-25T06:51:36.689Z","url":"/logout"}

@@ -41,7 +41,6 @@ const DetailSupplier = () => {
       setEmail(data.email);
       setAddress(data.address);
       setProduct(data.product);
-      console.log(data.product);
     } catch (error) {
       // jika id (tidak ditemukan maka akan redirect ke blank page)
       navigate("/not-found");
@@ -108,7 +107,11 @@ const DetailSupplier = () => {
                         <td scope="row" className="px-6 py-4 whitespace-nowrap">
                           {index + 1}
                         </td>
-                        <td className="px-6 py-4">{p.sku}</td>
+                        <td className="px-6 py-4">
+                          <Link to={`/products/${p.id}`} className=" hover:text-blue-500 hover:font-semibold">
+                            {p.sku}
+                          </Link>
+                        </td>
                         <td className="px-6 py-4">{p.name}</td>
                         <td className="px-6 py-4">Rp {p.price.toLocaleString()}</td>
                       </tr>
@@ -122,7 +125,8 @@ const DetailSupplier = () => {
           </div>
         </div>
         <Link
-          to="/supplier"
+          // to="/supplier"
+          onClick={() => navigate(-1)}
           className=" text-white bg-gray-500 hover:bg-gray-600 rounded-md font-medium text-sm px-5 py-2.5 ml-8"
         >
           Back

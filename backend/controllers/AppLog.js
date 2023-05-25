@@ -20,7 +20,7 @@ const logger = winston.createLogger({
       // max file size
       maxSize: "5m",
       // lma file akan disimpan
-      maxFiles: "7d",
+      maxFiles: "14d",
     }),
   ],
 });

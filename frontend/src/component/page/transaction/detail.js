@@ -158,7 +158,7 @@ const DetailTransaction = () => {
           </div>
         </div>
         <Link
-          to={`/transaction`}
+          onClick={() => navigate(-1)}
           id="back-button"
           className=" text-white bg-gray-500 hover:bg-gray-600 rounded-md font-medium text-sm px-5 py-2.5 ml-8"
         >

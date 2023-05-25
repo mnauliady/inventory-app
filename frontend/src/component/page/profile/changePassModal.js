@@ -15,33 +15,32 @@ const ChangePasswordModal = ({ id, setStatusChangePass, setShowModalChangePass }
   const [newPassword, setNewPassword] = useState("");
   const [confPassword, setConfPassword] = useState("");
 
+  const [passwordShown, setPasswordShown] = useState(false);
+  const [newPasswordShown, setNewPasswordShown] = useState(false);
+  const [confPasswordShown, setConfPasswordShown] = useState(false);
+
   //state validation
   const [validation, setValidation] = useState({});
 
-  const navigate = useNavigate();
+  useEffect(() => {
+    if (passwordShown) {
+      setTimeout(() => {
+        setPasswordShown(!passwordShown);
+      }, 1000);
+    }
 
-  //   //useEffect hook
-  //   //   useEffect(() => {
-  //   //     //panggil function "getPOstById"
-  //   //     getProfileById();
-  //   //   }, []);
+    if (newPasswordShown) {
+      setTimeout(() => {
+        setNewPasswordShown(!newPasswordShown);
+      }, 1000);
+    }
 
-  //   //function "getProfileById"
-  //   const getProfileById = async () => {
-  //     try {
-  //       //get data from server
-  //       const response = await axios.get(`http://localhost:5000/users/${id}`);
-  //       //get response data
-  //       const data = await response.data;
-  //       //assign data to state
-  //       setName(data.name);
-  //       setConfirm Password(data.mobile);
-  //       setPassword(data.password);
-  //     } catch (error) {
-  //       // jika id (tidak ditemukan maka akan redirect ke blank page)
-  //       navigate("/not-found");
-  //     }
-  //   };
+    if (confPasswordShown) {
+      setTimeout(() => {
+        setConfPasswordShown(!confPasswordShown);
+      }, 1000);
+    }
+  }, [passwordShown, newPasswordShown, confPasswordShown]);
 
   const changePassword = async (e) => {
     e.preventDefault();
@@ -65,13 +64,38 @@ const ChangePasswordModal = ({ id, setStatusChangePass, setShowModalChangePass }
       });
   };
 
+  // Password toggle handler
+  const togglePassword = (e) => {
+    e.preventDefault();
+    // When the handler is invoked
+    // inverse the boolean state of passwordShown
+    setPasswordShown(!passwordShown);
+  };
+
+  // Password toggle handler
+  const toggleNewPassword = (e) => {
+    e.preventDefault();
+    // When the handler is invoked
+    // inverse the boolean state of passwordShown
+    setNewPasswordShown(!newPasswordShown);
+  };
+
+  // Password toggle handler
+  const toggleConfPassword = (e) => {
+    e.preventDefault();
+    // When the handler is invoked
+    // inverse the boolean state of passwordShown
+    setConfPasswordShown(!confPasswordShown);
+  };
+
   return (
     <>
-      <div className="flex justify-center items-center overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none bg-transparent">
-        <div className="relative w-2/5 my-6 mx-auto max-w-3xl">
-          <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-slate-300 drop-shadow-2xl bg-opacity-50 backdrop-blur outline-none focus:outline-none">
+      {/* <div className="bg-transparent z-10 w-full md:h-[calc(100vh-48px)]"> */}
+      <div className="flex justify-center items-center overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none backdrop-blur-sm bg-white/30">
+        <div className="relative w-1/4 my-6 mx-auto max-w-3xl">
+          <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-gray-300 drop-shadow-2xl  outline-none focus:outline-none">
             <div className="flex items-start justify-between p-5 border-b border-solid border-gray-700 rounded-t ">
-              <h3 className="text-xl font-base">ChangePassword User</h3>
+              <h3 className="text-xl font-base">Change Password</h3>
               <button className="bg-transparent -mt-5 -mr-2" onClick={() => setShowModalChangePass(false)}>
                 <span className="absolute mt-3 right-2 p-0.5 bg-red-500 rounded-full text-white hover:bg-red-600">
                   <svg
@@ -106,17 +130,26 @@ const ChangePasswordModal = ({ id, setStatusChangePass, setShowModalChangePass }
                 {/* Password */}
                 <div>
                   <label htmlFor="password" className="block mb-1 text-sm font-medium text-gray-900 dark:text-white">
-                    Password
+                    Old Password
                   </label>
-                  <input
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    type="password"
-                    name="password"
-                    id="password"
-                    className="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                    required
-                  />
+                  <div className="flex">
+                    <input
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      type={passwordShown ? "text" : "password"}
+                      name="password"
+                      id="password"
+                      className="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                      required
+                    />
+                    <button className=" -ml-10" onClick={togglePassword}>
+                      {passwordShown ? (
+                        <i className="fa-solid fa-eye" style={{ color: "#9ca3af" }}></i>
+                      ) : (
+                        <i className="fa-solid fa-eye-slash" style={{ color: "#9ca3af" }}></i>
+                      )}
+                    </button>
+                  </div>
                 </div>
 
                 {/* New Password */}
@@ -124,15 +157,24 @@ const ChangePasswordModal = ({ id, setStatusChangePass, setShowModalChangePass }
                   <label htmlFor="newPassword" className="block mb-1 text-sm font-medium text-gray-900 dark:text-white">
                     New Password
                   </label>
-                  <input
-                    value={newPassword}
-                    onChange={(e) => setNewPassword(e.target.value)}
-                    type="password"
-                    name="newPassword"
-                    id="newPassword"
-                    className="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                    required
-                  />
+                  <div className="flex">
+                    <input
+                      value={newPassword}
+                      onChange={(e) => setNewPassword(e.target.value)}
+                      type={newPasswordShown ? "text" : "password"}
+                      name="newPassword"
+                      id="newPassword"
+                      className="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 flex w-full p-2 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                      required
+                    />
+                    <button className=" -ml-10" onClick={toggleNewPassword}>
+                      {newPasswordShown ? (
+                        <i className="fa-solid fa-eye" style={{ color: "#9ca3af" }}></i>
+                      ) : (
+                        <i className="fa-solid fa-eye-slash" style={{ color: "#9ca3af" }}></i>
+                      )}
+                    </button>
+                  </div>
                 </div>
 
                 {/* Confirm Password */}
@@ -143,15 +185,24 @@ const ChangePasswordModal = ({ id, setStatusChangePass, setShowModalChangePass }
                   >
                     Confirm Password
                   </label>
-                  <input
-                    value={confPassword}
-                    onChange={(e) => setConfPassword(e.target.value)}
-                    type="password"
-                    name="confPassword"
-                    id="confPassword"
-                    className="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                    required
-                  />
+                  <div className="flex">
+                    <input
+                      value={confPassword}
+                      onChange={(e) => setConfPassword(e.target.value)}
+                      type={confPasswordShown ? "text" : "password"}
+                      name="confPassword"
+                      id="confPassword"
+                      className="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 flex w-full p-2 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                      required
+                    />
+                    <button className="-ml-10" onClick={toggleConfPassword}>
+                      {confPasswordShown ? (
+                        <i className="fa-solid fa-eye" style={{ color: "#9ca3af" }}></i>
+                      ) : (
+                        <i className="fa-solid fa-eye-slash" style={{ color: "#9ca3af" }}></i>
+                      )}
+                    </button>
+                  </div>
                 </div>
 
                 <div className="flex items-center justify-end pb-6 rounded-b">
@@ -174,6 +225,7 @@ const ChangePasswordModal = ({ id, setStatusChangePass, setShowModalChangePass }
           </div>
         </div>
       </div>
+      {/* </div> */}
     </>
   );
 };

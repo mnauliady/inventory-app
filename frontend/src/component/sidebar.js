@@ -1,11 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { NavLink } from "react-router-dom";
-
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const Sidebar = () => {
   // ambil data isError untuk pengecekan status ambil data user, dan var user untuk data user login
-  const { user } = useSelector((state) => state.auth);
+  // const { user } = useSelector((state) => state.auth);
+
+  // ambil data isError untuk pengecekan status ambil data user, dan var user untuk data user login
+  const { isError, user } = useSelector((state) => state.auth);
 
   return (
     <nav aria-label="alternative nav" className="bg-gray-800 z-10 md:h-[calc(100vh-74px)] ">
@@ -25,6 +27,40 @@ const Sidebar = () => {
                 <i className="fa-solid fa-chart-line pr-0 md:pr-3"></i>
                 <span className="pb-1 md:pb-0 text-xs md:text-base text-gray-400 md:text-gray-200 block md:inline-block">
                   Dashboard
+                </span>
+              </NavLink>
+            </li>
+
+            {/* customer */}
+            <li className="mr-3 flex-1">
+              <NavLink
+                className={(navData) =>
+                  navData.isActive
+                    ? "active block py-1 md:py-3 pl-1 align-middle text-blue-600 border-b-2 border-blue-600"
+                    : "block py-1 md:py-3 pl-1 align-middle text-gray-300 no-underline border-b-2 border-gray-800 hover:border-blue-800"
+                }
+                to="/customer"
+              >
+                <i className="fa-solid fa-users pr-0 md:pr-3 "></i>
+                <span className="pb-1 md:pb-0 text-xs md:text-base text-gray-400 md:text-gray-200 block md:inline-block">
+                  Customer
+                </span>
+              </NavLink>
+            </li>
+
+            {/* supplier */}
+            <li className="mr-3 flex-1">
+              <NavLink
+                className={(navData) =>
+                  navData.isActive
+                    ? "active block py-1 md:py-3 pl-1 align-middle text-blue-600 border-b-2 border-blue-600"
+                    : "block py-1 md:py-3 pl-1 align-middle text-gray-300 no-underline border-b-2 border-gray-800 hover:border-blue-800"
+                }
+                to="/supplier"
+              >
+                <i className="fa-solid fa-boxes-packing pr-0 md:pr-3"></i>
+                <span className="pb-1 md:pb-0 text-xs md:text-base text-gray-400 md:text-gray-200 block md:inline-block">
+                  Supplier
                 </span>
               </NavLink>
             </li>
@@ -80,40 +116,6 @@ const Sidebar = () => {
               </NavLink>
             </li>
 
-            {/* customer */}
-            <li className="mr-3 flex-1">
-              <NavLink
-                className={(navData) =>
-                  navData.isActive
-                    ? "active block py-1 md:py-3 pl-1 align-middle text-blue-600 border-b-2 border-blue-600"
-                    : "block py-1 md:py-3 pl-1 align-middle text-gray-300 no-underline border-b-2 border-gray-800 hover:border-blue-800"
-                }
-                to="/customer"
-              >
-                <i className="fa-solid fa-users pr-0 md:pr-3 "></i>
-                <span className="pb-1 md:pb-0 text-xs md:text-base text-gray-400 md:text-gray-200 block md:inline-block">
-                  Customer
-                </span>
-              </NavLink>
-            </li>
-
-            {/* supplier */}
-            <li className="mr-3 flex-1">
-              <NavLink
-                className={(navData) =>
-                  navData.isActive
-                    ? "active block py-1 md:py-3 pl-1 align-middle text-blue-600 border-b-2 border-blue-600"
-                    : "block py-1 md:py-3 pl-1 align-middle text-gray-300 no-underline border-b-2 border-gray-800 hover:border-blue-800"
-                }
-                to="/supplier"
-              >
-                <i className="fa-solid fa-boxes-packing pr-0 md:pr-3"></i>
-                <span className="pb-1 md:pb-0 text-xs md:text-base text-gray-400 md:text-gray-200 block md:inline-block">
-                  Supplier
-                </span>
-              </NavLink>
-            </li>
-
             {/* App Log */}
             <li className="mr-3 flex-1">
               <NavLink
@@ -124,7 +126,8 @@ const Sidebar = () => {
                 }
                 to="/log"
               >
-                <i className="fa-solid fa-file-arrow-down pr-0 md:pr-3"></i>
+                {/* <i className="fa-solid fa-file-arrow-down pr-0 md:pr-3"></i> */}
+                <i className="fa-solid fa-gears pr-0 md:pr-3"></i>
                 <span className="pb-1 md:pb-0 text-xs md:text-base text-gray-400 md:text-gray-200 block md:inline-block">
                   App Log
                 </span>

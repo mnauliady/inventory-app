@@ -9,10 +9,13 @@ import { Link, useNavigate } from "react-router-dom";
 import jwtDecode from "jwt-decode";
 
 import DeleteModal from "./deleteModal";
-
 import AddModal from "./addModal";
-
 import EditModal from "./editModal";
+
+// import alert/flash message
+import AddAlert from "../../Alert/addAlert";
+import EditAlert from "../../Alert/editAlert";
+import DeleteAlert from "../../Alert/deleteAlert";
 
 import ReactPaginate from "react-paginate";
 
@@ -228,6 +231,10 @@ const Customer = () => {
             setShowModal={setShowModal}
           />
         )}
+
+        {statusAdd && <AddAlert setStatusAdd={setStatusAdd}></AddAlert>}
+        {statusEdit && <EditAlert setStatusEdit={setStatusEdit} message={`Data Successfully Updated`}></EditAlert>}
+        {statusDelete && <DeleteAlert setStatusDelete={setStatusDelete}></DeleteAlert>}
 
         {/* button Add */}
         <div className="flex flex-wrap mt-8 mx-8">

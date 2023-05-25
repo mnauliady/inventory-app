@@ -98,15 +98,27 @@ const EditProduct = () => {
 
   const loadImage = (e) => {
     const image = e.target.files[0];
+
+    if (image.type == "image/jpeg" || image.type == "image/png" || image.type == "image/jpg") {
+      console.log("gambar");
+    } else {
+      window.alert("Please upload a image file (png/jpg/jpeg)");
+      return false;
+    }
+
+    // cek size image
+    if (image.size > 3000000) {
+      window.alert("Please upload a file smaller than 3 MB");
+      return false;
+    }
     setFile(image);
     setPreview(URL.createObjectURL(image));
   };
   // ===================================================
 
-  // Proses Add data ===================================
-
   //state validation
   const [validation, setValidation] = useState({});
+  const [showModal, setShowModal] = useState(false);
 
   const navigate = useNavigate();
 
@@ -119,6 +131,11 @@ const EditProduct = () => {
   const handleSelectSupplier = (e) => {
     setSelectedSupplier(e.target.value);
   };
+
+  const addCommas = (num) => num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  const removeNonNumeric = (num) => num.toString().replace(/[^0-9]/g, "");
+
+  const handleChange = (event) => setPrice(addCommas(removeNonNumeric(event.target.value)));
 
   //method "updateProduct"
   const updateProduct = async (e) => {
@@ -147,7 +164,8 @@ const EditProduct = () => {
       )
       .then(() => {
         //redirect
-        navigate("/products");
+        setShowModal(true);
+        // navigate("/products");
       })
       .catch((error) => {
         //assign validation on state
@@ -159,6 +177,7 @@ const EditProduct = () => {
     setFile();
     setPreview();
   };
+
   return (
     <section className="w-full bg-gray-100 md:h-[calc(100vh-48px)]">
       <div id="main" className="main-content flex-1 bg-gray-100 pb-24 md:pb-5">
@@ -167,6 +186,53 @@ const EditProduct = () => {
             <h1 className="font-bold pl-2">Product</h1>
           </div>
         </div>
+
+        {/* Modal Success Edit*/}
+        {showModal && (
+          <div className="flex justify-center items-center overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none backdrop-blur-sm bg-white/30">
+            <div className="relative w-2/5 my-6 mx-auto max-w-3xl">
+              <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-gray-300 drop-shadow-2xl  outline-none focus:outline-none">
+                <div className="mx-auto text-green-700 p-5 ">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="w-32"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                    />
+                  </svg>
+                </div>
+                <h3 className="text-xl font-base mx-auto">Data Successfully Updated</h3>
+                <div className="text-center p-6  rounded-b">
+                  <button
+                    className="text-white bg-blue-500 hover:bg-blue-600 active:bg-blue-700 text-base px-4 py-1 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-44"
+                    type="button"
+                    onClick={() => {
+                      setShowModal(false);
+                      navigate("/products");
+                    }}
+                  >
+                    Back to list product
+                  </button>
+                  {/* <button
+                    onClick={() => {
+                      setShowModal(false);
+                    }}
+                    className="text-white bg-green-600 hover:bg-green-700 active:bg-green-700 text-base px-4 py-1 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-40"
+                  >
+                    Continue to edit
+                  </button> */}
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* form */}
         <div className="flex flex-wrap mx-8 mt-8">
@@ -248,12 +314,12 @@ const EditProduct = () => {
                     Price
                   </label>
                   <input
-                    value={price}
-                    onChange={(e) => setPrice(e.target.value)}
-                    type="number"
+                    value={price.toLocaleString()}
+                    onChange={handleChange}
+                    type="text"
                     name="price"
                     id="price"
-                    min="1"
+                    autoComplete="off"
                     className="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                     required
                   />

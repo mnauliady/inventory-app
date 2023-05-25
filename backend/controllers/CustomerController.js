@@ -78,7 +78,7 @@ const getCustomerById = async (req, res) => {
   }
 
   try {
-    const customer = await Customer.findByPk(req.params.id);
+    const customer = await Customer.findByPk(req.params.id, { include: [{ model: Order, as: "order" }] });
 
     // jika ada customer di dalam db
     if (customer) {

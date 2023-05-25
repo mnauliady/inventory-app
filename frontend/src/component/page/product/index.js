@@ -4,9 +4,14 @@ import { useState, useEffect } from "react";
 //import axios
 import axios from "axios";
 // import Link
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import DeleteModal from "./deleteModal";
+
+// import alert/flash message
+import AddAlert from "../../Alert/addAlert";
+import EditAlert from "../../Alert/editAlert";
+import DeleteAlert from "../../Alert/deleteAlert";
 
 import ReactPaginate from "react-paginate";
 
@@ -20,28 +25,32 @@ const Product = () => {
   const [idDelete, setIdDelete] = useState();
   const [nameDelete, setNameDelete] = useState();
 
+  // state untuk modal edit
+  const [statusEdit, setStatusEdit] = useState("");
+
   // state pagination dan search
   const [page, setPage] = useState(0);
   const [limit, setLimit] = useState(10);
   const [pages, setPages] = useState(0);
   const [rows, setRows] = useState(0);
   const [keyword, setKeyword] = useState("");
-  const [keyword2, setKeyword2] = useState("");
   const [query, setQuery] = useState("");
   const [status, setStatus] = useState("");
   const [msg, setMsg] = useState("");
+
+  const navigate = useNavigate();
 
   //useEffect hook
   useEffect(() => {
     //panggil method "fetchData"
     fectData();
-  }, [statusDelete, page, keyword]);
+  }, [statusDelete, page, keyword, status]);
 
   //function "fetchData"
   const fectData = async () => {
     //fetching
     const response = await axios.get(
-      `http://localhost:5000/products/all?search_query=${keyword}&status=${keyword2}&page=${page}&limit=${limit}`
+      `http://localhost:5000/products/all?search_query=${keyword}&status=${status}&page=${page}&limit=${limit}`
     );
     //get response data
     const data = await response.data.product;
@@ -67,7 +76,7 @@ const Product = () => {
     setPage(0);
     setMsg("");
     setKeyword(query);
-    setKeyword2(status);
+    setStatus(status);
   };
 
   const deleteProduct = (id, nama) => {
@@ -96,6 +105,9 @@ const Product = () => {
           <DeleteModal id={idDelete} name={nameDelete} setStatusDelete={setStatusDelete} setShowModal={setShowModal} />
         )}
 
+        {/* {statusAdd == true ? <p>Successfully</p> : ""} */}
+        {statusEdit && <EditAlert setStatusEdit={setStatusEdit}></EditAlert>}
+        {statusDelete && <DeleteAlert setStatusDelete={setStatusDelete}></DeleteAlert>}
         {/* button Add */}
         <div className="flex flex-wrap mt-8 mx-8">
           <Link
@@ -131,7 +143,6 @@ const Product = () => {
             </div>
           </div>
         </form>
-
         {/* Table */}
         <div className="flex flex-wrap mx-8">
           <div className="w-full relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -168,7 +179,7 @@ const Product = () => {
                     key={product.id}
                   >
                     <td scope="row" className="px-6 py-4  whitespace-nowrap">
-                      {index + 1}
+                      {page == 0 ? `${index + 1}` : `${page * 10 + index + 1}`}
                     </td>
                     <td className="px-6 py-4">{product.sku}</td>
                     <td className="px-6 py-4">{product.name}</td>
@@ -219,7 +230,6 @@ const Product = () => {
             </table>
           </div>
         </div>
-
         <div className="flex pt-2">
           <p className="text-red-500">{msg}</p>
           <p className="flex ml-8 pt-1 font-medium">

@@ -9,6 +9,10 @@ import { Link, useParams, useNavigate } from "react-router-dom";
 
 import moment from "moment/moment";
 
+import verified from "../../../asset/img/verified.gif";
+
+import DeleteFinalModal from "./deleteFinal";
+
 const Final = () => {
   //state
   const [code, setCode] = useState("");
@@ -24,6 +28,13 @@ const Final = () => {
   const { id } = useParams();
 
   const navigate = useNavigate();
+  const [showModal, setShowModal] = useState(false);
+
+  // state untuk modal delete
+  const [showModalFinal, setShowModalFinal] = useState(false);
+  const [statusDelete, setStatusDelete] = useState("");
+  const [idDelete, setIdDelete] = useState();
+  const [nameDelete, setNameDelete] = useState();
 
   //hook useEffect
   useEffect(() => {
@@ -70,10 +81,16 @@ const Final = () => {
 
   const deleteTransaction = async (id) => {
     //sending
-    await axios.delete(`http://localhost:5000/orders/${id}`);
+    // await axios.delete(`http://localhost:5000/orders/${id}`);
 
-    //navigate ke page transaction
-    navigate("/transaction");
+    // //navigate ke page transaction
+    // navigate("/transaction");
+
+    setShowModalFinal(true);
+    // set id dari produk yang akan dihapus
+    setIdDelete(id);
+    // set status delete (jika status delete berubah maka akan menjalankan useEffect)
+    setStatusDelete(false);
   };
 
   return (
@@ -84,6 +101,59 @@ const Final = () => {
             <h1 className="font-bold pl-2">Transaction</h1>
           </div>
         </div>
+        {/* Modal Success */}
+        {showModal && (
+          <div className="flex justify-center items-center overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none backdrop-blur-sm bg-white/30">
+            <div className="relative w-2/5 my-6 mx-auto max-w-3xl">
+              <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-gray-300 drop-shadow-2xl  outline-none focus:outline-none">
+                <div className="mx-auto text-green-700 p-5 ">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="w-32"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                    />
+                  </svg>
+                  {/* <img src={verified} alt="" /> */}
+                </div>
+                <h3 className="text-xl font-base mx-auto">Data Successfully Added</h3>
+                <div className="text-center p-6  rounded-b">
+                  <button
+                    className="text-white bg-blue-500 hover:bg-blue-600 active:bg-blue-700 text-base px-4 py-1 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-44"
+                    type="button"
+                    onClick={() => {
+                      setShowModal(false);
+                      navigate("/transaction");
+                    }}
+                  >
+                    Back to list transaction
+                  </button>
+                  <button
+                    className="text-white bg-green-600 hover:bg-green-700 active:bg-green-700 text-base px-4 py-1 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-44"
+                    type="button"
+                    onClick={() => {
+                      setShowModal(false);
+                      navigate("/transaction/add");
+                    }}
+                  >
+                    Add New Transaction
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+        {/* Modal delete */}
+        {showModalFinal && (
+          <DeleteFinalModal id={id} setStatusDelete={setStatusDelete} setShowModalFinal={setShowModalFinal} />
+        )}
 
         <div className="flex flex-wrap mt-8 mx-8 mb-4">
           <div className="overflow-hidden bg-white shadow sm:rounded-lg w-full">
@@ -175,16 +245,20 @@ const Final = () => {
         </Link>
         <Link
           onClick={() => {
-            if (window.confirm("Cancel the transaction?")) {
-              deleteTransaction(id);
-            }
+            // if (window.confirm("Cancel the transaction?")) {
+            //   deleteTransaction(id);
+            // }
+            deleteTransaction(id);
           }}
           className=" text-white bg-red-500 hover:bg-red-600 rounded-md font-medium text-sm px-5 py-2.5 ml-2"
         >
           Cancel Transaction
         </Link>
         <Link
-          to="/transaction"
+          // to="/transaction"
+          onClick={() => {
+            setShowModal(true);
+          }}
           className=" text-white bg-blue-500 hover:bg-blue-600 rounded-md font-medium text-sm px-5 py-2.5 ml-2"
         >
           Ok

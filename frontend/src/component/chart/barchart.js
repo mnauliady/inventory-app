@@ -22,11 +22,14 @@ const BarChart = () => {
     //get response data
     const data = await response.data;
     //assign response data to state "products"
+    // console.log(data);
     setDataBar(data);
   };
 
   const labels = dataBar && dataBar.dataTotal && dataBar.dataTotal.map((data) => data.name);
   const total = dataBar && dataBar.dataTotal && dataBar.dataTotal.map((data) => data.total);
+
+  // console.log(labels);
 
   const options = {
     maintainAspectRatio: false,

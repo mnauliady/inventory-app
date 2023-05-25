@@ -6,12 +6,16 @@ import axios from "axios";
 // import Link
 import { Link } from "react-router-dom";
 
+// import modal
 import DeleteModal from "./deleteModal";
-
 import AddModal from "./addModal";
-
 import EditModal from "./editModal";
 
+// import alert/flash message
+import AddAlert from "../../Alert/addAlert";
+import EditAlert from "../../Alert/editAlert";
+import DeleteAlert from "../../Alert/deleteAlert";
+// import react paginate
 import ReactPaginate from "react-paginate";
 
 const Category = () => {
@@ -79,6 +83,7 @@ const Category = () => {
     setKeyword(query);
   };
 
+  // tampilkan modal delete
   const deleteCategory = (id, nama) => {
     //sending
     // set modal ke true
@@ -98,6 +103,7 @@ const Category = () => {
     setStatusAdd(false);
   };
 
+  // tampilkan modal edit
   const editCategory = (id) => {
     // set id dari produk yang akan dihapus
     setIdCategory(id);
@@ -106,8 +112,6 @@ const Category = () => {
   };
 
   return (
-    // index page
-
     <section className="w-full bg-gray-100 md:h-[calc(100vh-48px)] ">
       <div id="main" className=" main-content flex-1 bg-gray-100 pb-24">
         <div className="bg-gray-800">
@@ -115,6 +119,7 @@ const Category = () => {
             <h1 className="font-bold pl-2">Category</h1>
           </div>
         </div>
+
         {/* Modal add */}
         {showModalAdd && <AddModal setStatusAdd={setStatusAdd} setShowModalAdd={setShowModalAdd} />}
 
@@ -164,6 +169,10 @@ const Category = () => {
             </div> */}
           </div>
         </form>
+
+        {statusAdd && <AddAlert setStatusAdd={setStatusAdd}></AddAlert>}
+        {statusEdit && <EditAlert setStatusEdit={setStatusEdit} message={`Data Successfully Updated`}></EditAlert>}
+        {statusDelete && <DeleteAlert setStatusDelete={setStatusDelete}></DeleteAlert>}
 
         {/* Table */}
         <div className="flex flex-wrap mx-8">
@@ -254,7 +263,7 @@ const Category = () => {
               onPageChange={changePage}
               containerClassName={"isolate inline-flex -space-x-px rounded-md shadow-sm"}
               pageLinkClassName={
-                "relative inline-flex items-center px-4 py-2 text-sm font-semibold text-blue-600 ring-1 ring-inset ring-blue-300 hover:bg-blue-200 focus:z-20 focus:outline-offset-0"
+                "relative inline-flex items-center px-4 py-2 text-sm font-semibold text-blue-600  ring-1 ring-inset ring-blue-300 hover:bg-blue-200 focus:z-20 focus:outline-offset-0"
               }
               previousLinkClassName={
                 "relative inline-flex items-center rounded-l-md text-sm px-4 py-2 text-blue-600 font-semibold ring-1 ring-inset hover:bg-blue-200 ring-blue-300 focus:z-20 focus:outline-offset-0"

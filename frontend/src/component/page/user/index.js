@@ -12,6 +12,10 @@ import DeleteModal from "./deleteModal";
 
 import AddModal from "./addModal";
 
+import AddAlert from "../../Alert/addAlert";
+import EditAlert from "../../Alert/editAlert";
+import DeleteAlert from "../../Alert/deleteAlert";
+
 import ResetPasswordModal from "./resetPassModal";
 
 import ReactPaginate from "react-paginate";
@@ -146,6 +150,10 @@ const User = () => {
           />
         )}
 
+        {statusAdd && <AddAlert setStatusAdd={setStatusAdd}></AddAlert>}
+        {statusReset && <EditAlert setStatusEdit={setStatusReset} message={`Reset Password Successfully`}></EditAlert>}
+        {statusDelete && <DeleteAlert setStatusDelete={setStatusDelete}></DeleteAlert>}
+
         {/* button Add */}
         <div className="flex flex-wrap mt-8 mx-8">
           <Link
@@ -194,32 +202,32 @@ const User = () => {
                 </tr>
               </thead>
               <tbody>
-                {users.map((user, index) => (
+                {users.map((u, index) => (
                   <tr
                     className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-                    key={user.id}
+                    key={u.id}
                   >
                     <td scope="row" className="px-6 py-4  whitespace-nowrap">
                       {index + 1}
                     </td>
-                    <td className="px-6 py-4">{user.name}</td>
-                    <td className="px-6 py-4">{user.email}</td>
-                    <td className="px-6 py-4 capitalize">{user.role}</td>
+                    <td className="px-6 py-4">{u.name}</td>
+                    <td className="px-6 py-4">{u.email}</td>
+                    <td className="px-6 py-4 capitalize">{u.role}</td>
                     <td className="px-6 py-4">
                       <Link
                         onClick={() => {
-                          resetPass(user.id, user.email);
+                          resetPass(u.id, u.email);
                         }}
                         className=" text-white bg-yellow-500 hover:bg-yellow-600 rounded-md text-sm px-2 py-1.5 mr-2 mb-2 dark:bg-yellow-600 dark:hover:bg-yellow-700"
                       >
                         Reset Password
                       </Link>
-                      {user.order.length ? (
+                      {u.order.length || u.role == "super admin" ? (
                         ""
                       ) : (
                         <Link
                           onClick={() => {
-                            deleteUser(user.id, user.email);
+                            deleteUser(u.id, u.email);
                           }}
                           className=" text-white bg-red-500 hover:bg-red-600 rounded-md text-sm px-2 py-1.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-res-700"
                         >
@@ -247,7 +255,7 @@ const User = () => {
               onPageChange={changePage}
               containerClassName={"isolate inline-flex -space-x-px rounded-md shadow-sm"}
               pageLinkClassName={
-                "relative inline-flex items-center px-4 py-2 text-sm font-semibold text-blue-600 ring-1 ring-inset ring-blue-300 hover:bg-blue-200 focus:z-20 focus:outline-offset-0"
+                "relative inline-flex items-center px-4 py-2 text-sm font-semibold text-blue-600  ring-1 ring-inset ring-blue-300 hover:bg-blue-200 focus:z-20 focus:outline-offset-0"
               }
               previousLinkClassName={
                 "relative inline-flex items-center rounded-l-md text-sm px-4 py-2 text-blue-600 font-semibold ring-1 ring-inset hover:bg-blue-200 ring-blue-300 focus:z-20 focus:outline-offset-0"

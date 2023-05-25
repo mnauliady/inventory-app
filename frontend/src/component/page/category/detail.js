@@ -83,7 +83,7 @@ const DetailCategory = () => {
                         Product Name
                       </th>
                       <th scope="col" className="px-6 py-3">
-                        Action
+                        Price
                       </th>
                     </tr>
                   </thead>
@@ -96,16 +96,13 @@ const DetailCategory = () => {
                         <td scope="row" className="px-6 py-4 whitespace-nowrap">
                           {index + 1}
                         </td>
-                        <td className="px-6 py-4">{p.sku}</td>
-                        <td className="px-6 py-4">{p.name}</td>
                         <td className="px-6 py-4">
-                          <Link
-                            to={`/products/${p.id}`}
-                            className=" text-white bg-green-700 hover:bg-green-800 rounded-md text-sm px-2 py-1.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 "
-                          >
-                            Detail
+                          <Link to={`/products/${p.id}`} className=" hover:text-blue-500 hover:font-semibold">
+                            {p.sku}
                           </Link>
                         </td>
+                        <td className="px-6 py-4">{p.name}</td>
+                        <td className="px-6 py-4">Rp {p.price.toLocaleString()}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -117,7 +114,8 @@ const DetailCategory = () => {
           </div>
         </div>
         <Link
-          to="/category"
+          // to="/category"
+          onClick={() => navigate(-1)}
           className=" text-white bg-gray-500 hover:bg-gray-600 rounded-md font-medium text-sm px-5 py-2.5 ml-8"
         >
           Back

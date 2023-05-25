@@ -14,6 +14,36 @@
             "date": 1679965733039,
             "name": "logs\\backup\\app-2023-03-28.log",
             "hash": "1aee801b7b666f6550767ea4bcba51d3f855d921f924a587a99c83311a675381"
+        },
+        {
+            "date": 1680051971180,
+            "name": "logs\\backup\\app-2023-03-29.log",
+            "hash": "7745af4481f165b2401e96a2adee8d85db350aaba69c41834fd062c949e64567"
+        },
+        {
+            "date": 1680133669495,
+            "name": "logs\\backup\\app-2023-03-30.log",
+            "hash": "7a9fcada592bea17ac0ebfc4059c9d195e44f5ed60cc6e6a474d24f0628b9a57"
+        },
+        {
+            "date": 1680224253745,
+            "name": "logs\\backup\\app-2023-03-31.log",
+            "hash": "03123f539211fd28e7316c0fbe003cbd0ae7111b2d479585a4e58c099402509a"
+        },
+        {
+            "date": 1680338762657,
+            "name": "logs\\backup\\app-2023-04-01.log",
+            "hash": "273204d959b07928ed4b463b2be21be849a1902efd07dfa7dbc5a01da019bee4"
+        },
+        {
+            "date": 1680403783490,
+            "name": "logs\\backup\\app-2023-04-02.log",
+            "hash": "09df117e88054963fc814e436b5572860336babab72fd5ff975581cb311f23be"
+        },
+        {
+            "date": 1680478510569,
+            "name": "logs\\backup\\app-2023-04-03.log",
+            "hash": "ed306c618fa861356da8160575e9ebc5ff9814f00d9b252a2d25e5337d06148e"
         }
     ],
     "hashType": "sha256"

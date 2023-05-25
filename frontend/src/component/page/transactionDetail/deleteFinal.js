@@ -1,14 +1,17 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { Navigate, useNavigate } from "react-router-dom";
 
-const DeleteModal = ({ id, name, setStatusDelete, setShowModal }) => {
-  const deleteCustomer = async () => {
+const DeleteFinalModal = ({ id, setStatusDelete, setShowModalFinal }) => {
+  const navigate = useNavigate();
+  const deleteDetail = async () => {
     // sending
-    await axios.delete(`http://localhost:5000/customers/${id}`);
+    await axios.delete(`http://localhost:5000/orders/${id}`);
 
-    setShowModal(false);
-
+    setShowModalFinal(false);
     setStatusDelete(true);
+
+    navigate("/transaction");
   };
 
   return (
@@ -17,10 +20,8 @@ const DeleteModal = ({ id, name, setStatusDelete, setShowModal }) => {
         <div className="relative w-2/5 my-6 mx-auto max-w-3xl">
           <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-gray-300 drop-shadow-2xl  outline-none focus:outline-none">
             <div className="flex items-start justify-between p-5 border-b border-solid border-gray-700 rounded-t ">
-              <h3 className="text-xl font-base">
-                Delete Customer <span className="font-semibold">{name}</span>?
-              </h3>
-              <button className="bg-transparent -mt-5 -mr-2" onClick={() => setShowModal(false)}>
+              <h3 className="text-xl font-base">Cancel the transaction?</h3>
+              <button className="bg-transparent -mt-5 -mr-2" onClick={() => setShowModalFinal(false)}>
                 <span className="absolute mt-3 right-2 p-0.5 bg-red-500 rounded-full text-white hover:bg-red-600">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -39,16 +40,16 @@ const DeleteModal = ({ id, name, setStatusDelete, setShowModal }) => {
               <button
                 className="text-white bg-blue-500 hover:bg-blue-600 active:bg-blue-700 text-base px-4 py-1 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1"
                 type="button"
-                onClick={() => setShowModal(false)}
+                onClick={() => setShowModalFinal(false)}
               >
                 Close
               </button>
               <button
                 className="text-white bg-red-500 hover:bg-red-600 active:bg-red-700 text-base px-4 py-1 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1"
                 type="button"
-                onClick={() => deleteCustomer()}
+                onClick={() => deleteDetail()}
               >
-                Delete
+                Yes
               </button>
             </div>
           </div>
@@ -58,4 +59,4 @@ const DeleteModal = ({ id, name, setStatusDelete, setShowModal }) => {
   );
 };
 
-export default DeleteModal;
+export default DeleteFinalModal;

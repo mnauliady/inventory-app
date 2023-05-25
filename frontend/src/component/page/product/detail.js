@@ -18,6 +18,8 @@ const DetailProduct = () => {
   const [status, setStatus] = useState("");
   const [category, setCategory] = useState("");
   const [supplier, setSupplier] = useState("");
+  const [categoryId, setCategoryId] = useState("");
+  const [supplierId, setSupplierId] = useState("");
 
   //get ID from parameter URL
   const { id } = useParams();
@@ -48,6 +50,8 @@ const DetailProduct = () => {
       setStatus(data.status);
       setCategory(data.category);
       setSupplier(data.supplier);
+      setCategoryId(data.categoryId);
+      setSupplierId(data.supplierId);
     } catch (error) {
       navigate("/not-found");
     }
@@ -95,7 +99,7 @@ const DetailProduct = () => {
                   </div>
                   <div className="border-b-2 border-gray-100 px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 hover:bg-gray-100">
                     <dt className="text-sm font-medium text-gray-500">Stock</dt>
-                    <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">{stock}</dd>
+                    <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">{stock ? `${stock}` : 0}</dd>
                   </div>
                   <div className="border-b-2 border-gray-100 px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 hover:bg-gray-100">
                     <dt className="text-sm font-medium text-gray-500">Minimal Stock</dt>
@@ -107,11 +111,19 @@ const DetailProduct = () => {
                   </div>
                   <div className="border-b-2 border-gray-100 px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 hover:bg-gray-100">
                     <dt className="text-sm font-medium text-gray-500">Category</dt>
-                    <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">{category}</dd>
+                    <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                      <Link to={`/category/${categoryId}`} className=" hover:text-blue-500 hover:font-semibold">
+                        {category}
+                      </Link>
+                    </dd>
                   </div>
                   <div className="px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 hover:bg-gray-100">
                     <dt className="text-sm font-medium text-gray-500">Supplier</dt>
-                    <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">{supplier}</dd>
+                    <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                      <Link to={`/supplier/${supplierId}`} className=" hover:text-blue-500 hover:font-semibold">
+                        {supplier}
+                      </Link>
+                    </dd>
                   </div>
                 </dl>
               </div>

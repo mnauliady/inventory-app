@@ -9,6 +9,7 @@ const uuid = require("uuid");
 const { check, validationResult } = require("express-validator");
 const db = require("../models/index");
 const { logger } = require("./AppLog");
+const fs = require("fs");
 
 // Get semua product
 const getProducts = async (req, res) => {
@@ -35,7 +36,7 @@ const getProductById = async (req, res) => {
 
   try {
     let product = await db.sequelize.query(
-      `SELECT products.*, SUM(orderdetails.quantity) as stock, categories."name" as "category", suppliers."name" as "supplier" FROM orderdetails INNER JOIN products ON products."id" = orderdetails."productId" INNER JOIN categories
+      `SELECT products.*, SUM(orderdetails.quantity) as stock, categories."id" as "categoryId", categories."name" as "category", suppliers."id" as "supplierId", suppliers."name" as "supplier" FROM orderdetails INNER JOIN products ON products."id" = orderdetails."productId" INNER JOIN categories
       ON products."categoryId" = categories."id" INNER JOIN suppliers ON products."supplierId" = suppliers."id" WHERE
       products."id" = (:id) GROUP BY products."id", categories."id", suppliers."id"`,
       {
@@ -48,7 +49,7 @@ const getProductById = async (req, res) => {
       res.send(product[0]);
     } else if (product.length === 0) {
       product = await db.sequelize.query(
-        `SELECT products.*, suppliers."name" as "supplier", categories."name" as "category" FROM products INNER JOIN suppliers ON products."supplierId" = suppliers."id" INNER JOIN categories ON products."categoryId" = categories."id" WHERE products."id" = (:id) `,
+        `SELECT products.*,suppliers."id" as "supplierId", suppliers."name" as "supplier", categories."id" as "categoryId", categories."name" as "category" FROM products INNER JOIN suppliers ON products."supplierId" = suppliers."id" INNER JOIN categories ON products."categoryId" = categories."id" WHERE products."id" = (:id) `,
         {
           replacements: { id: req.params.id },
           type: db.sequelize.QueryTypes.SELECT,
@@ -72,7 +73,7 @@ const createProduct = async (req, res) => {
   // await check("sku").notEmpty().withMessage("sku is required").run(req);
   await check("name").isLength({ min: 3 }).withMessage("Name at least 3 characters").run(req);
   await check("min_stock").notEmpty().isNumeric().withMessage("Minimal stock is required").run(req);
-  await check("price").notEmpty().isNumeric().withMessage("Price is required").run(req);
+  // await check("price").notEmpty().isNumeric().withMessage("Price is required").run(req);
   await check("categoryId").notEmpty().withMessage("Category is required").run(req);
   await check("supplierId").notEmpty().withMessage("Supplier is required").run(req);
 
@@ -95,7 +96,7 @@ const createProduct = async (req, res) => {
       name: req.body.name,
       status: "active",
       url_photo: req.file.filename,
-      price: req.body.price,
+      price: parseInt(req.body.price.replace(/,/g, "")),
       min_stock: req.body.min_stock,
       categoryId: req.body.categoryId,
       supplierId: req.body.supplierId,
@@ -119,7 +120,7 @@ const updateProduct = async (req, res) => {
   // validasi inputan
   await check("name").isLength({ min: 3 }).withMessage("Name at least 3 characters").run(req);
   await check("min_stock").notEmpty().isNumeric().withMessage("Minimal stock is required").run(req);
-  await check("price").notEmpty().isNumeric().withMessage("Price is required").run(req);
+  // await check("price").notEmpty().isNumeric().withMessage("Price is required").run(req);
   await check("categoryId").notEmpty().withMessage("Category is required").run(req);
   await check("supplierId").notEmpty().withMessage("Supplier is required").run(req);
 
@@ -164,7 +165,7 @@ const updateProduct = async (req, res) => {
         name: req.body.name,
         url_photo: photo,
         status: req.body.status,
-        price: req.body.price,
+        price: parseInt(req.body.price.replace(/,/g, "")),
         min_stock: req.body.min_stock,
         categoryId: req.body.categoryId,
       },
@@ -279,14 +280,13 @@ const getAllStock = async (req, res) => {
     const search = req.query.search_query || "";
     const status = req.query.status || "";
     const offset = limit * page;
-    console.log(req.query);
     const query = await db.sequelize.query(
-      `SELECT products.*, sum(orderdetails.quantity) AS stock FROM orderdetails RIGHT JOIN products ON orderdetails."productId" = products."id" WHERE(products.sku ILIKE '%${search}%' OR products."name" ILIKE '%${search}%' OR products."status" = '${status}') GROUP BY products."id" ORDER BY products."updatedAt" DESC`
+      `SELECT products.*, sum(orderdetails.quantity) AS stock FROM orderdetails RIGHT JOIN products ON orderdetails."productId" = products."id" WHERE(products.sku ILIKE '%${search}%' OR products."name" ILIKE '%${search}%') AND products."status" ILIKE '${status}%' GROUP BY products."id" ORDER BY products."updatedAt" DESC`
     );
-    totalRows = query[0].length;
+    const totalRows = query[0].length;
     const totalPage = Math.ceil(totalRows / limit);
     const product = await db.sequelize.query(
-      `SELECT products.*, sum(orderdetails.quantity) AS "stock" FROM orderdetails RIGHT JOIN products ON orderdetails."productId" = products."id" WHERE(products.sku ILIKE '%${search}%' OR products."name" ILIKE '%${search}%' OR products."status" = '${status}') GROUP BY products."id" ORDER BY "updatedAt" DESC`,
+      `SELECT products.*, sum(orderdetails.quantity) AS "stock" FROM orderdetails RIGHT JOIN products ON orderdetails."productId" = products."id" WHERE(products.sku ILIKE '%${search}%' OR products."name" ILIKE '%${search}%') AND products."status" ILIKE '${status}%' GROUP BY products."id" ORDER BY "updatedAt" DESC`,
       // `SELECT products.*, sum(orderdetails.quantity) AS "stock" FROM orderdetails RIGHT JOIN products ON orderdetails."productId" = products."id" GROUP BY products."id" ORDER BY "updatedAt"`,
       {
         type: db.sequelize.QueryTypes.SELECT,
